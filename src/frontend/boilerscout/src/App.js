@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
+import Home from './Home'
 
 
 class App extends Component {
@@ -26,19 +27,20 @@ class App extends Component {
   handleUnauth = () => {
     localStorage.removeItem('uid')
   }
-  
+
+
   render() {
     return (
-      <div className="App">
+      <div class="extended row header">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">BoilerScout</h1>
         </header>
-        <p className="App-intro">
-          Welcome to BoilerScout y'all
-        </p>
+        <div className="Container">
+          <Home/>
+        </div>
       </div>
-    );
+    )
   }
 }
 

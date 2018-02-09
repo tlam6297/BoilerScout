@@ -5,8 +5,11 @@ const Home = () => {
         <div className="Home">
             <header className="Header">
              <span className="title"> BoilerScout</span>
+             
             </header>
         </div>
     )
 
 }
+
+export default Home;
