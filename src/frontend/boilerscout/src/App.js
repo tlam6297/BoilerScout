@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import logo from './logo.svg'
 import './App.css'
 import Home from './Home'
@@ -30,10 +31,9 @@ class App extends Component {
 
   render() {
     return (
-      <div class="extended row header" className="All">
+      <div class="extended row header" className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">BoilerScout</h1>
         </header>
         <div className="Container">
         <Home/>
