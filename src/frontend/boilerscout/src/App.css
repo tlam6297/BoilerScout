@@ -16,12 +16,21 @@ h1 {
   padding-top: 4rem;
 }
 
-.button {
+.ForgotPLink {
+  margin-top: 10px;
+  font-size: 85%;
+}
+
+button {
   background-color: #cc9900;
   text-color: black;
+  font-size: 85%;
   margin: 5px;
   text-align: center;
-  
+  width: 25%;
+  height: 35px;
+  border: none;
+  border-radius: 10px;
 }
 
 .Container {
