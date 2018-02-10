@@ -4,8 +4,21 @@ const Home = () => {
     return (
         <div className="Home">
             <header className="Header">
-             <span className="title"> BoilerScout</span>
-             
+             <div className="SignUpButton">
+             <a href="#" > 
+                Sign Up 
+             </a>
+             </div>
+             <div className="LoginButton">
+             <a href="#" > 
+                Login 
+             </a>
+             </div>
+             <div className="ForgotPButton">
+             <a href="#" > 
+                Forgot Password? 
+             </a>
+             </div>
             </header>
         </div>
     )

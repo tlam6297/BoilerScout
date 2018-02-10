@@ -2,9 +2,9 @@ import React from 'react'
 
 const Main = () => {
     return (
-        <div className="Home">
+        <div className="Main">
             <header className="Header">
-             <span className="title"> This is Main</span>
+             <span className="title"> HOWDY </span>
              
             </header>
         </div>
