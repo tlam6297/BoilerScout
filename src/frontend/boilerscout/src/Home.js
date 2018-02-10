@@ -7,11 +7,12 @@ const Home = () => {
             <header className="Header">
              <div className="SignUpButton">
              <button class="button medium-btn" href="#" > 
-                Sign Up 
+              Sign Up
              </button>
              </div>
              <div className="LoginButton">
              <button class="button medium-btn" href="#">
+             Login
              </button>
              </div>
              <div className="ForgotPLink">
