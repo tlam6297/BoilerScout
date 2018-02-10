@@ -5,16 +5,16 @@ const Home = () => {
         <div className="Home">
             <header className="Header">
              <div className="SignUpButton">
-             <a href="#" > 
+             <button href="#" > 
                 Sign Up 
-             </a>
+             </button>
              </div>
              <div className="LoginButton">
-             <a href="#" > 
+             <button href="#" > 
                 Login 
-             </a>
+             </button>
              </div>
-             <div className="ForgotPButton">
+             <div className="ForgotPLink">
              <a href="#" > 
                 Forgot Password? 
              </a>

@@ -28,10 +28,9 @@ class App extends Component {
     localStorage.removeItem('uid')
   }
 
-
   render() {
     return (
-      <div class="extended row header">
+      <div class="extended row header" className="All">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">BoilerScout</h1>
