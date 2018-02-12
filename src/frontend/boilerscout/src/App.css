@@ -2,8 +2,6 @@
 
 * {
   background-color:  black;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
 }
 
 h1 {
@@ -16,19 +14,9 @@ h1 {
   padding-top: 4rem;
 }
 
-.ForgotPLink {
-  margin-top: 10px;
-  font-size: 85%;
-}
-
 button {
   background-color: #cc9900;
-  text-color: black;
   font-size: 85%;
-  margin: 5px;
-  text-align: center;
-  width: 25%;
-  height: 35px;
   border: none;
   border-radius: 10px;
 }
@@ -37,7 +25,6 @@ button {
   margin: 1px;
   padding-top: 100px;
   text-align: center;
-  background-color: black;
 }
 
 .App-logo {
@@ -45,23 +32,10 @@ button {
 }
 
 .App-header {
-  background-color: black;
-  z-index:2;
   text-align:center;
-  height: 150px;
-  padding: 20px;
   color:#cc9900;
 }
 
 .App-title {
   font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }

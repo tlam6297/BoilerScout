@@ -1,10 +1,9 @@
 import React from 'react';
-
+import './Home.css'
 const Home = () => {
 
     return (
         <div className="Home">
-            <header className="Header">
              <div className="SignUpButton">
              <button href="#" > 
               SIGN UP
@@ -15,12 +14,6 @@ const Home = () => {
              LOGIN
              </button>
              </div>
-             <div className="ForgotPLink">
-             <a href="#" >
-                Forgot Password? 
-             </a>
-             </div>
-            </header>
         </div>
     )
 
