@@ -7,11 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -25,17 +21,15 @@ public class BoilerScoutApplication {
     private SignUp su;
 
 	@RequestMapping(value = "/test")
-	public String test() {
-		return "this is a test!";
-	}
+    public List<Map<String, Object>> t() {
+        return su.test();
+    }
 
-	@RequestMapping(value = "/sign-up", method = RequestMethod.GET)
-	public List<Map<String, Object>> signUp() {
-		return su.test();
-	}
-
-
-
+	@RequestMapping(value = "/sign-up", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> signUp(@RequestBody Map<String, String> body) {
+        return su.signUp(body);
+    }
 
 	public static void main(String[] args) {
 		SpringApplication.run(BoilerScoutApplication.class, args);
