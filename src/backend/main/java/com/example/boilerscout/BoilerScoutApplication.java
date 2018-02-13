@@ -21,6 +21,8 @@ import java.util.Map;
 public class BoilerScoutApplication {
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
+    @Autowired
+    private SignUp su;
 
 	@RequestMapping(value = "/test")
 	public String test() {
@@ -29,8 +31,7 @@ public class BoilerScoutApplication {
 
 	@RequestMapping(value = "/sign-up", method = RequestMethod.GET)
 	public List<Map<String, Object>> signUp() {
-		SignUp su = new SignUp();
-		return su.signUp();
+		return su.test();
 	}
 
 
