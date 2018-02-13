@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { Router, Route, Switch } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import Home from './Home'
@@ -12,6 +12,7 @@ class App extends Component {
       userid: null,
     }
   }
+
   // Return user id if signed in, null if not
   signedIn = () => {
     return this.state.uid
@@ -30,7 +31,7 @@ class App extends Component {
 
   render() {
     return (
-      <div class="extended row header" className="App">
+      <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
