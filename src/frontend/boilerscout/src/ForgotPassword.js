@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { BrowserRouter as Router} from 'react-router-dom'
+import { BrowserRouter as Router, Link, Redirect} from 'react-router-dom'
 import "./ForgotPassword.css"
 
 class ForgotPassword extends Component {
@@ -8,7 +8,8 @@ class ForgotPassword extends Component {
     super(props);
 
     this.state = {
-      email: ""
+      email: "",
+      redirect: false,
     };
   }
 
@@ -29,7 +30,9 @@ class ForgotPassword extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    
+    this.setState({ redirect: true })
+
+    console.log("Button Clicked");
   }
 
   render() {
@@ -51,9 +54,13 @@ class ForgotPassword extends Component {
               bsSize="small"
               disabled={!this.validateForm()}
               type="submit">
-              Submit
+              Submit        
             </Button>
           </form>
+          
+          {this.state.redirect && (
+            <Redirect to={'/password-reset-sent'}/>   
+          )}
         </div>
       </Router>
     );
