@@ -4,11 +4,17 @@ import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 import './Home.css';
 import Login from './Login';
 import SignUp from './SignUp';
+import Buttons from './Buttons';
 
 class Home extends Component  {
     constructor(props) {
         super(props)
         this.handleClick = this.handleClick.bind(this);
+        this.state = {
+            showButtons: true,
+            showLogin: false,
+            showSignUp: false,
+        }
     }
     handleClick = (e) => {
             e.preventDefault();
@@ -17,18 +23,8 @@ class Home extends Component  {
 
     render () {
     return (
-        <div className="Home">
-             <div className="SignUpButton">
-                <Link to="/sign-up"><button>SIGN UP</button></Link>
-             </div>
-             <div className="LoginButton">
-                <Link to="/login"><button>LOGIN</button></Link>
-             </div>
-             <Route exact path="/sign-up" component={SignUp}/>
-             <Route exact path="/login" component={Login}/>       
-        </div>
-    );
-
+    this.state && this.state.showButtons ? <Buttons /> :<Login />
+    )
     }
 }
 
