@@ -9,8 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 import javax.sql.DataSource;
+import javax.validation.constraints.NotEmpty;
 import java.util.*;
 
 /**
@@ -41,7 +44,6 @@ public class SignUp {
     }
 
     public Map<String, Object> signUp(@RequestBody Map<String, String> body) {
-        //TODO JSON Valiation
 
         Map<String, Object> response = new HashMap<String, Object>();
         try {
@@ -55,9 +57,13 @@ public class SignUp {
                 throw new RuntimeException("[BadRequest] - User with this email already exists!");
             }
 
+            //Hash the password passed over SSL
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(password);
+
             //Insert a new user into database;
             jdbcTemplate.update("INSERT INTO users (user_id, password, email) VALUES (?, ?, ?)",
-                    newUserId, password, email);
+                    newUserId, hashedPassword, email);
             response.put("status", HttpStatus.OK);
             return response;
 

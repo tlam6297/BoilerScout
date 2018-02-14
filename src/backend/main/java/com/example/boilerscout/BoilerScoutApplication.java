@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,8 @@ public class BoilerScoutApplication {
 
 	@RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> signUp(@RequestBody Map<String, String> body) {
+    //TODO implement meaningful exception handling for badly formatted requests
+    public Map<String, Object> signUp(@Valid @RequestBody Map<String, String> body) {
         return su.signUp(body);
     }
 
