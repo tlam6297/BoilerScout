@@ -1,6 +1,9 @@
 import React from 'react'
-const SignUp = () => {
+import {Component} from 'react'
 
+class SignUp extends Component {
+
+    render () {
     return (
         <div className="SignUp">
              <div className="SignUpButton">
@@ -10,6 +13,7 @@ const SignUp = () => {
              </div>
         </div>
     )
+    }
 
 }
 

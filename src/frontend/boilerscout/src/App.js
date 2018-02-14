@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { Router, Route, Switch } from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import logo from './logo.svg'
 import './App.css'
 import Home from './Home'
+import Main from './Main'
+import SignUp from './SignUp'
 
 class App extends Component {
   constructor() {
@@ -15,7 +17,7 @@ class App extends Component {
 
   // Return user id if signed in, null if not
   signedIn = () => {
-    return this.state.uid
+    return false
   }
   // handle auth, set userid
   handleAuth = (user) => {
@@ -37,7 +39,7 @@ class App extends Component {
         </header>
         <div className="Container">
         <Home/>
-        </div>
+         </div>
       </div>
     )
   }
