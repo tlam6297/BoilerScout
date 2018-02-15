@@ -16,25 +16,25 @@ import java.util.Map;
 @RestController
 @SpringBootApplication
 public class BoilerScoutApplication {
-	private static final Logger log = LoggerFactory.getLogger(Application.class);
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired
     private SignUp su;
 
-	@RequestMapping(value = "/test")
+    @RequestMapping(value = "/test")
     public List<Map<String, Object>> t() {
         return su.test();
     }
 
-	@RequestMapping(value = "/sign-up", method = RequestMethod.POST)
+    @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     @ResponseBody
     //TODO implement meaningful exception handling for badly formatted requests
     public Map<String, Object> signUp(@Valid @RequestBody Map<String, String> body) {
         return su.signUp(body);
     }
 
-	public static void main(String[] args) {
-		SpringApplication.run(BoilerScoutApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BoilerScoutApplication.class, args);
+    }
 
 }

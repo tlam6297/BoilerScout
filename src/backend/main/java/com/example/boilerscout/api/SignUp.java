@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
-import javax.sql.DataSource;
-import javax.validation.constraints.NotEmpty;
 import java.util.*;
 
 /**
@@ -21,19 +19,13 @@ import java.util.*;
  */
 @Component
 public class SignUp {
-    private DataSource dataSource;
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
     public List<Map<String, Object>> test() {
         try {
-//            jdbcTemplate = new JdbcTemplate(dataSource);
             String sql = "SELECT * FROM users";
             List<Map<String, Object>> ls = jdbcTemplate.queryForList(sql);
             return ls;
@@ -53,7 +45,7 @@ public class SignUp {
 
             //Verify that no prior email exists
             List<Map<String, Object>> existingEmails = jdbcTemplate.queryForList("SELECT * FROM users WHERE email='" + email + "'");
-            if(existingEmails.size() != 0) {
+            if (existingEmails.size() != 0) {
                 throw new RuntimeException("[BadRequest] - User with this email already exists!");
             }
 
@@ -73,7 +65,6 @@ public class SignUp {
             throw new RuntimeException("[InternalServerError] - Error accessing data.");
         }
     }
-
 
 
 }
