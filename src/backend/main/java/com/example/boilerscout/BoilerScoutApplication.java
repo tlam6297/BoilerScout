@@ -1,5 +1,6 @@
 package com.example.boilerscout;
 
+import com.example.boilerscout.api.Login;
 import com.example.boilerscout.api.SignUp;
 import javafx.application.Application;
 import org.slf4j.Logger;
@@ -21,6 +22,9 @@ public class BoilerScoutApplication {
     @Autowired
     private SignUp su;
 
+    @Autowired
+    private Login l;
+
     @RequestMapping(value = "/test")
     public List<Map<String, Object>> t() {
         return su.test();
@@ -31,6 +35,13 @@ public class BoilerScoutApplication {
     //TODO implement meaningful exception handling for badly formatted requests
     public Map<String, Object> signUp(@Valid @RequestBody Map<String, String> body) {
         return su.signUp(body);
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> login(@Valid @RequestBody Map<String, String> body) {
+        return l.login(body);
+
     }
 
     public static void main(String[] args) {
