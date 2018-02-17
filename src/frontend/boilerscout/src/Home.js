@@ -23,7 +23,7 @@ class Home extends Component  {
 
     render () {
     return (
-    this.state && this.state.showButtons ? <Buttons /> :<Login />
+    this.state && this.state.showButtons ? <SignUp /> :<Login />
     )
     }
 }
