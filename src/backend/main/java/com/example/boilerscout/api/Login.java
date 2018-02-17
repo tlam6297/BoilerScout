@@ -55,7 +55,7 @@ public class Login {
             }
 
             //Grab user_id
-
+            String user_id = jdbcTemplate.queryForObject("SELECT user_id FROM users WHERE email='" + email + "'", String.class);
 
             //Otherwise generate new JWT access token
             String JWT = Jwts.builder()
@@ -64,7 +64,15 @@ public class Login {
                     .signWith(SignatureAlgorithm.HS512, SECRET)
                     .compact();
 
+            //Insert the token into the database
+            jdbcTemplate.update("UPDATE users SET authentication_token='" + JWT + "'");
+
+
+            //TODO add authorization to endpoints
+
+            response.put("user_id", user_id);
             response.put("token", JWT);
+
         } catch (DataAccessException ex) {
             log.info("Exception Message" + ex.getMessage());
             response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
