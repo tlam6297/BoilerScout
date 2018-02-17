@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -17,7 +17,7 @@ import java.util.*;
 /**
  * Created by terrylam on 2/10/18.
  */
-@Component
+@Service
 public class SignUp {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 

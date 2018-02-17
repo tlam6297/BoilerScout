@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.jwt.crypto.sign.SignatureVerifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -24,7 +23,7 @@ import java.util.Map;
  * Created by terrylam on 2/14/18.
  */
 
-@Component
+@Service
 public class Login {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     static final long EXPIRATIONTIME = 864_000_000; // 10 days
@@ -66,7 +65,6 @@ public class Login {
 
             //Insert the token into the database
             jdbcTemplate.update("UPDATE users SET authentication_token='" + JWT + "'");
-
 
             //TODO add authorization to endpoints
 
