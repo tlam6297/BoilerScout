@@ -18,8 +18,9 @@ class SignUp extends Component {
         const email = this.state.email.toLowerCase();
         const password = this.state.password;
         const regex = /^\S+@purdue.edu$/;
+        // Add password test
         const validEmail = regex.test(email);
-        
+        console.log("Good email?: " + validEmail);
         return (validEmail);
     }
 
@@ -42,6 +43,7 @@ class SignUp extends Component {
             <FormGroup controlId="signup" bsSize="large">
               <ControlLabel>Email:</ControlLabel>
               <FormControl
+                className="FormInput"
                 autoFocus
                 type="email"
                 value={this.state.email}
@@ -51,7 +53,7 @@ class SignUp extends Component {
             <FormGroup controlId="password" bsSize="large">
             <ControlLabel>Password:</ControlLabel>
              <FormControl
-                BGColor="white"
+                className="FormInput"
                 autoFocus
                 type="password"
                 value={this.state.password}

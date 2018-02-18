@@ -23,7 +23,8 @@ class Home extends Component  {
 
     render () {
     return (
-    this.state && this.state.showButtons ? <SignUp /> :<Login />
+    // Negate Buttons when SignUp or Login is picked
+    this.state && this.state.showButtons ? <Buttons/> :<Login />
     )
     }
 }
