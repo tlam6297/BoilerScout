@@ -18,7 +18,7 @@ import java.util.*;
  * Created by terrylam on 2/10/18.
  */
 @Service
-public class SignUp {
+public class SignUpController {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired

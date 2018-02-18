@@ -24,7 +24,7 @@ import java.util.Map;
  */
 
 @Service
-public class Login {
+public class LoginController {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     static final long EXPIRATIONTIME = 864_000_000; // 10 days
     static final String SECRET = "TerryLam";
