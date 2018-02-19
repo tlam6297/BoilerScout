@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import Home from './Home'
+import ForgotPassword from './ForgotPassword'
+import { BrowserRouter as Router, Link, Redirect, Route} from 'react-router-dom'
 import Main from './Main'
 
 class App extends Component {
@@ -32,11 +34,16 @@ class App extends Component {
   render() {
     return (
       <div class="extended row header" className="App">
+      {console.log("HERE: " + this.props.children)}
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <div className="Container">
-        <Home/>
+          <Router>
+            <Route path="/" component={Home}>
+              <Route path="forgot-password" component={ForgotPassword}></Route>
+            </Route>
+          </Router>
         </div>
       </div>
     )
