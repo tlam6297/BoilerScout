@@ -59,6 +59,7 @@ public class LoginController {
             //Otherwise generate new JWT access token
             String JWT = Jwts.builder()
                     .setSubject(email)
+                    .claim("userId", user_id)
                     .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                     .signWith(SignatureAlgorithm.HS512, SECRET)
                     .compact();
