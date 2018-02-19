@@ -64,7 +64,7 @@ public class LoginController {
                     .compact();
 
             //Insert the token into the database
-            jdbcTemplate.update("UPDATE users SET authentication_token='" + JWT + "'");
+            jdbcTemplate.update("UPDATE users SET authentication_token='" + JWT + "'" + " WHERE email ='" + email +"'");
 
             //TODO add authorization to endpoints
 
