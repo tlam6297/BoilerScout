@@ -26,8 +26,8 @@ public class BoilerScoutApplication {
     private LoginController loginController;
 
     @RequestMapping(value = "/test")
-    public List<Map<String, Object>> t() {
-        return signUpController.test();
+    public Map<String, Object> t(@RequestBody Map<String, String> body) {
+        return signUpController.test(body);
     }
 
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
