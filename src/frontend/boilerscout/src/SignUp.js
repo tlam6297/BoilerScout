@@ -23,9 +23,10 @@ class SignUp extends Component {
         
         const password = this.state.password;
         const repeatpass = this.state.repeatpassword;
-        
+
         // Password must have 8 characters, include an uppercase letter, lowercase letter, one special character  and a number
-        const validPassword = password.test("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}");
+        const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
+        const validPassword = passwordregex.test(password);
         const repeatPassword = (password == repeatpass);
         console.log("Password good?" + validPassword);
         console.log("Passwords match?" + repeatpass);
@@ -48,7 +49,7 @@ class SignUp extends Component {
         <div className="SignUp">
             <form onSubmit={this.handleSubmit}>
             <div className="Form">
-            <FormGroup controlId="signup" bsSize="large">
+            <FormGroup controlId="email" bsSize="large">
               <ControlLabel>Email:</ControlLabel>
               <FormControl
                 className="FormInput"
@@ -73,8 +74,8 @@ class SignUp extends Component {
              <FormControl
                 className="FormInput repeatPassword"
                 autoFocus
-                type="repeatpassword"
-                value={this.state.password}
+                type="password"
+                value={this.state.repeatpassword}
                 onChange={this.handleChange}
               />
               </FormGroup>
