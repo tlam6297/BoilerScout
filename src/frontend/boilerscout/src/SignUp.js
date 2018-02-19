@@ -10,18 +10,26 @@ class SignUp extends Component {
         this.state = {
             email: "",
             password: "",
+            repeatpassword: "",
             redirect: false,
         };
     }
 
     validateForm = () => {
         const email = this.state.email.toLowerCase();
-        const password = this.state.password;
         const regex = /^\S+@purdue.edu$/;
-        // Add password test
         const validEmail = regex.test(email);
         console.log("Good email?: " + validEmail);
-        return (validEmail);
+        
+        const password = this.state.password;
+        const repeatpass = this.state.repeatpassword;
+        
+        // Password must have 8 characters, include an uppercase letter, lowercase letter, one special character  and a number
+        const validPassword = password.test("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}");
+        const repeatPassword = (password == repeatpass);
+        console.log("Password good?" + validPassword);
+        console.log("Passwords match?" + repeatpass);
+        return (validEmail && validPassword && repeatPassword);
     }
 
     handleChange = (event) => {
@@ -53,9 +61,19 @@ class SignUp extends Component {
             <FormGroup controlId="password" bsSize="large">
             <ControlLabel>Password:</ControlLabel>
              <FormControl
-                className="FormInput"
+                className="FormInput Password"
                 autoFocus
                 type="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+            <ControlLabel>Repeat Password:</ControlLabel>
+             <FormControl
+                className="FormInput repeatPassword"
+                autoFocus
+                type="repeatpassword"
                 value={this.state.password}
                 onChange={this.handleChange}
               />
