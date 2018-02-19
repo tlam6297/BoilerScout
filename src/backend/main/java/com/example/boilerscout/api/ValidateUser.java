@@ -22,7 +22,6 @@ public class ValidateUser {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     /**
-     *
      * Takes in a JWT and parses it, looking for its userId claim. It matches
      * with the given userId to see if the token is valid and assigned
      *
@@ -30,6 +29,7 @@ public class ValidateUser {
      * @param userId
      * @return
      */
+    
     public static boolean validateToken(String jwt, String userId) {
         try {
             Claims claims = Jwts.parser()
