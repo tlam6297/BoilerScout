@@ -5,6 +5,7 @@ import './Home.css';
 import Login from './Login';
 import SignUp from './SignUp';
 import Buttons from './Buttons';
+import ResendConfirmation from './ResendConfirmation';
 
 class Home extends Component  {
     constructor(props) {

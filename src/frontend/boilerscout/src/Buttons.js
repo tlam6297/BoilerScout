@@ -10,10 +10,24 @@ class Buttons extends Component {
         return (
         <div className="Buttons">
             <div className="SignUpButton">
-               <Link to="/sign-up"><button>SIGN UP</button></Link>
+            <Route render={({ history}) => (
+                <button
+                    type='button'
+                    onClick={() => { history.push('/sign-up') }}
+                >
+                SIGN UP
+                </button>
+            )} />
             </div>
             <div className="LoginButton">
-               <Link to="/login"><button onClick={this.loginClick}>LOGIN</button></Link>
+            <Route render={({ history}) => (
+                <button
+                    type='button'
+                    onClick={() => { history.push('/login') }}
+                >
+                LOGIN
+                </button>
+            )} />
             </div>
             <Route exact path="/sign-up" component={SignUp}/>
             <Route exact path="/login" component={Login}/>        
