@@ -6,6 +6,7 @@ import Login from './Login';
 import SignUp from './SignUp';
 import Buttons from './Buttons';
 import ResendConfirmation from './ResendConfirmation';
+import Scout from './Scout';
 
 class Home extends Component  {
     constructor(props) {
@@ -25,7 +26,7 @@ class Home extends Component  {
     render () {
     return (
     // Negate Buttons when SignUp or Login is picked
-    this.state && this.state.showButtons ? <Buttons/> :<Login />
+    this.state && this.state.showButtons ? <Scout/> :<Login />
     )
     }
 }
