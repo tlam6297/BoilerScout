@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,8 +25,8 @@ public class BoilerScoutApplication {
     private LoginController loginController;
 
     @RequestMapping(value = "/test")
-    public List<Map<String, Object>> t() {
-        return signUpController.test();
+    public Map<String, Object> t(@RequestBody Map<String, String> body) {
+        return signUpController.test(body);
     }
 
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)

@@ -1,6 +1,5 @@
 package com.example.boilerscout.api;
 
-import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import javafx.application.Application;
@@ -43,13 +42,13 @@ public class LoginController {
 
             //Check if email exists
             Integer existingEmail = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users WHERE email='" + email + "'", Integer.class);
-            if(existingEmail <= 0) {
+            if (existingEmail <= 0) {
                 throw new RuntimeException("[BadRequest] - No user associated with this email address!");
             }
 
             //Check if password matches
             String dbPassword = jdbcTemplate.queryForObject("SELECT password FROM users WHERE email='" + email + "'", String.class);
-            if(!passwordEncoder.matches(password, dbPassword)) {
+            if (!passwordEncoder.matches(password, dbPassword)) {
                 throw new RuntimeException("[BadRequest] - Incorrect password provided!");
             }
 
@@ -65,7 +64,7 @@ public class LoginController {
                     .compact();
 
             //Insert the token into the database
-            jdbcTemplate.update("UPDATE users SET authentication_token='" + JWT + "'" + " WHERE email ='" + email +"'");
+            jdbcTemplate.update("UPDATE users SET authentication_token='" + JWT + "'" + " WHERE email ='" + email + "'");
 
             //TODO add authorization to endpoints
 

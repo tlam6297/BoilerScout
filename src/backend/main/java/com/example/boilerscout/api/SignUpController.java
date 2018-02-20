@@ -1,5 +1,7 @@
 package com.example.boilerscout.api;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
+import javax.xml.bind.DatatypeConverter;
 import java.util.*;
 
 /**
@@ -24,15 +27,16 @@ public class SignUpController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Map<String, Object>> test() {
-        try {
-            String sql = "SELECT * FROM users";
-            List<Map<String, Object>> ls = jdbcTemplate.queryForList(sql);
-            return ls;
-        } catch (DataAccessException ex) {
-            log.info("Exception Message" + ex.getMessage());
-            throw new RuntimeException("[InternalServerError] - Error accessing data.");
-        }
+    public Map<String, Object> test(@RequestBody Map<String, String> body) {
+        Map<String, Object> response = new HashMap<String, Object>();
+        String token = body.get("token");
+        Claims claims = Jwts.parser()
+                .setSigningKey(DatatypeConverter.parseBase64Binary("TerryLam"))
+                .parseClaimsJws(token).getBody();
+        response.put("user_id", claims.get("userId"));
+        response.put("expiration", claims.getExpiration());
+        response.put("subject", claims.getSubject());
+        return response;
     }
 
     public Map<String, Object> signUp(@RequestBody Map<String, String> body) {
