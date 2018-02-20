@@ -29,14 +29,14 @@ public class ValidateUser {
      * @param userId
      * @return
      */
-    
+
     public static boolean validateToken(String jwt, String userId) {
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(DatatypeConverter.parseBase64Binary("TerryLam"))
                     .parseClaimsJws(jwt).getBody();
 
-            Object jwtUserId = claims.get("userId");
+            String jwtUserId = claims.get("userId").toString();
             if (!jwtUserId.equals(userId)) {
                 return false;
             }
