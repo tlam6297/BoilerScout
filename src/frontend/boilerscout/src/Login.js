@@ -4,14 +4,14 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 class Login extends Component {
   constructor (props) {
-      super(props);
+    super(props);
 
-      this.state = {
-          email: "",
-          password: "",
-          repeatpassword: "",
-          redirect: false,
-      };
+    this.state = {
+      email: "",
+      password: "",
+      repeatpassword: "",
+      redirect: false,
+    };
   }
 
   validateForm = () => {
@@ -45,49 +45,48 @@ class Login extends Component {
   }
 
   render() {
-      return (
-          <div className="Login">
-            <form onSubmit={this.handleSubmit}>
-              <div className="Form">
-                <FormGroup controlId="email" bsSize="large">
-                  <ControlLabel>Email:</ControlLabel>
-                  <FormControl
-                    className="FormInput"
-                    autoFocus
-                    type="email"
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                  />
-                </FormGroup>
-                <FormGroup controlId="password" bsSize="large">
-                <ControlLabel>Password:</ControlLabel>
-                  <FormControl
-                    className="FormInput Password"
-                    autoFocus
-                    type="password"
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                  />
-                </FormGroup>
-                <Button
-                  block
-                  bsSize="small"
-                  disabled={!this.validateForm()}
-                  type="submit">
-                  SUBMIT        
-                </Button>
-              </div>
-            </form>
-            
-            <Link to="/sign-up">Not a member yet?</Link>
-            <p></p>
-            <Link to="/forgot-password">Forgot Password?</Link>
-            <p></p>
-            <Link to="/scout"> Scout</Link>
+    return (
+      <div className="Login">
+        <form onSubmit={this.handleSubmit}>
+          <div className="Form">
+            <FormGroup controlId="email" bsSize="large">
+              <ControlLabel>Email:</ControlLabel>
+              <FormControl
+                className="FormInput"
+                autoFocus
+                type="email"
+                value={this.state.email}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup controlId="password" bsSize="large">
+            <ControlLabel>Password:</ControlLabel>
+              <FormControl
+                className="FormInput Password"
+                autoFocus
+                type="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <Button
+              block
+              bsSize="small"
+              disabled={!this.validateForm()}
+              type="submit">
+              SUBMIT        
+            </Button>
           </div>
-      )
+        </form>
+        
+        <Link to="/sign-up">Not a member yet?</Link>
+        <p></p>
+        <Link to="/forgot-password">Forgot Password?</Link>
+        <p></p>
+        <Link to="/scout"> Scout</Link>
+      </div>
+    )
   }
-
 }
 
 export default Login;

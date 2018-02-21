@@ -4,57 +4,57 @@ import { Button, FormGroup, FormControl, ControlLabel, Navbar, Nav, NavItem } fr
 import './NavBar.css'
 
 class TopNavBar extends Component {
-    constructor (props) {
-        super(props);
+  constructor (props) {
+    super(props);
 
-        this.state = {
-            email: "",
-            password: "",
-            repeatpassword: "",
-            redirect: false,
-        };
+    this.state = {
+      email: "",
+      password: "",
+      repeatpassword: "",
+      redirect: false,
+    };
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.setState({ redirect: true })
+  }
+
+  render () {
+    const style = {
+      display: "inline",
+      color: "red",
+      width: "60px",
+      margin: 0,
+      padding: 0,
     }
 
-    handleChange = (event) => {
-        this.setState({
-          [event.target.id]: event.target.value
-        });
-    }
-
-    handleSubmit = (event) => {
-        event.preventDefault();
-        this.setState({ redirect: true })
-      }
-
-    render () {
-        const style = {
-            display: "inline",
-            color: "red",
-            width: "60px",
-            margin: 0,
-            padding: 0,
-        }
     return (
-        <div className="navbar" class="navbar" style={style}>
-            <Navbar>
-                <Navbar.Header>
-                    <Navbar.Brand>
-                    <a href="#home">BoilerScout</a>
-                    </Navbar.Brand>
-                </Navbar.Header>
-                <Nav>
-                    <NavItem eventKey={1} href="#">
-                    Settings
-                    </NavItem>
-                    <NavItem eventKey={2} href="#">
-                    Profile
-                    </NavItem>
-                </Nav>
-            </Navbar>
-        </div>
-        )
-    }
-
+      <div className="navbar" class="navbar" style={style}>
+        <Navbar>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <a href="#home">BoilerScout</a>
+            </Navbar.Brand>
+          </Navbar.Header>
+          <Nav>
+            <NavItem eventKey={1} href="#">
+              Settings
+            </NavItem>
+            <NavItem eventKey={2} href="#">
+              Profile
+            </NavItem>
+          </Nav>
+        </Navbar>
+      </div>
+    )
+  }
 }
 
-    export default TopNavBar;
+export default TopNavBar;

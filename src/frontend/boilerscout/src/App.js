@@ -11,20 +11,24 @@ class App extends Component {
 
     this.state = {
       userid: null,
+      signedIn: false,
     }
   }
 
   // Return user id if signed in, null if not
   signedIn = () => {
-    return false
+    return this.state.signedIn
   }
+
   // handle auth, set userid
   handleAuth = (user) => {
     localStorage.setItem('userid', user.uid)
+
     this.setState( 
       {uid: user.uid}
     )
   }
+
   // handle unauth, remove userid
   handleUnauth = () => {
     localStorage.removeItem('uid')
@@ -34,8 +38,8 @@ class App extends Component {
     return (
       <div className="App">
         <div className="Container">
-        <Home/>
-         </div>
+          <Home/>
+        </div>
       </div>
     )
   }

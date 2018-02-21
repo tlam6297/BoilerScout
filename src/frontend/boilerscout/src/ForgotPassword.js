@@ -39,8 +39,8 @@ class ForgotPassword extends Component {
 
   render() {
     return (
-        <div className="ForgotPassword" class="fg">
-          <form onSubmit={this.handleSubmit}>
+      <div className="ForgotPassword" class="fg">
+        <form onSubmit={this.handleSubmit}>
           <div className="Form" class="Form">
             <FormGroup controlId="email" bsSize="large">
               <ControlLabel>Email:</ControlLabel>
@@ -52,7 +52,7 @@ class ForgotPassword extends Component {
                 onChange={this.handleChange}
               />
             </FormGroup>
-            </div>
+          </div>
             <Button
               block
               bsSize="small"
@@ -60,12 +60,12 @@ class ForgotPassword extends Component {
               type="submit">
               Submit        
             </Button>
-          </form>
-          <Link to="/login">Return to Login</Link>
-          {this.state.redirect && (
-            <Redirect to={'/password-reset-sent'}/>   
-          )}
-        </div>
+        </form>
+        <Link to="/login">Return to Login</Link>
+        {this.state.redirect && (
+          <Redirect to={'/password-reset-sent'}/>   
+        )}
+      </div>
     );
   }
 }
