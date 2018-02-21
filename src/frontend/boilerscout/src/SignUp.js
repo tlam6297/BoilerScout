@@ -69,7 +69,7 @@ class SignUp extends Component {
                 onChange={this.handleChange}
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup controlId="repeatpassword" bsSize="large">
             <ControlLabel>Repeat Password:</ControlLabel>
              <FormControl
                 className="FormInput repeatPassword"
