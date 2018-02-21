@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { BrowserRouter as Router, Link, Redirect} from 'react-router-dom'
+import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import './SignUp.css'
 
@@ -88,6 +88,7 @@ class SignUp extends Component {
               SUBMIT        
             </Button>
             </form>
+            <Link to="/login">Already a member?</Link>
         </div>
     )
     }
