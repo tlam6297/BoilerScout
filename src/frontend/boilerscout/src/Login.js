@@ -24,13 +24,13 @@ class Login extends Component {
     const repeatpass = this.state.repeatpassword;
 
     // Password must have 8 characters, include an uppercase letter, lowercase letter, one special character  and a number
-    const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
-    const validPassword = passwordregex.test(password);
-    const repeatPassword = (password == repeatpass);
-    console.log("Password good?" + validPassword);
-    console.log("Passwords match?" + repeatpass);
+    //const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
+    //const validPassword = passwordregex.test(password);
+    //const repeatPassword = (password == repeatpass);
+    //console.log("Password good?" + validPassword);
+    //console.log("Passwords match?" + repeatpass);
 
-    return (validEmail && validPassword && repeatPassword);
+    return (validEmail);
   }
 
   handleChange = (event) => {
