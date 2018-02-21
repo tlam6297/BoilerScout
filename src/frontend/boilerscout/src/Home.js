@@ -31,6 +31,7 @@ class Home extends Component  {
     render () {
     return (
         <div className="Home">
+            <NavBar/>
                 <Link to="/">
                 <img
                     src={logo} 
