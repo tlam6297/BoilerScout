@@ -1,0 +1,9 @@
+.left {    
+    width: 55%;
+    float: left;
+}
+
+.right {
+    float: right;
+    color: wheat;
+}
