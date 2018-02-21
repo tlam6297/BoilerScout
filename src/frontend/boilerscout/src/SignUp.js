@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel } from'react-bootstrap'
 import './SignUp.css'
 
 class SignUp extends Component {

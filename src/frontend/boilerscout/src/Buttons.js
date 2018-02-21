@@ -5,7 +5,14 @@ import Login from './Login';
 import SignUp from './SignUp';
 
 class Buttons extends Component {
-
+    constructor(props) {
+        super(props)
+        this.state = {
+            showButtons: true,
+            showLogin: false,
+            showSignUp: false,
+        }
+    }
     render() {
         return (
         <div className="Buttons">
