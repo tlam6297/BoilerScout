@@ -5,11 +5,6 @@
   font-family: Oxygen, Helvetica, Arial, sans-serif;
 }
 
-h1 {
-  padding-top: 0.2rem;
-  padding-bottom: 0.2rem;
-}
-
 .App {
   padding: 0.5rem;
 }
@@ -29,11 +24,6 @@ button {
 
 .App-logo {
   -webkit-margin-bottom-collapse: 20px;
-}
-
-.App-header {
-  text-align:center;
-  color:#cc9900;
 }
 
 .App-title {
