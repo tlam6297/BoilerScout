@@ -3,6 +3,8 @@ import { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import './Scout.css'
+
+
 class Scout extends Component {
     constructor(props, context) {
         super(props, context);

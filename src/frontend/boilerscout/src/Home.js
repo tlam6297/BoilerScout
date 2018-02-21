@@ -12,6 +12,7 @@ import ResendConfirmation from './ResendConfirmation';
 import Scout from './Scout'
 import AdvancedFilters from './AdvancedFilters'
 import UpdatePassword from './UpdatePassword'
+import NavBar from './TopNavBar'
 
 class Home extends Component  {
     constructor(props) {
@@ -39,14 +40,14 @@ class Home extends Component  {
                 </Link>
             )} />
         <Switch>
-        <Route exact path="/" component={Buttons} />
-        <Route path="/sign-up" component={SignUp} />
-        <Route path="/login" component={Login} />
-        <Route path="/forgot-password" component={ForgotPassword} />
-        <Route path="/password-reset-sent" component={PasswordSent} />
-        <Route path="/advanced-filters" component={AdvancedFilters} />
-        <Route path="/update-password" component={UpdatePassword} />
-        <Route path="/scout" component={Scout} />
+            <Route exact path="/" component={Buttons} />
+            <Route path="/sign-up" component={SignUp} />
+            <Route path="/login" component={Login} />
+            <Route path="/forgot-password" component={ForgotPassword} />
+            <Route path="/password-reset-sent" component={PasswordSent} />
+            <Route path="/advanced-filters" component={AdvancedFilters} />
+            <Route path="/update-password" component={UpdatePassword} />
+            <Route path="/scout" component={Scout} />
       </Switch>
       </div>
     )
