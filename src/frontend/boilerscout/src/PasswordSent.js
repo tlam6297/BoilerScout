@@ -8,4 +8,4 @@ class PasswordSent extends Component {
     }
 }
 
-export default PasswordSent
+export default PasswordSent;

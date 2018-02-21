@@ -6,6 +6,7 @@ import Login from './Login';
 import SignUp from './SignUp';
 import Buttons from './Buttons';
 import ForgotPassword from './ForgotPassword'
+import PasswordSent from './PasswordSent'
 import ResendConfirmation from './ResendConfirmation';
 
 class Home extends Component  {
@@ -29,6 +30,7 @@ class Home extends Component  {
         <Route path="/sign-up" component={SignUp} />
         <Route path="/login" component={Login} />
         <Route path="/forgot-password" component={ForgotPassword} />
+        <Route path="/password-sent" component={PasswordSent} />
       </Switch>
     )
     }
