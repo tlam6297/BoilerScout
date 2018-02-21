@@ -1,9 +1,15 @@
 .left {    
-    width: 55%;
+    margin-top: 20px;
+    margin-left: 37%;
     float: left;
+    color: #cc9900;
 }
 
 .right {
-    float: right;
-    color: wheat;
+    float: left;
+    color: #cc9900;
+}
+
+.AFForm {
+    width: 55%;
 }

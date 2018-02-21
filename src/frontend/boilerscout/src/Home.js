@@ -30,13 +30,13 @@ class Home extends Component  {
     render () {
     return (
         <div className="Home">
-        <Route render={({ history}) => (
+                <Link to="/">
                 <img
                     src={logo} 
                     className="Home-logo" 
-                    alt="logo"
-                    onClick={() => { history.push('/') }}
+                    alt="logo"                
                 />
+                </Link>
             )} />
         <Switch>
         <Route exact path="/" component={Buttons} />

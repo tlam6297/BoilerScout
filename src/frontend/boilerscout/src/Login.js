@@ -82,6 +82,8 @@ class Login extends Component {
             <Link to="/sign-up">Not a member yet?</Link>
             <p></p>
             <Link to="/forgot-password">Forgot Password?</Link>
+            <p></p>
+            <Link to="/scout"> Scout</Link>
           </div>
       )
   }

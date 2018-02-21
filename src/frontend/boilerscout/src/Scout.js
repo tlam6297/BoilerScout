@@ -2,6 +2,7 @@ import React from 'react'
 import { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import './Scout.css'
 class Scout extends Component {
     constructor(props, context) {
         super(props, context);
@@ -21,7 +22,7 @@ class Scout extends Component {
         <div className="Scout">
             <FormGroup controlId="search" bsSize="large">
               <FormControl
-                className="FormInput"
+                className="FormInput ScoutForm"
                 autoFocus
                 type="text"
                 value={this.state.searchinput}
@@ -29,16 +30,27 @@ class Scout extends Component {
                 onChange={this.handleChange}
               />
             </FormGroup>
+            <p></p>
             <div className="Submit">
             <Route render={({ history}) => (
                 <button
+                    className='scoutbutton'
                     type='button'
                     onClick={() => { history.push('/search') }}
                 >
                 SCOUT
                 </button>
             )} />
-            </div>   
+            <p></p>
+            </div>
+              <Route render={({ history}) => (
+                <button
+                    type='button'
+                    onClick={() => { history.push('/advanced-filters') }}
+                >
+                ADVANCED FILTERS
+                </button>
+            )} />  
        </div>
         );
         }

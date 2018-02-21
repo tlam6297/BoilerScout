@@ -27,21 +27,14 @@ class AdvancedFilters extends Component {
       return (
           <div className="AdvancedFilters">
             <div className="Form" class="button top">
-              <form onSubmit={this.handleSubmit}>
-              <Button
-                  block
-                  bsSize="small"
-                  type="submit">
-                  SCOUT        
-                </Button>
-              </form>
+            <Link to="/scout"> Go Back To Scout</Link>
             </div>
             <div className="Form" class="left"> 
             <form>
                 <FormGroup controlId="first-name" bsSize="large">
                   <ControlLabel>First Name:</ControlLabel>
                   <FormControl
-                    className="FormInput"
+                    className="FormInput AFForm"
                     autoFocus
                     value={this.state.firstName}
                   />
@@ -49,7 +42,7 @@ class AdvancedFilters extends Component {
                 <FormGroup controlId="last-name" bsSize="large">
                   <ControlLabel>Last Name:</ControlLabel>
                   <FormControl
-                    className="FormInput"
+                    className="FormInput AFForm"
                     autoFocus
                     value={this.state.lastName}
                   />
@@ -57,7 +50,7 @@ class AdvancedFilters extends Component {
                 <FormGroup controlId="user-name" bsSize="large">
                   <ControlLabel>Username:</ControlLabel>
                   <FormControl
-                    className="FormInput"
+                    className="FormInput AFForm"
                     autoFocus
                     value={this.state.username}
                   />
