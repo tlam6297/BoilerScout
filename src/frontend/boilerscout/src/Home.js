@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Redirect, Switch} from 'react-router-dom';
 import './Home.css';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -19,13 +19,15 @@ class Home extends Component  {
     }
     handleClick = (e) => {
             e.preventDefault();
-            console.log("WOW")
     }
 
     render () {
     return (
-    // Negate Buttons when SignUp or Login is picked
-    this.state && this.state.showButtons ? <Buttons/> :<Login />
+        <Switch>
+        <Route exact path="/" component={Buttons} />
+        <Route path="/sign-up" component={SignUp} />
+        <Route path="/login" component={Login} />
+      </Switch>
     )
     }
 }
