@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar, Nav, NavItem } from "react-bootstrap";
-import './SignUp.css'
+import './NavBar.css'
 
 class TopNavBar extends Component {
     constructor (props) {
@@ -27,24 +27,34 @@ class TopNavBar extends Component {
       }
 
     render () {
-    return (
-    <Navbar>
-        <Navbar.Header>
-            <Navbar.Brand>
-            <a href="#home">BoilerScout</a>
-            </Navbar.Brand>
-        </Navbar.Header>
-        <Nav>
-            <NavItem eventKey={1} href="#">
-            Settings
-            </NavItem>
-            <NavItem eventKey={2} href="#">
-            Profile
-            </NavItem>
-        </Nav>
-    </Navbar> )
+        const style = {
+            display: "inline",
+            color: "red",
+            width: "60px",
+            margin: 0,
+            padding: 0,
         }
-
+    return (
+        <div className="navbar" class="navbar" style={style}>
+            <Navbar>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                    <a href="#home">BoilerScout</a>
+                    </Navbar.Brand>
+                </Navbar.Header>
+                <Nav>
+                    <NavItem eventKey={1} href="#">
+                    Settings
+                    </NavItem>
+                    <NavItem eventKey={2} href="#">
+                    Profile
+                    </NavItem>
+                </Nav>
+            </Navbar>
+        </div>
+        )
     }
+
+}
 
     export default TopNavBar;
