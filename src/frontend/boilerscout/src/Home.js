@@ -8,6 +8,8 @@ import Buttons from './Buttons';
 import ForgotPassword from './ForgotPassword'
 import PasswordSent from './PasswordSent'
 import ResendConfirmation from './ResendConfirmation';
+import Scout from './Scout'
+import AdvancedFilters from './AdvancedFilters'
 
 class Home extends Component  {
     constructor(props) {
@@ -31,6 +33,8 @@ class Home extends Component  {
         <Route path="/login" component={Login} />
         <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/password-sent" component={PasswordSent} />
+        <Route path="/advanced-filters" component={AdvancedFilters} />
+        <Route path="/scout" component={Scout} />
       </Switch>
     )
     }
