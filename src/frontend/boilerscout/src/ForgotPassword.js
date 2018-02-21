@@ -39,10 +39,9 @@ class ForgotPassword extends Component {
 
   render() {
     return (
-      <Router>
-        <div className="ForgotPassword">
+        <div className="ForgotPassword" class="fg">
           <form onSubmit={this.handleSubmit}>
-          <div className="Form">
+          <div className="Form" class="Form">
             <FormGroup controlId="email" bsSize="large">
               <ControlLabel>Email:</ControlLabel>
               <FormControl
@@ -67,7 +66,6 @@ class ForgotPassword extends Component {
             <Redirect to={'/password-reset-sent'}/>   
           )}
         </div>
-      </Router>
     );
   }
 }
