@@ -5,6 +5,7 @@ import './Home.css';
 import Login from './Login';
 import SignUp from './SignUp';
 import Buttons from './Buttons';
+import ForgotPassword from './ForgotPassword'
 import ResendConfirmation from './ResendConfirmation';
 
 class Home extends Component  {
@@ -27,6 +28,7 @@ class Home extends Component  {
         <Route exact path="/" component={Buttons} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/login" component={Login} />
+        <Route path="/forgot-password" component={ForgotPassword} />
       </Switch>
     )
     }
