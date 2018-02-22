@@ -55,6 +55,7 @@ class ForgotPassword extends Component {
               SUBMIT        
             </Button>
         </form>
+        <Link to="/login">Return to Login</Link>
         {this.state.redirect && (
           <Redirect to={'/confirmation-resent'}/>   
         )}
