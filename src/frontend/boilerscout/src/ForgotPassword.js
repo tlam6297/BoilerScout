@@ -33,8 +33,6 @@ class ForgotPassword extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ redirect: true })
-
-    console.log("Button Clicked");
   }
 
   render() {
@@ -58,7 +56,7 @@ class ForgotPassword extends Component {
               bsSize="small"
               disabled={!this.validateForm()}
               type="submit">
-              Submit        
+              SUBMIT        
             </Button>
         </form>
         <Link to="/login">Return to Login</Link>
