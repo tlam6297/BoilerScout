@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import './Scout.css'
+import TopNavBar from './TopNavBar'
 
 
 class Scout extends Component {
@@ -23,6 +24,7 @@ class Scout extends Component {
   render() {
     return (
       <div className="Scout">
+        <TopNavBar/>
         <FormGroup controlId="search" bsSize="large">
           <FormControl
             className="FormInput ScoutForm"

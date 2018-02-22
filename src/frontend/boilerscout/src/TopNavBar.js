@@ -28,8 +28,6 @@ class TopNavBar extends Component {
 
   render () {
     const style = {
-      display: "inline",
-      color: "red",
       width: "60px",
       margin: 0,
       padding: 0,
@@ -37,21 +35,13 @@ class TopNavBar extends Component {
 
     return (
       <div className="navbar" class="navbar" style={style}>
-        <Navbar>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#home">BoilerScout</a>
-            </Navbar.Brand>
-          </Navbar.Header>
-          <Nav>
-            <NavItem eventKey={1} href="#">
-              Settings
-            </NavItem>
-            <NavItem eventKey={2} href="#">
-              Profile
-            </NavItem>
-          </Nav>
-        </Navbar>
+        <nav className="navbar navbar-default">
+            <form className="navbar-form navbar-left">
+             <Link to="/">Home</Link>
+             <Link to="/settings">Settings</Link>
+             <Link to="/profile">Profile</Link>
+            </form>
+      </nav>
       </div>
     )
   }
