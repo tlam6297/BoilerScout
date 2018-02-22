@@ -25,7 +25,8 @@ class Login extends Component {
     const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
     const validPassword = passwordregex.test(password);
     console.log("Password good?" + validPassword);
-    return (validEmail);
+    
+    return (validEmail & validPassword  );
   }
 
   handleChange = (event) => {
