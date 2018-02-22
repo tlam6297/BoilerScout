@@ -50,6 +50,7 @@ class Home extends Component  {
           <Route path="/advanced-filters" component={AdvancedFilters} />
           <Route path="/update-password" component={UpdatePassword} />
           <Route path="/scout" component={Scout} />
+          <Route path="/resend-confirmation" component={ResendConfirmation} />
         </Switch>
       </div>
     )

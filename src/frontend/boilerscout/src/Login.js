@@ -78,7 +78,7 @@ class Login extends Component {
         <p></p>
         <Link to="/forgot-password">Forgot Password?</Link>
         <p></p>
-        <Link to="/login">Resend Confirmation?</Link>
+        <Link to="/resend-confirmation">Resend Confirmation?</Link>
         <p></p>
         <Link to="/scout"> Scout</Link>
       </div>
