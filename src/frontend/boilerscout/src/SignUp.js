@@ -21,15 +21,16 @@ class SignUp extends Component {
     const validEmail = regex.test(email);
     console.log("Good email?: " + validEmail);
     
-    const password = this.state.password;
-    const repeatpass = this.state.repeatpassword;
-
     // Password must have 8 characters, include an uppercase letter, lowercase letter, one special character  and a number
+    const password = this.state.password;
     const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
     const validPassword = passwordregex.test(password);
-    const repeatPassword = (password == repeatpass);
     console.log("Password good?" + validPassword);
-    console.log("Passwords match?" + repeatpass);
+
+    const repeatpass = this.state.repeatpassword;
+    const repeatPassword = (password == repeatpass);
+    console.log("Passwords match?" + repeatPassword);
+
 
     return (validEmail && validPassword && repeatPassword);
   }
