@@ -28,7 +28,7 @@ class TopNavBar extends Component {
 
   render () {
     const style = {
-      width: "60px",
+      width: "400px",
       margin: 0,
       padding: 0,
     }
@@ -40,6 +40,7 @@ class TopNavBar extends Component {
              <Link to="/">Home</Link>
              <Link to="/settings">Settings</Link>
              <Link to="/profile">Profile</Link>
+             <Link to="/update-password">Update Password</Link>
             </form>
       </nav>
       </div>

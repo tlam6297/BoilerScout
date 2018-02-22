@@ -25,12 +25,9 @@ class SignUp extends Component {
     const password = this.state.password;
     const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
     const validPassword = passwordregex.test(password);
-    console.log("Password good?" + validPassword);
 
     const repeatpass = this.state.repeatpassword;
     const repeatPassword = (password == repeatpass);
-    console.log("Passwords match?" + repeatPassword);
-
 
     return (validEmail && validPassword && repeatPassword);
   }
@@ -91,6 +88,8 @@ class SignUp extends Component {
           </Button>
         </form>
         <Link to="/login">Already a member?</Link>
+        <p></p>
+        <Link to="/resend-confirmation">Resend Confirmation?</Link>
       </div>
     )
   }

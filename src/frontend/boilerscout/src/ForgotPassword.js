@@ -37,7 +37,7 @@ class ForgotPassword extends Component {
 
   render() {
     return (
-      <div className="ForgotPassword" class="fg">
+      <div className="ForgotPassword">
         <form onSubmit={this.handleSubmit}>
           <div className="Form" class="Form">
             <FormGroup controlId="email" bsSize="large">

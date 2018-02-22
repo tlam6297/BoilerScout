@@ -25,7 +25,7 @@ class Login extends Component {
     const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
     const validPassword = passwordregex.test(password);
     console.log("Password good?" + validPassword);
-    
+
     return (validEmail & validPassword  );
   }
 
@@ -78,8 +78,6 @@ class Login extends Component {
         <Link to="/sign-up">Not a member yet?</Link>
         <p></p>
         <Link to="/forgot-password">Forgot Password?</Link>
-        <p></p>
-        <Link to="/resend-confirmation">Resend Confirmation?</Link>
         <p></p>
         <Link to="/scout"> Scout</Link>
       </div>

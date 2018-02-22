@@ -23,36 +23,47 @@ class AdvancedFilters extends Component {
     this.setState({ redirect: true })
   }
 
+  handleChange = (event) => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
   render() {
     return (
       <div className="AdvancedFilters">
         <div className="Form" class="button top">
-          <Link to="/scout"> Go Back To Scout</Link>
+          <Button>
+            Scout
+          </Button>
         </div>
         <div className="Form" class="left"> 
           <form>
-            <FormGroup controlId="first-name" bsSize="large">
+            <FormGroup controlId="firstName" bsSize="large">
               <ControlLabel>First Name:</ControlLabel>
               <FormControl
                 className="FormInput AFForm"
                 autoFocus
                 value={this.state.firstName}
+                onChange={this.handleChange}
               />
             </FormGroup>
-            <FormGroup controlId="last-name" bsSize="large">
+            <FormGroup controlId="lastName" bsSize="large">
               <ControlLabel>Last Name:</ControlLabel>
               <FormControl
                 className="FormInput AFForm"
                 autoFocus
                 value={this.state.lastName}
+                onChange={this.handleChange}
               />
             </FormGroup>
-            <FormGroup controlId="user-name" bsSize="large">
+            <FormGroup controlId="username" bsSize="large">
               <ControlLabel>Username:</ControlLabel>
               <FormControl
                 className="FormInput AFForm"
                 autoFocus
                 value={this.state.username}
+                onChange={this.handleChange}
               />
             </FormGroup>
           </form>
