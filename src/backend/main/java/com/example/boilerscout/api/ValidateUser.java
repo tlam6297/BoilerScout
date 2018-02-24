@@ -15,7 +15,7 @@ import java.util.Date;
  */
 
 /**
- * This is a utility class written to validate different aspects of a user
+ * This is a utility class written to validate different aspects of a user and their JWTs
  */
 
 
@@ -26,9 +26,9 @@ public class ValidateUser {
      * Takes in a JWT and parses it, looking for its userId claim. It matches
      * with the given userId to see if the token is valid and assigned
      *
-     * @param jwt
-     * @param userId
-     * @return
+     * @param jwt - JWT token
+     * @param userId - A user's UUID
+     * @return - true or false
      */
 
     public static boolean isValidToken(String jwt, String userId) {
@@ -48,6 +48,15 @@ public class ValidateUser {
             return false;
         }
     }
+
+    /**
+     * Takes in a JWT and parses it, looking for the expiration claim. It
+     * will check the expiration against the current System time.
+     * If the expiration time is `before` the current time, that means the token is stale.
+     *
+     * @param jwt - JWT token
+     * @return - true or false
+     */
 
     public static boolean isExpiredToken(String jwt) {
         try {
