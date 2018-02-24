@@ -40,12 +40,13 @@ public class ValidateUser {
             String jwtUserId = claims.get("userId").toString();
             if (!jwtUserId.equals(userId)) {
                 return false;
+            } else {
+                return true;
             }
         } catch (JwtException ex) {
             log.info("Error validating token. Exception Message " + ex.getMessage());
             return false;
         }
-        return true;
     }
 
     public static boolean isExpiredToken(String jwt) {
@@ -57,12 +58,12 @@ public class ValidateUser {
             //If the expiration Date is a time BEFORE the current time, it is expired
             if (expiration.before(new Date())) {
                 return true;
+            } else {
+                return false;
             }
         } catch (JwtException ex) {
             log.info("Error validating token. Exception Message " + ex.getMessage());
             return true;
-        } 
-        return false;
         }
     }
 }
