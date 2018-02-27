@@ -21,9 +21,7 @@ class Home extends Component  {
 
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-        showButtons: true,
-        showLogin: false,
-        showSignUp: false,
+ 
     }
   }
 
@@ -34,25 +32,11 @@ class Home extends Component  {
   render () {
     return (
       <div className="Home">            
-        <Link to="/">
-          <img
-              src={logo} 
-              className="Home-logo" 
-              alt="logo"                
-          />
-        </Link>
         
         <Switch>
           <Route exact path="/" component={Buttons} />
-          <Route path="/sign-up" component={SignUp} />
-          <Route path="/login" component={Login} />
-          <Route path="/forgot-password" component={ForgotPassword} />
-          <Route path="/password-reset-sent" component={PasswordSent} />
-          <Route path="/confirmation-resent" component={ConfirmationSent} />
           <Route path="/advanced-filters" component={AdvancedFilters} />
-          <Route path="/update-password" component={UpdatePassword} />
           <Route path="/scout" component={Scout} />
-          <Route path="/resend-confirmation" component={ResendConfirmation} />
           <Route path="/update-password" component={UpdatePassword} />
         </Switch>
       </div>

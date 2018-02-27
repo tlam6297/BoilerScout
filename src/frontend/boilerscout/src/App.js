@@ -38,7 +38,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="Container">
-          <Home/>
+          <Main/>
         </div>
       </div>
     )
