@@ -46,6 +46,12 @@ public class LoginController {
                 throw new RuntimeException("[BadRequest] - No user associated with this email address!");
             }
 
+            //Check if email is verified
+            Integer verifiedEmail = jdbcTemplate.queryForObject("SELECT email_verified FROM users WHERE email='" + email + "'", Integer.class);
+            if (verifiedEmail == 0) {
+                throw new RuntimeException("[BadRequest] - The associated email is not verified!");
+            }
+
             //Check if password matches
             String dbPassword = jdbcTemplate.queryForObject("SELECT password FROM users WHERE email='" + email + "'", String.class);
             if (!passwordEncoder.matches(password, dbPassword)) {
