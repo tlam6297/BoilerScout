@@ -60,7 +60,6 @@ class SignUp extends Component {
       .then(function(response) {
         alert(response.statusText);
       })
-    }
   }
 
   render () {

@@ -41,6 +41,14 @@ class Login extends Component {
     });
   }
 
+  saveToLocalStorage = (name, data) => {
+    localStorage.setItem(name, data);
+  }
+
+  getLocalStorage = (name) => {
+     return localStorage.getItem(name);
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
     const _this = this;
@@ -61,10 +69,12 @@ class Login extends Component {
       if (response.ok) {
         // redirect
         _this.setState({ redirect: true })
+
+        //Get the user ID and token and save to localstorage
+
       } else {
         alert("Error: invalid username or password");
-      }
-      
+      }      
     })
   }
 
