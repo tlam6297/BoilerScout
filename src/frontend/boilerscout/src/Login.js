@@ -29,6 +29,12 @@ class Login extends Component {
     return (validEmail & validPassword  );
   }
 
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/home'/>
+    }
+  }
+
   handleChange = (event) => {
     this.setState({
       [event.target.id]: event.target.value
@@ -37,7 +43,7 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ redirect: true })
+    const _this = this;
 
 
     fetch('http://localhost:8080/login', {
@@ -51,13 +57,21 @@ class Login extends Component {
         "password": "Oddfuture!7"
       })
     })
-    .then(response => alert("ok"))
-    .catch(alert("error"));
+    .then(function(response) {
+      if (response.ok) {
+        // redirect
+        _this.setState({ redirect: true })
+      } else {
+        alert("Error: invalid username or password");
+      }
+      
+    })
   }
 
   render() {
     return (
       <div className="Login">
+        {this.renderRedirect()}
         <form onSubmit={this.handleSubmit}>
           <div className="Form">
             <FormGroup controlId="email" bsSize="large">
