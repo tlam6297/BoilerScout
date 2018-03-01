@@ -29,6 +29,20 @@ class ForgotPassword extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ redirect: true })
+    
+    fetch('http://localhost:8080/resend-confirmation', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json;charset=UTF-8',
+          'Content-Type':'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify ({
+          'email': this.state.email,
+        })
+      })
+      .then(function(response) {
+        alert(response.statusText);
+      })
   }
 
   render() {

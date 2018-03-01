@@ -57,7 +57,11 @@ class SignUp extends Component {
           'email': this.state.email,
         })
       })
+      .then(function(response) {
+        alert(response.statusText);
+      })
     }
+  }
 
   render () {
     return (
