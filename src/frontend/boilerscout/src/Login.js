@@ -7,9 +7,9 @@ class Login extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
-      repeatpassword: "",
+      email: "examples@purdue.edu",
+      password: "testTT1!89",
+      repeatpassword: "testTT1!89",
       redirect: false,
     };
   }
@@ -38,6 +38,21 @@ class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ redirect: true })
+
+
+    fetch('http://localhost:8080/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "email": "sovalididi@purdue.edu",
+        "password": "Oddfuture!7"
+      })
+    })
+    .then(response => alert("ok"))
+    .catch(alert("error"));
   }
 
   render() {
