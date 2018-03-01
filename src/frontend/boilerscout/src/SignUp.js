@@ -21,7 +21,6 @@ class SignUp extends Component {
     const validEmail = regex.test(email);
     console.log("Good email?: " + validEmail);
     
-    // Password must have 8 characters, include an uppercase letter, lowercase letter, one special character  and a number
     const password = this.state.password;
     const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
     const validPassword = passwordregex.test(password);
@@ -40,7 +39,24 @@ class SignUp extends Component {
 
   handleSubmit = (event) => {
       event.preventDefault();
-      this.setState({ redirect: true })
+      this.setState({ redirect: true });
+      const the_email = this.state.email;
+      const user_array = the_email.split('@');
+      const user_id = user_array[0];
+      console.log(user_id);
+
+      fetch('http://localhost:8080/sign-up', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json;charset=UTF-8',
+          'Content-Type':'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify ({
+          'user-id': user_id,
+          'password': this.state.password,
+          'email': this.state.email,
+        })
+      })
     }
 
   render () {
