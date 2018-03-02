@@ -11,6 +11,8 @@ class SignUp extends Component {
       email: "",
       password: "",
       repeatpassword: "",
+      fullname: "",
+      major: "",
       redirect: false,
     };
   }
@@ -39,11 +41,7 @@ class SignUp extends Component {
 
   handleSubmit = (event) => {
       event.preventDefault();
-      this.setState({ redirect: true });
-      const the_email = this.state.email;
-      const user_array = the_email.split('@');
-      const user_id = user_array[0];
-      console.log(user_id);
+      this.setState({ redirect: true });  
 
       fetch('http://localhost:8080/sign-up', {
         method: 'POST',
@@ -52,9 +50,10 @@ class SignUp extends Component {
           'Content-Type':'application/json;charset=UTF-8'
         },
         body: JSON.stringify ({
-          'user-id': user_id,
-          'password': this.state.password,
           'email': this.state.email,
+          'password': this.state.password,
+          'fullName': this.state.fullname,
+          'major': this.state.major,
         })
       })
       .then(function(response) {
@@ -67,6 +66,36 @@ class SignUp extends Component {
       <div className="SignUp">
         <form onSubmit={this.handleSubmit}>
           <div className="Form">
+          <FormGroup controlId="name" bsSize="large">
+              <ControlLabel>Full Name:</ControlLabel>
+              <FormControl
+                className="FormInput"
+                autoFocus
+                type="text"
+                value={this.state.fullname}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup controlId="major" bsSize="large">
+              <ControlLabel>Major:</ControlLabel>
+              <FormControl
+                className="FormInput"
+                autoFocus
+                type="text"
+                value={this.state.major}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup controlId="name" bsSize="large">
+              <ControlLabel>Full Name:</ControlLabel>
+              <FormControl
+                className="FormInput"
+                autoFocus
+                type="text"
+                value={this.state.fullname}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
             <FormGroup controlId="email" bsSize="large">
               <ControlLabel>Email:</ControlLabel>
               <FormControl
