@@ -1,8 +1,6 @@
 package com.example.boilerscout.api;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +24,7 @@ public class ValidateUser {
      * Takes in a JWT and parses it, looking for its userId claim. It matches
      * with the given userId to see if the token is valid and assigned
      *
-     * @param jwt - JWT token
+     * @param jwt    - JWT token
      * @param userId - A user's UUID
      * @return - true or false
      */

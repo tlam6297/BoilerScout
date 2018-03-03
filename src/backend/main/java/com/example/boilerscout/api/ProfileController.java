@@ -36,38 +36,38 @@ public class ProfileController extends ValidateUser {
         String userId = body.get("userId").toString();
         String token = body.get("token").toString();
 
+        if (!isValidToken(token, userId) || isExpiredToken(token)) {
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
+            return response;
+        } else {
 
+            //Update profile
+            //TODO Refactor this functionality for PUT and PATCH rather than POSTs
+            try {
+                //Update bio (if any changes are made)
+                if (body.containsKey("bio")) {
+                    String bio = body.get("bio").toString();
+                    jdbcTemplate.update("UPDATE profiles SET bio='" + bio + "' WHERE user_id='" + userId + "'");
+                    log.info("Successfully updated bio for user: " + userId);
+                }
+                if (body.containsKey("skills")) {
+                    List skills = (List) body.get("skills");
+                    //for each skill, check if it exists, if not, add it to skills table
 
-        //Update profile
-        try {
-            //Update bio (if any changes are made)
-            if (body.containsKey("bio")) {
-                String bio = body.get("bio").toString();
+                    //remove all the user's skills and re-enter them
+                }
+                if (body.containsKey("courses")) {
+                    List courses = (List) body.get("courses");
+                }
+            } catch (DataAccessException ex) {
+                log.info("Exception Message" + ex.getMessage());
+                response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new RuntimeException("[InternalServerError] - Error accessing data.");
             }
-            if (body.containsKey("skills")) {
-                List skills = (List) body.get("skills");
-            }
-            if (body.containsKey("courses")) {
-                List courses = (List) body.get("courses");
-            }
-        } catch (DataAccessException ex) {
-            log.info("Exception Message" + ex.getMessage());
-            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
-            throw new RuntimeException("[InternalServerError] - Error accessing data.");
         }
 
-        try {
-            isValidToken(token, userId);
-            isExpiredToken(token);
-        } catch (JwtException ex) {
-            log.info("Exception Message" + ex.getMessage());
-            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
-            throw new RuntimeException("[InternalServerError] - Error validating JWT.");
-        }
 
-
-
-        response.put("skills", skills);
+        response.put("status", HttpStatus.OK);
         return response;
     }
 
