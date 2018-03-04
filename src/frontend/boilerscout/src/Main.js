@@ -1,7 +1,7 @@
 import React from 'react'
 import { Component } from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect, Switch} from 'react-router-dom'
-import './Home.css'
+import './Main.css'
 import logo from './logo.svg'
 import Login from './Login'
 import SignUp from './SignUp'

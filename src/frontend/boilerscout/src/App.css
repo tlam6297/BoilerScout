@@ -19,11 +19,11 @@ button {
 .Container {
   margin: 1px;
   padding-top: 100px;
-  text-align: center;
 }
 
 .App-logo {
   -webkit-margin-bottom-collapse: 20px;
+  align-self: center;
 }
 
 .App-title {

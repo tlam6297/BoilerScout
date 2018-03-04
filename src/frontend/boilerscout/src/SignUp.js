@@ -42,21 +42,21 @@ class SignUp extends Component {
   handleSubmit = (event) => {
       event.preventDefault();
       this.setState({ redirect: true });  
+      const myreq = JSON.stringify({
+        "email": this.state.email,
+        "password": this.state.password,
+        "fullName": this.state.fullname,
+        "major": this.state.major,
+      });
 
       fetch('http://localhost:8080/sign-up', {
         method: 'POST',
         headers: {
-          'Accept': 'application/json;charset=UTF-8',
+          'Accept': 'application/json',
           'Content-Type':'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-
+          'transfer-encoding': 'chunked'
         },
-        body: JSON.stringify ({
-          "email": this.state.email,
-          "password": this.state.password,
-          "fullName": this.state.fullname,
-          "major": this.state.major,
-        })
+        body: myreq,
       })
   }
 
