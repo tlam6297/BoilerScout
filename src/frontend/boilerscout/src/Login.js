@@ -7,9 +7,9 @@ class Login extends Component {
     super(props);
 
     this.state = {
-      email: "examples@purdue.edu",
-      password: "testTT1!89",
-      repeatpassword: "testTT1!89",
+      email: "lam45@purdue.edu",
+      password: "test1234",
+      repeatpassword: "test1234",
       redirect: false,
     };
   }
@@ -26,7 +26,8 @@ class Login extends Component {
     const validPassword = passwordregex.test(password);
     console.log("Password good?" + validPassword);
 
-    return (validEmail & validPassword  );
+    //return (validEmail & validPassword  );
+    return true;
   }
 
   renderRedirect = () => {
@@ -52,30 +53,33 @@ class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const _this = this;
-
+    const payload = JSON.stringify({
+      "email": "lam45@purdue.edu",
+      "password": "test1234"
+    });
+    console.log(payload)
 
     fetch('http://localhost:8080/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "email": "sovalididi@purdue.edu",
-        "password": "Oddfuture!7"
-      })
+        'Content-Type': 'application/json;charset=UTF-8',
+        'transfer-encoding': 'chunked',
+      }, 
+      body: payload,
     })
     .then(function(response) {
       if (response.ok) {
         // redirect
         _this.setState({ redirect: true })
-
+        console.log(response)
         //Get the user ID and token and save to localstorage
 
       } else {
         alert("Error: invalid username or password");
       }      
     })
+
   }
 
   render() {
