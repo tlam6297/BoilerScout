@@ -57,22 +57,21 @@ class Login extends Component {
       "email": "lam45@purdue.edu",
       "password": "test1234"
     });
-    console.log(payload)
-
+    
     fetch('http://localhost:8080/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json;charset=UTF-8',
         'transfer-encoding': 'chunked',
-      }, 
+      },
       body: payload,
     })
     .then(function(response) {
       if (response.ok) {
         // redirect
         _this.setState({ redirect: true })
-        console.log(response)
+        console.log(response.json())
         //Get the user ID and token and save to localstorage
 
       } else {
