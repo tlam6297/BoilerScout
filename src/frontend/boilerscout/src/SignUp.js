@@ -47,17 +47,16 @@ class SignUp extends Component {
         method: 'POST',
         headers: {
           'Accept': 'application/json;charset=UTF-8',
-          'Content-Type':'application/json;charset=UTF-8'
+          'Content-Type':'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+
         },
         body: JSON.stringify ({
-          'email': this.state.email,
-          'password': this.state.password,
-          'fullName': this.state.fullname,
-          'major': this.state.major,
+          "email": this.state.email,
+          "password": this.state.password,
+          "fullName": this.state.fullname,
+          "major": this.state.major,
         })
-      })
-      .then(function(response) {
-        alert(response.statusText);
       })
   }
 
@@ -66,7 +65,7 @@ class SignUp extends Component {
       <div className="SignUp">
         <form onSubmit={this.handleSubmit}>
           <div className="Form">
-          <FormGroup controlId="name" bsSize="large">
+          <FormGroup controlId="fullname" bsSize="large">
               <ControlLabel>Full Name:</ControlLabel>
               <FormControl
                 className="FormInput"
@@ -83,16 +82,6 @@ class SignUp extends Component {
                 autoFocus
                 type="text"
                 value={this.state.major}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-            <FormGroup controlId="name" bsSize="large">
-              <ControlLabel>Full Name:</ControlLabel>
-              <FormControl
-                className="FormInput"
-                autoFocus
-                type="text"
-                value={this.state.fullname}
                 onChange={this.handleChange}
               />
             </FormGroup>
