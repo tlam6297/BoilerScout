@@ -14,6 +14,7 @@ import Scout from './Scout'
 import AdvancedFilters from './AdvancedFilters'
 import UpdatePassword from './UpdatePassword'
 import NavBar from './TopNavBar'
+import Settings from './Settings'
 
 class Main extends Component  {
   constructor(props) {
@@ -54,6 +55,7 @@ class Main extends Component  {
           <Route path="/scout" component={Scout} />
           <Route path="/resend-confirmation" component={ResendConfirmation} />
           <Route path="/update-password" component={UpdatePassword} />
+          <Route path="/settings" component={Settings}/>
         </Switch>
       </div>
     )

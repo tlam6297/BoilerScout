@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar, Nav, NavItem } from "react-bootstrap";
-import './NavBar.css'
 
 class TopNavBar extends Component {
   constructor (props) {
