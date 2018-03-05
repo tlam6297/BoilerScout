@@ -3,7 +3,7 @@ import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import UpdatePassword from './UpdatePassword.js'
 
-class Login extends Component {
+class Settings extends Component {
  constructor (props) {
    super(props);
    this.state = {
@@ -42,19 +42,7 @@ toggleUpdatePassword = () => {
    }
  }
 
- handleChange = (event) => {
-   this.setState({
-     [event.target.id]: event.target.value
-   });
- }
 
- saveToLocalStorage = (name, data) => {
-   localStorage.setItem(name, data);
- }
-
- getLocalStorage = (name) => {
-    return localStorage.getItem(name);
- }
 
  /* handleSubmit = (event) => {
    event.preventDefault();
@@ -98,11 +86,11 @@ toggleUpdatePassword = () => {
             >
             Update Password
             </button>
-        {this.state.active && UpdatePassword}
+        <UpdatePassword active={this.state.active}/>
         </div>
      </div>
    )
  }
 }
 
-export default Login;
+export default Settings;

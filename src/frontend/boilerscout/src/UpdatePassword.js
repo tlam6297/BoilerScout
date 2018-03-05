@@ -47,6 +47,35 @@ class UpdatePassword extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    const _this = this;
+   const payload = JSON.stringify({
+     // "user_id":localdatastorage.get
+     "user_id": "",
+     "oldpassword": this.state.oldPassword,
+     "newpassword": this.state.newPassword1,
+   });
+   
+   fetch('http://localhost:8080/login', {
+     method: 'POST',
+     headers: {
+       'Accept': 'application/json',
+       'Content-Type': 'application/json;charset=UTF-8',
+       'transfer-encoding': 'chunked',
+    }, 
+     body: payload,
+   })
+   .then(function(response) {
+     if (response.ok) {
+       // redirect
+       _this.setState({ redirect: true })
+      // Update view depending on if the password was changed or not
+
+     } else {
+       alert("Error: invalid username or password");
+     }      
+   })
+
   }
 
   render() {
