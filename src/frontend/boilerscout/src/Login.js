@@ -91,10 +91,11 @@ class Login extends Component {
         // redirect
         _this.setState({ redirect: true })
 
-        const promise = response.json();
-        console.log(promise
-        )
-        //Get the user ID and token and save to localstorage
+        response.json().then(json => {
+          // Save to local storage
+          _this.saveToLocalStorage("token", json.token);
+          _this.saveToLocalStorage("id", json.user_id);
+        });
 
       } else {
         alert("Error: invalid username or password");
