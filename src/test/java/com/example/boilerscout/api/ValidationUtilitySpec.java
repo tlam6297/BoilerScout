@@ -58,4 +58,10 @@ public class ValidationUtilitySpec extends ValidationUtility {
         Assert.assertFalse("This skill does not exist!", skillExists("blahblahblah"));
     }
 
+    @Test
+    public void testExistingCourse() {
+        Assert.assertTrue("This course exists", courseExists("CS307"));
+        Assert.assertFalse("This course does not exist!", courseExists("blahblahblah"));
+    }
+
 }
