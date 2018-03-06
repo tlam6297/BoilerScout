@@ -8,11 +8,11 @@ class SignUp extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
-      repeatpassword: "",
-      fullname: "",
-      major: "",
+      email: "jmieczni@purdue.edu",
+      password: "Test1234!",
+      repeatpassword: "Test1234!",
+      fullname: "Jacob P Mieczni",
+      major: "Antropology",
       redirect: false,
     };
   }
@@ -41,22 +41,22 @@ class SignUp extends Component {
 
   handleSubmit = (event) => {
       event.preventDefault();
-      this.setState({ redirect: true });  
+      this.setState({ redirect: true });
+      const payload = JSON.stringify({
+        "email": this.state.email,
+        "password": this.state.password,
+        "fullName": this.state.fullname,
+        "major": this.state.major,
+      });
 
       fetch('http://localhost:8080/sign-up', {
         method: 'POST',
         headers: {
-          'Accept': 'application/json;charset=UTF-8',
-          'Content-Type':'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'transfer-encoding': 'chunked',
         },
-        body: JSON.stringify ({
-          "email": this.state.email,
-          "password": this.state.password,
-          "fullName": this.state.fullname,
-          "major": this.state.major,
-        })
+        body: payload
       })
   }
 
