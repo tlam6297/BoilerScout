@@ -67,7 +67,7 @@ public class SignUpController {
             //Create a new default profile for the user
             jdbcTemplate.update("INSERT INTO profiles (user_id, full_name, major) VALUES (?, ?, ?)",
                     newUserId, fullName, major);
-            
+
             response.put("status", HttpStatus.OK);
             return response;
         } catch (DataAccessException ex) {

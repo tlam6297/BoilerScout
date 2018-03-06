@@ -47,7 +47,7 @@ public class ValidationUtilitySpec extends ValidationUtility {
 //                .compact();
 //        Assert.assertTrue("This token is expired!", isExpiredToken(expiredJWT));
 //        Assert.assertFalse("This token is not expired!", isExpiredToken(validJWT));
-    }
+//    }
 
     @Test
     public void testExistingSkill() {
