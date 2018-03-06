@@ -88,4 +88,13 @@ public class ValidationUtility {
             return true;
         }
     }
+
+    public boolean courseExists(String courseName) {
+        Integer existingCourse = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM courses WHERE course_name='" + courseName + "'", Integer.class);
+        if (existingCourse == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

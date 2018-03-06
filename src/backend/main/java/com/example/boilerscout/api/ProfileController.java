@@ -41,7 +41,7 @@ public class ProfileController extends ValidationUtility {
             try {
                 //Update bio (if any changes are made)
                 if (body.containsKey("bio")) {
-                    String bio = body.get("bio").toString();
+                    String bio = body.get("bio").toString().replace("'", "''");
                     jdbcTemplate.update("UPDATE profiles SET bio='" + bio + "' WHERE user_id='" + userId + "'");
                     log.info("Successfully updated bio for user: " + userId);
                 }
@@ -70,7 +70,28 @@ public class ProfileController extends ValidationUtility {
                     }
                 }
                 if (body.containsKey("courses")) {
-                    List courses = (List) body.get("courses");
+                    //TODO this really needs to be refactored so we don't hit the database so much
+                    List listOfCourses = (List) body.get("courses");
+                    log.info(listOfCourses.toString());
+
+                    if (listOfCourses.isEmpty()) {
+                        //Just clear all user's courses from user_courses
+                        jdbcTemplate.update("DELETE FROM user_courses WHERE user_id='" + userId + "'");
+                    } else {
+                        //For each course, check if it exists, if not, add it to courses table. Then re-add old and new to user_courses table
+                        jdbcTemplate.update("DELETE FROM user_courses WHERE user_id='" + userId + "'");
+                        for (int i = 0; i < listOfCourses.size(); i++) {
+                            String courseName = listOfCourses.get(i).toString();
+                            if (!courseExists(courseName)) {
+                                String newCourseId = UUID.randomUUID().toString();
+                                jdbcTemplate.update("INSERT INTO courses (course_id, course_name) VALUES (?, ?)", newCourseId, courseName);
+                                jdbcTemplate.update("INSERT INTO user_courses (user_id, course_id) VALUES (?, ?)", userId, newCourseId);
+                            } else {
+                                String courseId = jdbcTemplate.queryForObject("SELECT course_id FROM courses WHERE course_name='" + courseName + "'", String.class);
+                                jdbcTemplate.update("INSERT INTO user_courses (user_id, course_id) VALUES (?, ?)", userId, courseId);
+                            }
+                        }
+                    }
                 }
             } catch (DataAccessException ex) {
                 log.info("Exception Message" + ex.getMessage());
