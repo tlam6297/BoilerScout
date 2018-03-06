@@ -34,13 +34,7 @@ class Main extends Component  {
   render () {
     return (
       <div className="Home">            
-        <Link to="/">
-          <img
-              src={logo} 
-              className="Home-logo" 
-              alt="logo"                
-          />
-        </Link>
+        
         
         <Switch>
           <Route exact path="/" component={Buttons} />

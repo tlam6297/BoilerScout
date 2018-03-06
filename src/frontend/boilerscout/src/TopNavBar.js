@@ -36,13 +36,13 @@ class TopNavBar extends Component {
     return (
       <div className="navbar" class="navbar" style={style}>
         <nav className="navbar navbar-default">
-            <form className="navbar-form navbar-left">
-             <Link to="/">Home</Link>
-             <Link to="/settings">Settings</Link>
-             <Link to="/profile">Profile</Link>
-             <Link to="/update-password">Update Password</Link>
-            </form>
-      </nav>
+          <form className="navbar-form navbar-left">
+            <Link to="/">Home</Link>
+            <Link to="/settings">Settings</Link>
+            <Link to="/profile">Profile</Link>
+            <Link to="/update-password">Update Password</Link>
+          </form>
+        </nav>
       </div>
     )
   }

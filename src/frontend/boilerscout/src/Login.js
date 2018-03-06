@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, Nav } from "react-bootstrap";
+import NavBar from './TopNavBar'
 
 class Login extends Component {
- 
-
   constructor (props) {
     super(props);
 
@@ -54,12 +53,16 @@ class Login extends Component {
     });
   }
 
-  saveToLocalStorage = (name, data) => {
-    localStorage.setItem(name, data);
+  saveToLocalStorage = (key, data) => {
+    localStorage.setItem(key, data);
   }
 
-  getLocalStorage = (name) => {
-     return localStorage.getItem(name);
+  getLocalStorage = (key) => {
+     return localStorage.getItem(key);
+  }
+
+  deleteLocalStorage = (key) => {
+    localStorage.removeItem(key);
   }
 
   handleSubmit = (event) => {
@@ -108,6 +111,9 @@ class Login extends Component {
     return (
       <div className="Login">
         {this.renderRedirect()}
+        <div className="Navbar">
+          <NavBar />
+        </div>
         <form onSubmit={this.handleSubmit}>
           <div className="Form">
             <FormGroup controlId="email" bsSize="large">
