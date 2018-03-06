@@ -46,6 +46,8 @@ public class SignUpController {
             String newUserId = UUID.randomUUID().toString();
             String email = body.get("email");
             String password = body.get("password");
+            String fullName = body.get("fullName");
+            String major = body.get("major");
 
             //Verify that no prior email exists
             List<Map<String, Object>> existingEmails = jdbcTemplate.queryForList("SELECT * FROM users WHERE email='" + email + "'");
@@ -60,9 +62,14 @@ public class SignUpController {
             //Insert a new user into database;
             jdbcTemplate.update("INSERT INTO users (user_id, password, email) VALUES (?, ?, ?)",
                     newUserId, hashedPassword, email);
+
+
+            //Create a new default profile for the user
+            jdbcTemplate.update("INSERT INTO profiles (user_id, full_name, major) VALUES (?, ?, ?)",
+                    newUserId, fullName, major);
+            
             response.put("status", HttpStatus.OK);
             return response;
-
         } catch (DataAccessException ex) {
             log.info("Exception Message" + ex.getMessage());
             response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
