@@ -1,6 +1,5 @@
 package com.example.boilerscout.api;
 
-import io.jsonwebtoken.JwtException;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,17 +10,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by terrylam on 3/1/18.
  */
 
 @Service
-public class ProfileController extends ValidateUser {
+public class ProfileController extends ValidationUtility {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
@@ -40,7 +36,6 @@ public class ProfileController extends ValidateUser {
             response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
             return response;
         } else {
-
             //Update profile
             //TODO Refactor this functionality for PUT and PATCH rather than POSTs
             try {
@@ -51,10 +46,28 @@ public class ProfileController extends ValidateUser {
                     log.info("Successfully updated bio for user: " + userId);
                 }
                 if (body.containsKey("skills")) {
-                    List skills = (List) body.get("skills");
-                    //for each skill, check if it exists, if not, add it to skills table
+                    //TODO this really needs to be refactored so we don't hit the database so much
+                    List listOfSkills = (List) body.get("skills");
+                    log.info(listOfSkills.toString());
 
-                    //remove all the user's skills and re-enter them
+                    if (listOfSkills.isEmpty()) {
+                        //Just clear all user's skills from user_skills
+                        jdbcTemplate.update("DELETE FROM user_skills WHERE user_id='" + userId + "'");
+                    } else {
+                        //For each skill, check if it exists, if not, add it to skills table. Then re-add old and new to user_skills table
+                        jdbcTemplate.update("DELETE FROM user_skills WHERE user_id='" + userId + "'");
+                        for (int i = 0; i < listOfSkills.size(); i++) {
+                            String skillName = listOfSkills.get(i).toString();
+                            if (!skillExists(skillName)) {
+                                String newSkillId = UUID.randomUUID().toString();
+                                jdbcTemplate.update("INSERT INTO skills (skill_id, skill_name) VALUES (?, ?)", newSkillId, skillName);
+                                jdbcTemplate.update("INSERT INTO user_skills (user_id, skill_id) VALUES (?, ?)", userId, newSkillId);
+                            } else {
+                                String skillId = jdbcTemplate.queryForObject("SELECT skill_id FROM skills WHERE skill_name='" + skillName + "'", String.class);
+                                jdbcTemplate.update("INSERT INTO user_skills (user_id, skill_id) VALUES (?, ?)", userId, skillId);
+                            }
+                        }
+                    }
                 }
                 if (body.containsKey("courses")) {
                     List courses = (List) body.get("courses");

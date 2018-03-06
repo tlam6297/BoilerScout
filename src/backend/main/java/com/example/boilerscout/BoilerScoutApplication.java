@@ -2,6 +2,7 @@ package com.example.boilerscout;
 
 import com.example.boilerscout.api.LoginController;
 import com.example.boilerscout.api.ProfileController;
+import com.example.boilerscout.api.ValidationUtility;
 import com.example.boilerscout.api.SignUpController;
 import javafx.application.Application;
 import org.slf4j.Logger;

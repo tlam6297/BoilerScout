@@ -4,9 +4,12 @@ import io.jsonwebtoken.*;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by terrylam on 2/19/18.
@@ -17,8 +20,11 @@ import java.util.Date;
  */
 
 
-public class ValidateUser {
+public class ValidationUtility {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * Takes in a JWT and parses it, looking for its userId claim. It matches
@@ -29,7 +35,7 @@ public class ValidateUser {
      * @return - true or false
      */
 
-    public static boolean isValidToken(String jwt, String userId) {
+    public boolean isValidToken(String jwt, String userId) {
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(DatatypeConverter.parseBase64Binary("TerryLam"))
@@ -56,7 +62,7 @@ public class ValidateUser {
      * @return - true or false
      */
 
-    public static boolean isExpiredToken(String jwt) {
+    public boolean isExpiredToken(String jwt) {
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(DatatypeConverter.parseBase64Binary("TerryLam"))
@@ -70,6 +76,15 @@ public class ValidateUser {
             }
         } catch (JwtException ex) {
             log.info("Error validating token. Exception Message " + ex.getMessage());
+            return true;
+        }
+    }
+
+    public boolean skillExists(String skillName) {
+        Integer existingSkill = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM skills WHERE skill_name='" + skillName + "'", Integer.class);
+        if (existingSkill == 0) {
+            return false;
+        } else {
             return true;
         }
     }

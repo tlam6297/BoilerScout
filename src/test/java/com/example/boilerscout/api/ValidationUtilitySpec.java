@@ -16,7 +16,7 @@ import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ValidateUserSpec extends ValidateUser {
+public class ValidationUtilitySpec extends ValidationUtility {
 
     static final long EXPIRATIONTIME = 1_864_000_000; // 10 days
     static final String SECRET = "TerryLam";
