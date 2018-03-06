@@ -1,3 +1,18 @@
 .navbar {
-    display: inline; 
+    list-style-type: none;
+    margin: 10px;
+    padding: 0;
+    margin-bottom: 5rem;
+    background-color: darkcyan;
+    padding: 14px 16px;
+    overflow: hidden;
+}
+
+.link {
+    display: inline;
+}
+
+.left {
+    float: left;
+    display: inline;
 }

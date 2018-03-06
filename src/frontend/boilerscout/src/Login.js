@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Nav } from "react-bootstrap";
 import NavBar from './TopNavBar'
+import './Login.css'
 
 class Login extends Component {
   constructor (props) {

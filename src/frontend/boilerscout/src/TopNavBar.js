@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
-import { Button, FormGroup, FormControl, ControlLabel, Navbar, Nav, NavItem } from "react-bootstrap";
-import './NavBar.css'
+import { Button, FormGroup, FormControl, ControlLabel, Navbar, Nav, NavItem, MenuItem,  } from "react-bootstrap";
 
 class TopNavBar extends Component {
   constructor (props) {
@@ -26,22 +25,23 @@ class TopNavBar extends Component {
     this.setState({ redirect: true })
   }
 
-  render () {
-    const style = {
-      width: "400px",
-      margin: 0,
-      padding: 0,
-    }
-
+  render () {   
     return (
-      <div className="navbar" class="navbar" style={style}>
+      <div className="navbar" class="navbar">
         <nav className="navbar navbar-default">
-          <form className="navbar-form navbar-left">
-            <Link to="/">Home</Link>
+        
+          <div className="link">
+            <Link to="/">Home</Link>            
+          </div>
+          <div className="link left ">
             <Link to="/settings">Settings</Link>
+          </div>
+          <div className="link">
             <Link to="/profile">Profile</Link>
+          </div>
+          <div className="link">
             <Link to="/update-password">Update Password</Link>
-          </form>
+          </div>            
         </nav>
       </div>
     )
