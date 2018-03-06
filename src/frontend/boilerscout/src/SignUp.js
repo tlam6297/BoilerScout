@@ -45,8 +45,6 @@ class SignUp extends Component {
       const payload = JSON.stringify({
         "email": this.state.email,
         "password": this.state.password,
-        "fullName": this.state.fullname,
-        "major": this.state.major,
       });
 
       fetch('http://localhost:8080/sign-up', {
@@ -57,6 +55,10 @@ class SignUp extends Component {
           'transfer-encoding': 'chunked',
         },
         body: payload
+      }).then(function(response) {
+        if (response.ok) {
+          console.log("GOOD");
+        }
       })
   }
 

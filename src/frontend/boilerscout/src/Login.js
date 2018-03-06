@@ -3,15 +3,15 @@ import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Nav } from "react-bootstrap";
 import NavBar from './TopNavBar'
 import './Login.css'
+import logo from './logo.svg'
 
 class Login extends Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      email: "lam45@purdue.edu",
-      password: "test1234",
-      repeatpassword: "test1234",
+      email: "",
+      password: "",
       redirect: false,
       DEBUGGING: true,
     };
@@ -76,8 +76,8 @@ class Login extends Component {
 
     if (this.state.DEBUGGING) {
       payload = JSON.stringify({
-        "email": "lam45@purdue.edu",
-        "password": "test1234"
+        "email": "hgfdsdggfdfghgf@purdue.edu",
+        "password": "Test1234!",
       });
     }
 
@@ -96,6 +96,7 @@ class Login extends Component {
         _this.setState({ redirect: true })
 
         response.json().then(json => {
+          console.log(json);
           // Save to local storage
           _this.saveToLocalStorage("token", json.token);
           _this.saveToLocalStorage("id", json.user_id);
@@ -112,6 +113,15 @@ class Login extends Component {
     return (
       <div className="Login">
         {this.renderRedirect()}
+        <div className="Logo">
+          <Link to="/">
+            <img
+                src={logo} 
+                className="Home-logo" 
+                alt="logo"                
+            />
+          </Link>
+        </div>
         <div className="Navbar">
           <NavBar />
         </div>
