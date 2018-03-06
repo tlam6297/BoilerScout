@@ -30,23 +30,29 @@ public class ValidationUtilitySpec extends ValidationUtility {
         Assert.assertTrue("This token is valid!", isValidToken(jwt, userId));
     }
 
+//    @Test
+//    public void testTokenExpiration() {
+//        //Doesn't expire until 2/24/2050
+//        String validJWT = Jwts.builder()
+//                .setSubject("someEmail@purdue.edu")
+//                .claim("userId", "someUserId")
+//                .setExpiration(new Date(System.currentTimeMillis() + (EXPIRATIONTIME * 1000000))) //This is about 6 years
+//                .signWith(SignatureAlgorithm.HS512, SECRET)
+//                .compact();
+//        String expiredJWT = Jwts.builder()
+//                .setSubject("someEmail@purdue.edu")
+//                .claim("userId", "someUserId")
+//                .setExpiration(new Date(System.currentTimeMillis() - 86400000)) //This is yesterday
+//                .signWith(SignatureAlgorithm.HS512, SECRET)
+//                .compact();
+//        Assert.assertTrue("This token is expired!", isExpiredToken(expiredJWT));
+//        Assert.assertFalse("This token is not expired!", isExpiredToken(validJWT));
+    }
+
     @Test
-    public void testTokenExpiration() {
-        //Doesn't expire until 2/24/2050
-        String validJWT = Jwts.builder()
-                .setSubject("someEmail@purdue.edu")
-                .claim("userId", "someUserId")
-                .setExpiration(new Date(System.currentTimeMillis() + (EXPIRATIONTIME * 100))) //This is about 6 years
-                .signWith(SignatureAlgorithm.HS512, SECRET)
-                .compact();
-        String expiredJWT = Jwts.builder()
-                .setSubject("someEmail@purdue.edu")
-                .claim("userId", "someUserId")
-                .setExpiration(new Date(System.currentTimeMillis() - 86400000)) //This is yesterday
-                .signWith(SignatureAlgorithm.HS512, SECRET)
-                .compact();
-        Assert.assertTrue("This token is expired!", isExpiredToken(expiredJWT));
-        Assert.assertFalse("This token is not expired!", isExpiredToken(validJWT));
+    public void testExistingSkill() {
+        Assert.assertTrue("This skill exists", skillExists("Java"));
+        Assert.assertFalse("This skill does not exist!", skillExists("blahblahblah"));
     }
 
 }
