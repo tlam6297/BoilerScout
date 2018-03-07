@@ -3,6 +3,8 @@ import { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 import Login from './Login';
 import SignUp from './SignUp';
+import { Button} from "react-bootstrap";
+
 
 class Buttons extends Component {
 
@@ -11,22 +13,24 @@ class Buttons extends Component {
       <div className="Buttons">
         <div className="SignUpButton">
           <Route render={({ history }) => (
-            <button
-              type='button'
-              onClick={() => { history.push('/sign-up') }}
-            >
-            SIGN UP
-            </button>
+            <Button
+            block
+            bsSize="small"
+            onClick={() => { history.push('/sign-up')}}
+            type="submit">
+            SIGN UP        
+          </Button>
           )} />
         </div>
         <div className="LoginButton">
-          <Route render={({ history }) => (
-            <button
-              type='button'
-              onClick={() => { history.push('/login') }}
-            >
-            LOGIN
-            </button>
+        <Route render={({ history }) => (
+            <Button
+            block
+            bsSize="small"
+            onClick={() => { history.push('/login')}}
+            type="submit">
+            LOGIN       
+          </Button>
           )} />
         </div>
         <Route exact path="/sign-up" component={SignUp}/>

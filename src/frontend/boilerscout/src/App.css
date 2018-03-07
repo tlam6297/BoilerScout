@@ -14,6 +14,9 @@ button {
   font-size: 85%;
   border: none;
   border-radius: 10px;
+  margin: 5px;
+  width: 25%;
+  height: 35px; 
 }
 
 .Container {
