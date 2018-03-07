@@ -7,9 +7,8 @@ class Login extends Component {
    super(props);
 
    this.state = {
-     email: "lam45@purdue.edu",
-     password: "test1234",
-     repeatpassword: "test1234",
+     email: "",
+     password: "",
      redirect: false,
    };
  }
@@ -54,32 +53,37 @@ class Login extends Component {
    event.preventDefault();
    const _this = this;
    const payload = JSON.stringify({
-     "email": "lam45@purdue.edu",
-     "password": "test1234",
+     "email": this.state.email,
+     "password": this.state.password,
    });
    
    fetch('http://localhost:8080/login', {
-     method: 'POST',
-     headers: {
-       'Accept': 'application/json',
-       'Content-Type': 'application/json;charset=UTF-8',
-       'transfer-encoding': 'chunked',
-    }, 
-     body: payload,
-   })
-   .then(function(response) {
-     if (response.ok) {
-       // redirect
-       _this.setState({ redirect: true })
-       console.log(response.json())
-       //Get the user ID and token and save to localstorage
-
-     } else {
-       alert("Error: invalid username or password");
-     }      
-   })
-
- }
+       method: 'POST',
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json;charset=UTF-8',
+         'transfer-encoding': 'chunked',
+       },
+       body: payload,
+     })
+     .then(function(response) {
+       if (response.ok) {
+         // redirect
+          _this.setState({ redirect: true })
+  
+          response.json().then(json => {
+ +          console.log(json);
+            // Save to local storage
+            _this.saveToLocalStorage("token", json.token);
+            _this.saveToLocalStorage("id", json.user_id);
+         });
+ 
+       } else {
+         alert("Error: invalid username or password");
+       }      
+     })
+ 
+   }
 
  render() {
    return (

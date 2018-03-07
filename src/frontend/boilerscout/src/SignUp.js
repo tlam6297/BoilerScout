@@ -8,11 +8,11 @@ class SignUp extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
-      repeatpassword: "",
-      fullname: "",
-      major: "",
+      email: "sovali@purdue.edu",
+      password: "Amadeus!7",
+      repeatpassword: "Amadeus!7",
+      fullname: "Selin Ovali",
+      major: "CS",
       redirect: false,
     };
   }
@@ -33,6 +33,12 @@ class SignUp extends Component {
     return (validEmail && validPassword && repeatPassword);
   }
 
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/login'/>
+    }
+  }
+
   handleChange = (event) => {
     this.setState({
       [event.target.id]: event.target.value
@@ -42,7 +48,7 @@ class SignUp extends Component {
   handleSubmit = (event) => {
       event.preventDefault();
       this.setState({ redirect: true });  
-      const myreq = JSON.stringify({
+      const payload = JSON.stringify({
         "email": this.state.email,
         "password": this.state.password,
         "fullName": this.state.fullname,
@@ -56,13 +62,18 @@ class SignUp extends Component {
           'Content-Type':'application/json;charset=UTF-8',
           'transfer-encoding': 'chunked'
         },
-        body: myreq,
-      })
+        body: payload,
+      }).then(function(response) {
+             if (response.ok) {
+                console.log("GOOD");
+              }
+            })
   }
 
   render () {
     return (
       <div className="SignUp">
+      {this.renderRedirect()}
         <form onSubmit={this.handleSubmit}>
           <div className="Form">
           <FormGroup controlId="fullname" bsSize="large">
