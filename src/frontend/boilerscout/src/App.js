@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import './App.css'
 import Main from './Main'
 import SignUp from './SignUp'
+import Profile from './Profile'
 
 class App extends Component {
   constructor() {
@@ -37,7 +38,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="Container">
-          <Main/>
+          <Profile/>
         </div>
       </div>
     )
