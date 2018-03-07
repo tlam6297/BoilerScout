@@ -1,7 +1,7 @@
 import React from 'react'
 import { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
-import { Button, Panel} from "react-bootstrap";
+import { Button, Panel, ControlLabel} from "react-bootstrap";
 import Logo from './Logo'
 import './Profile.css'
 
@@ -19,6 +19,7 @@ class Profile extends Component {
           user_skills: "Java, C",
           user_courses: "CS250, CS252",
           user_major: "CS",
+          user_year: "Junior"
         };
       }
      
@@ -68,13 +69,23 @@ class Profile extends Component {
 
     render() {
         return (
-            <div className="Profile">
-                <h1>{this.state.user_id}</h1>
-                <Panel>
-                    <p id="bio">
-                        {this.state.user_bio}
-                    </p>
-                </Panel>
+            <div class="container">
+                <div className="row">
+                    <div className="col-xs-12">
+                    <h1>{this.state.user_id}</h1>
+                    <hr />
+                    </div>
+                </div>
+                <div className="row"> 
+                <h4>{this.state.user_fullname}</h4>
+                <div id="labels">
+                <ControlLabel id="label">Major:</ControlLabel>
+                <p id="info"> {this.state.user_major}</p>
+                <p></p>
+                <ControlLabel id="label">Class Standing:</ControlLabel>
+                <p id="info"> {this.state.user_year}</p>
+                </div>
+                </div>
             </div>
         );
         }
