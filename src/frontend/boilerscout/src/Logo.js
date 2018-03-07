@@ -22,4 +22,4 @@ class Logo extends Component {
   }
 }
 
-export default Buttons;
+export default Logo;

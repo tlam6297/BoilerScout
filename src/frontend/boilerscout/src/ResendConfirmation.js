@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
+import Logo from './Logo.js'
 
 class ForgotPassword extends Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class ForgotPassword extends Component {
   render() {
     return (
       <div className="ForgotPassword" class="fg">
+      <Logo/>
         <form onSubmit={this.handleSubmit}>
           <div className="Form" class="Form">
             <FormGroup controlId="email" bsSize="large">

@@ -2,7 +2,6 @@ import React from 'react'
 import { Component } from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect, Switch} from 'react-router-dom'
 import './Main.css'
-import logo from './logo.svg'
 import Login from './Login'
 import SignUp from './SignUp'
 import Buttons from './Buttons'
@@ -22,9 +21,6 @@ class Main extends Component  {
 
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-        showButtons: true,
-        showLogin: false,
-        showSignUp: false,
     }
   }
 
@@ -35,14 +31,6 @@ class Main extends Component  {
   render () {
     return (
       <div className="Home">            
-        <Link to="/">
-          <img
-              src={logo} 
-              className="Home-logo" 
-              alt="logo"                
-          />
-        </Link>
-        
         <Switch>
           <Route exact path="/" component={Buttons} />
           <Route path="/sign-up" component={SignUp} />

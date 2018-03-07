@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-
+import Logo from './Logo.js'
 class Login extends Component {
  constructor (props) {
    super(props);
@@ -88,6 +88,7 @@ class Login extends Component {
  render() {
    return (
      <div className="Login">
+     <Logo/>
        {this.renderRedirect()}
        <form onSubmit={this.handleSubmit}>
          <div className="Form">

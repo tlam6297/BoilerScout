@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 import Login from "./Login"
 import PasswordSent from './PasswordSent'
 import "./ForgotPassword.css"
+import Logo from './Logo.js'
 
 class ForgotPassword extends Component {
   constructor(props) {
@@ -52,6 +53,7 @@ class ForgotPassword extends Component {
   render() {
     return (
       <div className="ForgotPassword">
+      <Logo/>
         <form onSubmit={this.handleSubmit}>
           <div className="Form" class="Form">
             <FormGroup controlId="email" bsSize="large">
