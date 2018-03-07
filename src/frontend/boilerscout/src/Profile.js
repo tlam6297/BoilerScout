@@ -77,14 +77,27 @@ class Profile extends Component {
                     </div>
                 </div>
                 <div className="row"> 
-                <h4>{this.state.user_fullname}</h4>
-                <div id="labels">
-                <ControlLabel id="label">Major:</ControlLabel>
-                <p id="info"> {this.state.user_major}</p>
-                <p></p>
-                <ControlLabel id="label">Class Standing:</ControlLabel>
-                <p id="info"> {this.state.user_year}</p>
-                </div>
+                        <h4>{this.state.user_fullname}</h4>
+                        <div 
+                            id="labels">
+                                <ControlLabel 
+                                    id="label">
+                                    Major: 
+                                </ControlLabel>
+                            <p 
+                            id="info"> 
+                                 {this.state.user_major}
+                            </p>
+                            <p></p>
+                            <ControlLabel 
+                            id="label">
+                                Class Standing: 
+                            </ControlLabel>
+                            <p 
+                            id="info"> 
+                                 {this.state.user_year}
+                            </p>
+                        </div>
                 </div>
             </div>
         );
