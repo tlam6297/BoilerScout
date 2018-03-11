@@ -100,7 +100,8 @@ public class ProfileController extends ValidationUtility {
             }
         }
 
-
+        response.put("userId", userId);
+        response.put("token", token);
         response.put("status", HttpStatus.OK);
         return response;
     }
