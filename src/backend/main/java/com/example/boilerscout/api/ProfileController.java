@@ -47,7 +47,8 @@ public class ProfileController extends ValidationUtility {
                 }
                 if (body.containsKey("skills")) {
                     //TODO this really needs to be refactored so we don't hit the database so much
-                    List listOfSkills = (List) body.get("skills");
+                    List ls = (List) body.get("skills");
+                    HashSet<String> listOfSkills = new HashSet<String>(ls);
                     log.info(listOfSkills.toString());
 
                     if (listOfSkills.isEmpty()) {
@@ -56,8 +57,8 @@ public class ProfileController extends ValidationUtility {
                     } else {
                         //For each skill, check if it exists, if not, add it to skills table. Then re-add old and new to user_skills table
                         jdbcTemplate.update("DELETE FROM user_skills WHERE user_id='" + userId + "'");
-                        for (int i = 0; i < listOfSkills.size(); i++) {
-                            String skillName = listOfSkills.get(i).toString();
+                        for (Iterator<String> it = listOfSkills.iterator(); it.hasNext();) {
+                            String skillName = it.next();
                             if (!skillExists(skillName)) {
                                 String newSkillId = UUID.randomUUID().toString();
                                 jdbcTemplate.update("INSERT INTO skills (skill_id, skill_name) VALUES (?, ?)", newSkillId, skillName);
@@ -71,7 +72,8 @@ public class ProfileController extends ValidationUtility {
                 }
                 if (body.containsKey("courses")) {
                     //TODO this really needs to be refactored so we don't hit the database so much
-                    List listOfCourses = (List) body.get("courses");
+                    List ls = (List) body.get("courses");
+                    HashSet<String> listOfCourses = new HashSet<String>(ls);
                     log.info(listOfCourses.toString());
 
                     if (listOfCourses.isEmpty()) {
@@ -80,8 +82,8 @@ public class ProfileController extends ValidationUtility {
                     } else {
                         //For each course, check if it exists, if not, add it to courses table. Then re-add old and new to user_courses table
                         jdbcTemplate.update("DELETE FROM user_courses WHERE user_id='" + userId + "'");
-                        for (int i = 0; i < listOfCourses.size(); i++) {
-                            String courseName = listOfCourses.get(i).toString();
+                        for (Iterator<String> it = listOfCourses.iterator(); it.hasNext();) {
+                            String courseName = it.next();
                             if (!courseExists(courseName)) {
                                 String newCourseId = UUID.randomUUID().toString();
                                 jdbcTemplate.update("INSERT INTO courses (course_id, course_name) VALUES (?, ?)", newCourseId, courseName);
