@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import UpdatePassword from './UpdatePassword.js'
-
+import TopNavBar from './TopNavBar.js'
 class Settings extends Component {
  constructor (props) {
    super(props);
@@ -79,7 +79,7 @@ toggleUpdatePassword = () => {
  render() {
    return (
      <div className="Settings">
-       
+       <TopNavBar/>
       <div className="Update Password">
             <button onClick={this.toggleUpdatePassword}
               type='button'

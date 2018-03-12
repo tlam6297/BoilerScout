@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar, Nav, NavItem } from "react-bootstrap";
+import  './TopNavBar.css'
 
 class TopNavBar extends Component {
   constructor (props) {
@@ -33,14 +34,11 @@ class TopNavBar extends Component {
     }
 
     return (
-      <div className="navbar" class="navbar" style={style}>
-        <nav className="navbar navbar-default">
-            <form className="navbar-form navbar-left">
-             <Link to="/">Home</Link>
-             <Link to="/settings">Settings</Link>
-             <Link to="/profile">Profile</Link>
-             <Link to="/update-password">Update Password</Link>
-            </form>
+      <div class="container">
+      <nav class="nav">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/profile">Profile</a>
+        <a class="nav-link" href="/settings">Settings</a>
       </nav>
       </div>
     )

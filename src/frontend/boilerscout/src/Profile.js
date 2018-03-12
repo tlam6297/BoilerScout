@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 import { Button, Panel, ControlLabel} from "react-bootstrap";
 import Logo from './Logo'
 import './Profile.css'
+import TopNavBar from './TopNavBar'
 
 class Profile extends Component {
     constructor (props) {
@@ -70,13 +71,9 @@ class Profile extends Component {
     render() {
         return (
             <div class="container">
-                <div className="row">
-                    <div className="col-xs-12">
+                <TopNavBar/>
+                <div className="card"> 
                     <h1>{this.state.user_id}</h1>
-                    <hr />
-                    </div>
-                </div>
-                <div className="row"> 
                         <h4>{this.state.user_fullname}</h4>
                         <div 
                             id="labels">
