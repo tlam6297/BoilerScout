@@ -1,12 +1,16 @@
 .nav {
     display: flex;
+    padding-top: 3em;
 }
 
 a.nav-link {
     display: flex;
     padding: 0px 10px;
+    font-size: 100%;
 }
 
-body {
-    align-items: flex;
+#mylogo {
+    float: left;
+    width: 9em;
+    height: auto;
 }

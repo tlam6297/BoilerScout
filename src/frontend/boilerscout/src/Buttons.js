@@ -6,12 +6,11 @@ import SignUp from './SignUp';
 import Logo from './Logo.js';
 import { Button} from "react-bootstrap";
 
-
 class Buttons extends Component {
 
   render() {
     return (
-      <div className="Buttons">
+      <div class="Buttons">
       <Logo/>
         <div className="SignUpButton">
           <Route render={({ history }) => (

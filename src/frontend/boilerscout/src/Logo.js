@@ -4,12 +4,12 @@ import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 import Login from './Login';
 import SignUp from './SignUp';
 import logo from './logo.svg';
-
+import './Logo.css'
 class Logo extends Component {
 
   render() {
     return (
-        <div className="Logo">
+        <div class="Logo">
         <Link to="/">
           <img
               src={logo} 
