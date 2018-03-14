@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
+import POSTRequest from './POSTRequest'
 
 class ForgotPassword extends Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class ForgotPassword extends Component {
 
     this.state = {
       email: "",
+      redirect: false,
     };
   }
 
@@ -16,7 +18,6 @@ class ForgotPassword extends Component {
     const regex = /^\S+@purdue.edu$/;
     const validEmail = regex.test(email);
 
-    console.log("Good email?: " + validEmail);
     return (validEmail);
   }
 
@@ -28,21 +29,17 @@ class ForgotPassword extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ redirect: true })
     
-    fetch('http://localhost:8080/resend-confirmation', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json;charset=UTF-8',
-          'Content-Type':'application/json;charset=UTF-8'
-        },
-        body: JSON.stringify ({
-          'email': this.state.email,
-        })
-      })
-      .then(function(response) {
-        alert(response.statusText);
-      })
+    const payload = JSON.stringify ({
+      'email': this.state.email,
+    });
+
+    const post = new POSTRequest(payload, 'http://localhost:8080/resend-confirmation');
+    post.send();
+    
+    if (post.responseOk) {
+      this.setState({ redirect: true });      
+    }
   }
 
   render() {
