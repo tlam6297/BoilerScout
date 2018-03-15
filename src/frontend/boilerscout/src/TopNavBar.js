@@ -32,24 +32,42 @@ class TopNavBar extends Component {
 
     return (
       <div class="container">
-      <div class="grid-container">
-      <div class="logo grid-item"> <img
+        <div class="grid-container">
+          <div class="logo grid-item"> 
+            <img
               id="mylogo"
+              href="/"
               src={logo} 
               alt="logo"
-          /> 
+            /> 
+        </div>
+        <div class="grid-item">
+          <nav class="nav">
+            <a 
+              class="nav-link" 
+              href="/scout">
+              Scout
+            </a>
+            <a 
+              class="nav-link" 
+              href="/community">
+              Community
+            </a>
+            <a 
+              class="nav-link" 
+              href="/profile">
+              Profile
+            </a>
+            <a 
+              class="nav-link" 
+              href="/settings">
+              Settings
+            </a>
+          </nav>
+        </div>
       </div>
-      <div class="grid-item">
-      <nav class="nav">
-        <a class="nav-link" href="/scout">Scout</a>
-        <a class="nav-link" href="/community">Community</a>
-        <a class="nav-link" href="/profile">Profile</a>
-        <a class="nav-link" href="/settings">Settings</a>
-      </nav>
-      </div>
-      </div>
-      <p></p>
-      <hr/>
+        <p></p>
+        <hr/>
       </div>
     )
   }

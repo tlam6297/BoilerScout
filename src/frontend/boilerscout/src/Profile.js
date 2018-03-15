@@ -76,48 +76,47 @@ class Profile extends Component {
     render() {
         return (
                 <div class="container">
-                <TopNavBar/>
-                <div class="grid-container">
-                <div class="grid-item"><div className="card"> 
-                    <h1>{this.state.user_id}</h1>
-                        <h4>{this.state.user_fullname}</h4>
-                        <div 
-                            id="labels">
-                                <ControlLabel 
-                                    id="label">
-                                    Major: 
-                                </ControlLabel>
-                            <p 
-                                id="info"> 
-                                 {this.state.user_major}
-                            </p>
-                            <p></p>
-                            <ControlLabel 
-                                id="label">
-                                Class Standing: 
-                            </ControlLabel>
-                            <p 
-                                id="info"> 
-                                 {this.state.user_year}
-                            </p>
-                        </div>
-                </div>
-                </div>
-                <div class="grid-item"> 
-                    <h1> Bio </h1> 
-                </div>
-                <div class="grid-item"> 
-                    <h1> Courses </h1> 
+                    <TopNavBar/>
                     <div class="grid-container">
-                    <h4>Currently Taking</h4>
-                    <h4>Already Taken</h4>
+                        <div class="card grid-item">
+                            <h1>{this.state.user_id}</h1>
+                            <h4>{this.state.user_fullname}</h4>
+                            <div 
+                                id="labels">
+                                    <ControlLabel 
+                                        id="label">
+                                        Major: 
+                                    </ControlLabel>
+                                    <p 
+                                        id="info"> 
+                                        {this.state.user_major}
+                                    </p>
+                                    <p></p>
+                                    <ControlLabel 
+                                        id="label">
+                                        Class Standing: 
+                                    </ControlLabel>
+                                    <p 
+                                        id="info"> 
+                                        {this.state.user_year}
+                                    </p>     
+                            </div>
+                        </div>
+                        <div class="grid-item"> 
+                            <h1> Bio </h1> 
+                        </div>
+                        <div class="grid-item"> 
+                            <h1> Courses </h1> 
+                            <div class="grid-container">
+                                <h4>Currently Taking</h4>
+                                <h4>Already Taken</h4>
+                            </div>
+                        </div>
+                        <div class="grid-item"> 
+                            <h1>Skills </h1> 
+                        </div>
                     </div>
                 </div>
-                <div class="grid-item"> 
-                    <h1> Skills </h1> 
-                </div>
-            </div>
-            </div>
         );
         }
     }
