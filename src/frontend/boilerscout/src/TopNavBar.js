@@ -9,10 +9,6 @@ class TopNavBar extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
-      repeatpassword: "",
-      redirect: false,
     };
   }
 
@@ -36,17 +32,22 @@ class TopNavBar extends Component {
 
     return (
       <div class="container">
-      <div class="logo"> <img
+      <div class="grid-container">
+      <div class="logo grid-item"> <img
               id="mylogo"
               src={logo} 
               alt="logo"
           /> 
       </div>
+      <div class="grid-item">
       <nav class="nav">
-        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/scout">Scout</a>
+        <a class="nav-link" href="/community">Community</a>
         <a class="nav-link" href="/profile">Profile</a>
         <a class="nav-link" href="/settings">Settings</a>
       </nav>
+      </div>
+      </div>
       <p></p>
       <hr/>
       </div>

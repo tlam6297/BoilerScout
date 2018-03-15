@@ -1,6 +1,8 @@
 .nav {
     display: flex;
-    padding-top: 3em;
+    padding-top: 3rem;
+    float: right;
+    padding-left: 10rem;
 }
 
 a.nav-link {
@@ -9,8 +11,12 @@ a.nav-link {
     font-size: 100%;
 }
 
+.grid-container {
+    grid-template-columns: auto auto auto;
+}
+
 #mylogo {
     float: left;
-    width: 9em;
+    width: 9rem;
     height: auto;
 }
