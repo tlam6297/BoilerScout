@@ -23,6 +23,11 @@ class Profile extends Component {
           user_year: "Junior"
         };
       }
+
+    parseFields = (text) => {
+        var ans = text.split(" ");
+        return ans;
+    }
      
     getAccessToken = () => {
         // The type of token might be JSON
@@ -83,24 +88,34 @@ class Profile extends Component {
                                     Major: 
                                 </ControlLabel>
                             <p 
-                            id="info"> 
+                                id="info"> 
                                  {this.state.user_major}
                             </p>
                             <p></p>
                             <ControlLabel 
-                            id="label">
+                                id="label">
                                 Class Standing: 
                             </ControlLabel>
                             <p 
-                            id="info"> 
+                                id="info"> 
                                  {this.state.user_year}
                             </p>
                         </div>
                 </div>
                 </div>
-                <div class="grid-item"> <h1> Bio </h1> </div>
-                <div class="grid-item"> <h1> Skills </h1> </div>
-                <div class="grid-item"> <h1> Courses </h1> </div>
+                <div class="grid-item"> 
+                    <h1> Bio </h1> 
+                </div>
+                <div class="grid-item"> 
+                    <h1> Courses </h1> 
+                    <div class="grid-container">
+                    <h4>Currently Taking</h4>
+                    <h4>Already Taken</h4>
+                    </div>
+                </div>
+                <div class="grid-item"> 
+                    <h1> Skills </h1> 
+                </div>
             </div>
             </div>
         );
