@@ -3,6 +3,7 @@ import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Radio, Checkbox, DropdownButton, InputGroup, MenuItem, ButtonGroup } from "react-bootstrap";
 import './AdvancedFilters.css';
 import POSTRequest from './POSTRequest'
+import Nav from './TopNavBar'
 
 class AdvancedFilters extends Component {
   constructor (props) {
@@ -16,7 +17,10 @@ class AdvancedFilters extends Component {
         username : "",
         currentlyEnrolled : false,
         alreadyTaken : false,
-        classStanding : "freshman",
+        classStandingFreshman : false,
+        classStandingSophomore : false,
+        classStandingJunior : false,
+        classStandingSenior : false,
         major : ""
       };
   }
@@ -25,6 +29,8 @@ class AdvancedFilters extends Component {
     event.preventDefault();
     this.setState({ redirect: true })
     const _this = this;
+
+    console.log(this.state);
 
     var payload = JSON.stringify({
       "fistName": this.state.firstName,
@@ -52,13 +58,48 @@ class AdvancedFilters extends Component {
     this.setState({
       [event.target.id]: event.target.value
     });
-    console.log(this.state);
+    
+  }
+
+  handleCheckCurentlyEnrolled = (event) => {    
+    this.state.currentlyEnrolled = !this.state.currentlyEnrolled;
+  }
+
+  handleCheckAlreadyTaken = (event) => {
+    this.state.alreadyTaken = !this.state.alreadyTaken;
+  }
+
+  handleCheckClassStandingFreshman = (event) => {
+    this.state.classStandingFreshman = !this.state.classStandingFreshman;
+  }
+
+  handleCheckClassStandingSophomore = (event) => {
+    this.state.classStandingSophomore = !this.state.classStandingSophomore;
+  }
+
+  handleCheckClassStandingJunior = (event) => {
+    this.state.classStandingJunior = !this.state.classStandingJunior;
+  }
+
+  handleCheckClassStandingSenior = (event) => {
+    this.state.classStandingSenior = !this.state.classStandingSenior;
+  }
+
+  handleRadioAll = (event) => {
+    this.state.major = "all";
+  }
+
+  handleRadioOnlyMine = (event) => {
+    this.state.major = "mine";
+  }
+
+  handleRadioOnlySpecific = (event) => {
+    this.state.major = "specific";
   }
 
   render() {
     return (
-      <div className="AdvancedFilters">
-        <form onSubmit={this.handleSubmit}>
+      <div className="AdvancedFilters">        
           <div className="Form" className="left">
             <FormGroup controlId="firstName" bsSize="large">
               <ControlLabel>First Name:</ControlLabel>
@@ -92,47 +133,51 @@ class AdvancedFilters extends Component {
           <div className="right">
             <div className="courses">
               <h3>Courses</h3>
-              <Checkbox>
+              <Checkbox onChange={this.handleCheckCurentlyEnrolled}>
                 Currently Enrolled
               </Checkbox>
-              <Checkbox>
+              <Checkbox onChange={this.handleCheckAlreadyTaken}>
                 Already Taken
               </Checkbox>
             </div>
             <div className="class-standing">
               <h3>Class Standing</h3>
-              <Checkbox>
+              <Checkbox onChange={this.handleCheckClassStandingFreshman}>
                 Freshman
               </Checkbox>
-              <Checkbox>
+              <Checkbox onChange={this.handleCheckClassStandingSophomore}>
                 Sophomore
               </Checkbox>
-              <Checkbox>
+              <Checkbox onChange={this.handleCheckClassStandingJunior}>
                 Junior
               </Checkbox>
-              <Checkbox>
+              <Checkbox onChange={this.handleCheckClassStandingSenior}>
                 Senior
               </Checkbox>
             </div>
             <div className="majors">
-              <h3>Majors</h3>
-              <Radio>
-                All majors
-              </Radio>
-              <Radio>
-                Only my major
-              </Radio>
-              <Radio>
-                Only in a specific major
-              </Radio>
+              <FormGroup>
+                <h3>Majors</h3>
+                <Radio name="radioGroup" onChange={this.handleRadioAll}>
+                  All majors
+                </Radio>
+                <Radio name="radioGroup" onChange={this.handleRadioOnlyMine}>
+                  Only my major
+                </Radio>
+                <Radio name="radioGroup" onChange={this.handleRadioOnlySpecific}>
+                  Only in a specific major
+                </Radio>
+              </FormGroup>
             </div>
+
+            <div className="button bottom">
+              <form onSubmit={this.handleSubmit}>
+                <Button type="submit">
+                  Scout
+                </Button>  
+              </form>    
+            </div>          
           </div>
-          <div className="button bottom">
-            <Button type="submit">
-              Scout
-            </Button>      
-          </div>          
-        </form>
       </div>
     )
   }

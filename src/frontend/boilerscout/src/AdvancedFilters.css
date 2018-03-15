@@ -1,15 +1,21 @@
-.left {    
-    margin-top: 20px;
-    margin-left: 37%;
-    float: left;
-    color: #cc9900;
+.AdvancedFilters {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.navbar {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.left {
+    grid-column: 2;
+    grid-row: 2 / 4;
 }
 
 .right {
-    float: left;
-    color: #cc9900;
-}
-
-.AFForm {
-    width: 55%;
+    grid-column: 3;
+    grid-row: 2 / 4;      
 }
