@@ -100,8 +100,8 @@ class AdvancedFilters extends Component {
   render() {
     return (
       <div className="AdvancedFilters">        
-          <div className="Form" className="left">
-            <FormGroup controlId="firstName" bsSize="large">
+          <div className="Form" className="left" >
+            <FormGroup controlId="firstName" bsSize="large" className="padding">
               <ControlLabel>First Name:</ControlLabel>
               <FormControl
                 className="FormInput AFForm"
@@ -110,7 +110,7 @@ class AdvancedFilters extends Component {
                 onChange={this.handleChange}
               />
             </FormGroup>
-            <FormGroup controlId="lastName" bsSize="large">
+            <FormGroup controlId="lastName" bsSize="large" className="padding">
               <ControlLabel>Last Name:</ControlLabel>
               <FormControl
                 className="FormInput AFForm"
@@ -119,7 +119,7 @@ class AdvancedFilters extends Component {
                 onChange={this.handleChange}
               />
             </FormGroup>
-            <FormGroup controlId="username" bsSize="large">
+            <FormGroup controlId="username" bsSize="large" className="padding">
               <ControlLabel>Username:</ControlLabel>
               <FormControl
                 className="FormInput AFForm"
@@ -128,6 +128,13 @@ class AdvancedFilters extends Component {
                 onChange={this.handleChange}
               />
             </FormGroup>
+            <div className="button bottom">
+              <form onSubmit={this.handleSubmit}>
+                <Button type="submit">
+                  Scout
+                </Button>  
+              </form>    
+            </div>
           </div>
 
           <div className="right">
@@ -168,15 +175,7 @@ class AdvancedFilters extends Component {
                   Only in a specific major
                 </Radio>
               </FormGroup>
-            </div>
-
-            <div className="button bottom">
-              <form onSubmit={this.handleSubmit}>
-                <Button type="submit">
-                  Scout
-                </Button>  
-              </form>    
-            </div>          
+            </div>        
           </div>
       </div>
     )
