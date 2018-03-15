@@ -1,16 +1,14 @@
 import React, {Component} from 'react'
 import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
-import { Button, FormGroup, FormControl, ControlLabel, Navbar, Nav, NavItem, MenuItem,  } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, Navbar, Nav, NavItem } from "react-bootstrap";
+import  './TopNavBar.css'
+import logo from './logo.svg'
 
 class TopNavBar extends Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
-      repeatpassword: "",
-      redirect: false,
     };
   }
 
@@ -25,24 +23,33 @@ class TopNavBar extends Component {
     this.setState({ redirect: true })
   }
 
-  render () {   
+  render () {
+    const style = {
+      width: "400px",
+      margin: 0,
+      padding: 0,
+    }
+
     return (
-      <div className="navbar" class="navbar">
-        <nav className="navbar navbar-default">
-        
-          <div className="link">
-            <Link to="/">Home</Link>            
-          </div>
-          <div className="link left ">
-            <Link to="/settings">Settings</Link>
-          </div>
-          <div className="link">
-            <Link to="/profile">Profile</Link>
-          </div>
-          <div className="link">
-            <Link to="/update-password">Update Password</Link>
-          </div>            
-        </nav>
+      <div class="container">
+      <div class="grid-container">
+      <div class="logo grid-item"> <img
+              id="mylogo"
+              src={logo} 
+              alt="logo"
+          /> 
+      </div>
+      <div class="grid-item">
+      <nav class="nav">
+        <a class="nav-link" href="/scout">Scout</a>
+        <a class="nav-link" href="/community">Community</a>
+        <a class="nav-link" href="/profile">Profile</a>
+        <a class="nav-link" href="/settings">Settings</a>
+      </nav>
+      </div>
+      </div>
+      <p></p>
+      <hr/>
       </div>
     )
   }
