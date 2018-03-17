@@ -5,6 +5,7 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import './Scout.css'
 import TopNavBar from './TopNavBar'
 import GETRequest from './GETRequest'
+import Result from './Result'
 
 class Scout extends Component {
   constructor(props, context) {
@@ -13,7 +14,8 @@ class Scout extends Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      searchinput: ''
+      searchinput: '',
+      showResult: false,
     };
   }
   
@@ -22,10 +24,13 @@ class Scout extends Component {
     
   }
 
-  handleSubmit = () => {
-    const get = new GETRequest('http://localhost:8080/scout');
+  handleSubmit = (e) => {
+    //const get = new GETRequest('http://localhost:8080/scout');
+    e.preventDefault();
 
-    console.log(get.getResponse());
+    this.setState({
+      showResult: true,
+    });
   }
 
   render() {
@@ -52,6 +57,11 @@ class Scout extends Component {
             </Button>
             <p></p>
           </form>
+
+          {this.state.showResult ?
+            <Result /> :
+            null
+          }
 
           <Route render={({ history}) => (
             <button
