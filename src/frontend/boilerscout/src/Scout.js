@@ -44,9 +44,11 @@ class Scout extends Component {
 
   render() {
     return (
-      <div className="Scout">
-        {/*<TopNavBar/>*/}
-        <form onSubmit={this.handleSubmit}>
+      <div className="scout">
+        <div className="nav">
+          <TopNavBar/>
+        </div>        
+        <form onSubmit={this.handleSubmit} className="form">
           <FormGroup controlId="search" bsSize="large">
             <FormControl
               className="FormInput ScoutForm"
@@ -63,21 +65,24 @@ class Scout extends Component {
               bsSize="small"
               type="submit">
               SUBMIT        
-            </Button>
-            <p></p>
-          </form>
+          </Button>
+          <p></p>
+        </form>
 
+        <div className="result">
           {this.state.showResult ?
             <Result data={this.state}/> :
             null
           }
-
+        </div>
+        <div className="advanced">
           <Route render={({ history}) => (
             <button
               type='button'
               onClick={() => { history.push('/advanced-filters') }}
             >ADVANCED FILTERS</button>
-          )} />  
+          )} />
+        </div>
       </div>
     );
   }

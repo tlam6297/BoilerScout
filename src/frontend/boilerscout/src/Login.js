@@ -13,7 +13,7 @@ class Login extends Component {
       email: "",
       password: "",
       redirect: false,
-      DEBUGGING: true,
+      DEBUGGING: false,
     };
   }
 
@@ -113,15 +113,6 @@ class Login extends Component {
     return (
       <div className="Login">
         {this.renderRedirect()}
-        <div className="Logo">
-          <Link to="/">
-            <img
-                src={logo} 
-                className="Home-logo" 
-                alt="logo"                
-            />
-          </Link>
-        </div>
         <div className="Navbar">
           <NavBar />
         </div>

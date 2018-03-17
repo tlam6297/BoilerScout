@@ -14,12 +14,18 @@ class Result extends Component {
 
     return (
       <div className="result">
-        <p>
+        <div className="pic">
+          {data.picture}
+        </div>
+        <div className="first">
           {data.first}
-        </p>
-        <p>
+        </div>
+        <div className="last">
           {data.last}
-        </p>
+        </div>
+        <div className="major">
+          {data.major}
+        </div>
       </div>
     )
   }
