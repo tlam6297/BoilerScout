@@ -28,15 +28,24 @@ class Scout extends Component {
     //const get = new GETRequest('http://localhost:8080/scout');
     e.preventDefault();
 
+    const firstName = "jacob"
+    const lastName = "mmmmmmmizeee"
+    const maj = "Computer Science"
+    const yearr = "Sophomore"
+
     this.setState({
       showResult: true,
+      first: firstName,
+      last: lastName,
+      major: maj,
+      year: yearr,
     });
   }
 
   render() {
     return (
       <div className="Scout">
-        <TopNavBar/>
+        {/*<TopNavBar/>*/}
         <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="search" bsSize="large">
             <FormControl
@@ -59,7 +68,7 @@ class Scout extends Component {
           </form>
 
           {this.state.showResult ?
-            <Result /> :
+            <Result data={this.state}/> :
             null
           }
 

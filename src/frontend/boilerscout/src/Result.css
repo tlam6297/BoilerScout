@@ -1,0 +1,5 @@
+.result {
+  border-bottom: 6px solid rgb(231, 170, 0);
+  background-color: lightgrey;
+  border-radius: 5px; 
+}
