@@ -11,19 +11,20 @@ class Result extends Component {
 
   render() {
     const data = this.props.data;
+    console.log(data);
 
     return (
       <div className="result">
-        <div className="pic">
+        <div className="pic entry">
           {data.picture}
         </div>
-        <div className="first">
+        <div className="first entry">
           {data.first}
         </div>
-        <div className="last">
+        <div className="last entry">
           {data.last}
         </div>
-        <div className="major">
+        <div className="major entry">
           {data.major}
         </div>
       </div>

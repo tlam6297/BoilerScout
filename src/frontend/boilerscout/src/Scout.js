@@ -16,30 +16,57 @@ class Scout extends Component {
     this.state = {
       searchinput: '',
       showResult: false,
+      results: [{
+        firstName: "bonxie",
+        lastName: "trumper",
+        maj: "political science",
+        yearr: "Senior",
+      }],
     };
   }
   
   handleChange(e) {
-    this.setState({searchinput: e.target.searchinput});
-    
+    this.setState({searchinput: e.target.searchinput});    
   }
 
   handleSubmit = (e) => {
     //const get = new GETRequest('http://localhost:8080/scout');
     e.preventDefault();
 
-    const firstName = "jacob"
-    const lastName = "mmmmmmmizeee"
-    const maj = "Computer Science"
-    const yearr = "Sophomore"
+    const testData = {
+      firstName: "jacob",
+      lastName: "mmmmmmmizeee",
+      maj: "Computer Science",
+      yearr: "Sophomore",
+    }
 
-    this.setState({
-      showResult: true,
-      first: firstName,
-      last: lastName,
-      major: maj,
-      year: yearr,
-    });
+    const numberOfResults = 2;
+
+    // Add new object to list of objects in state
+    this.setState((prevState, props) => {
+      const test = prevState.results;
+      test.push(testData);
+      return {results: test};
+    });    
+  }
+
+  renderResults = () => {
+    return (
+      <div className="results">
+        {this.state.results.forEach(function(data) {
+          return <p>hello1</p>;
+        })}
+      </div>
+    )
+  }
+
+  renderResultsOld = () => {
+    var stateList = [this.state.first, this.state.last, this.state.major, this.state.year];
+    var info = stateList.map(function(dataPoint){
+      return <li>{dataPoint}</li>;
+    })
+
+    return  <ul>{ info }</ul>
   }
 
   render() {
@@ -69,12 +96,8 @@ class Scout extends Component {
           <p></p>
         </form>
 
-        <div className="result">
-          {this.state.showResult ?
-            <Result data={this.state}/> :
-            null
-          }
-        </div>
+        {this.renderResults()}
+
         <div className="advanced">
           <Route render={({ history}) => (
             <button

@@ -16,7 +16,7 @@
   padding: 1.5rem;
 }
 
-.result {
+.results {
   grid-column: 2;
   grid-row: 3 / 5;
 }
