@@ -54,7 +54,7 @@ public class BoilerScoutApplication {
         return profileController.updateProfile(body);
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/scout", method = RequestMethod.GET)
     public Map<String, Object> queryForUsers(@RequestParam String userId,
                                       @RequestParam String token,
                                       @RequestParam String type,
