@@ -4,6 +4,7 @@ import com.example.boilerscout.api.LoginController;
 import com.example.boilerscout.api.ProfileController;
 import com.example.boilerscout.api.ValidationUtility;
 import com.example.boilerscout.api.SignUpController;
+import com.example.boilerscout.api.ProfileGetController;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,9 @@ public class BoilerScoutApplication {
 
     @Autowired
     private ProfileController profileController;
+    
+    @Autowired
+    private ProfileGetController profileGetController;
 
     @RequestMapping(value = "/test")
     public Map<String, Object> t(@RequestBody Map<String, String> body) {
@@ -54,6 +58,13 @@ public class BoilerScoutApplication {
         return profileController.updateProfile(body);
     }
 
+    
+    @RequestMapping(value = "/get-profile/get", params = {"id"}, method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getProfile(@RequestParam("id") String id,@RequestParam("token") String token){
+        return profileGetController.getProfile(id,token);
+    }
+    
     public static void main(String[] args) {
         SpringApplication.run(BoilerScoutApplication.class, args);
     }
