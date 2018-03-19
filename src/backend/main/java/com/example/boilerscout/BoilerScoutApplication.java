@@ -37,7 +37,7 @@ public class BoilerScoutApplication {
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     @ResponseBody
     //TODO implement meaningful exception handling for badly formatted requests
-    public Map<String, Object> signUp(@Valid @RequestBody Map<String, String> body) {
+    public Map<String, Object> signUp(@Valid @RequestBody Map<String, Object> body) {
         return signUpController.signUp(body);
     }
 
