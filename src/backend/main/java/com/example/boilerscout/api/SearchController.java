@@ -59,7 +59,19 @@ public class SearchController extends ValidationUtility {
                 }
                 else { //type is a course
                     List<String> courseIds = jdbcTemplate.queryForList("SELECT course_id FROM courses WHERE course_name LIKE '%" + query + "%'", String.class);
-                    response.put("query", courseIds);
+                    HashSet<String> userIdsWithCourse = new HashSet<String>();
+                    for(int i = 0; i < courseIds.size(); i++) {
+                        HashSet<String> hs = new HashSet<String>(jdbcTemplate.queryForList("SELECT user_id FROM user_courses WHERE course_id='" + courseIds.get(i) + "'", String.class));
+                        userIdsWithCourse.addAll(hs);
+                    }
+
+                    List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+                    for(Iterator<String> it = userIdsWithCourse.iterator(); it.hasNext();) {
+                        String uid = it.next();
+                        result.addAll(jdbcTemplate.queryForList("SELECT * FROM profiles WHERE user_id='" + uid + "'"));
+                    }
+
+                    response.put("query", result);
 
              }
 
