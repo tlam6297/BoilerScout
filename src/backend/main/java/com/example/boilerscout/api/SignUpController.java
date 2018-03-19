@@ -39,15 +39,16 @@ public class SignUpController {
         return response;
     }
 
-    public Map<String, Object> signUp(@RequestBody Map<String, String> body) {
+    public Map<String, Object> signUp(@RequestBody Map<String, Object> body) {
 
         Map<String, Object> response = new HashMap<String, Object>();
         try {
             String newUserId = UUID.randomUUID().toString();
-            String email = body.get("email");
-            String password = body.get("password");
-            String fullName = body.get("fullName");
-            String major = body.get("major");
+            String email = body.get("email").toString();
+            String password = body.get("password").toString();
+            String fullName = body.get("fullName").toString();
+            String major = body.get("major").toString();
+            Integer gradYear = (Integer) body.get("grad_year");
 
             //Verify that no prior email exists
             List<Map<String, Object>> existingEmails = jdbcTemplate.queryForList("SELECT * FROM users WHERE email='" + email + "'");
@@ -65,8 +66,8 @@ public class SignUpController {
 
 
             //Create a new default profile for the user
-            jdbcTemplate.update("INSERT INTO profiles (user_id, full_name, major) VALUES (?, ?, ?)",
-                    newUserId, fullName, major);
+            jdbcTemplate.update("INSERT INTO profiles (user_id, full_name, major, grad_year) VALUES (?, ?, ?, ?)",
+                    newUserId, fullName, major, gradYear);
 
             response.put("status", HttpStatus.OK);
             return response;
