@@ -5,8 +5,8 @@
   grid-template-columns: 0.5fr 1fr 0.5fr;
 }
 
-.nav {
-  grid-column: 2;
+.navs {
+  grid-column: 1 / 4;
   grid-row: 1;
 }
 
@@ -30,6 +30,18 @@ button {
   color:black;
 }
 
+.scoutbutton {
+  width: 20%;
+}
+
+.ScoutForm {
+  width: 20%;
+}
+
+button {
+  color:black;
+}
+ 
 .scoutbutton {
   width: 20%;
 }

@@ -3,7 +3,7 @@ import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Nav } from "react-bootstrap";
 import NavBar from './TopNavBar'
 import './Login.css'
-import logo from './logo.svg'
+import Logo from './Logo'
 
 class Login extends Component {
   constructor (props) {
@@ -113,8 +113,8 @@ class Login extends Component {
     return (
       <div className="Login">
         {this.renderRedirect()}
-        <div className="Navbar">
-          <NavBar />
+        <div className="logo">
+          <Logo />
         </div>
         <form onSubmit={this.handleSubmit}>
           <div className="Form">

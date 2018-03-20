@@ -1,31 +1,36 @@
 @import url(https://fonts.googleapis.com/css?family=Fauna+One|Oxygen:400,300,700);
 
 * {
-  background-color:  rgb(59, 160, 218);
-  font-family: Oxygen, Helvetica, Arial, sans-serif;
+ background-color:  black;
+ font-family: Oxygen, Helvetica, Arial, sans-serif;
 }
 
 .App {
-  padding: 0.5rem;
+ padding: 0.5rem;
 }
 
 button {
-  background-color: #cc9900;
-  font-size: 85%;
-  border: none;
-  border-radius: 10px;
+ background-color: #cc9900;
+ font-size: 85%;
+ border: none;
+ border-radius: 10px;
+ margin: 5px;
+ width: 25%;
+ height: 35px;
 }
 
 .Container {
-  margin: 1px;
-  padding-top: 5px;
-  text-align: center;
+ margin: 1px;
+ padding-top: 10px;
 }
 
 .App-logo {
-  -webkit-margin-bottom-collapse: 20px;
+ -webkit-margin-bottom-collapse: 20px;
+ align-self: center;
 }
 
 .App-title {
-  font-size: 1.5em;
+ font-size: 1.5em;
 }
+
+

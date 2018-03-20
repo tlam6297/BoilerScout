@@ -7,6 +7,8 @@ import TopNavBar from './TopNavBar'
 import GETRequest from './GETRequest'
 import Result from './Result'
 
+import axios from 'axios';
+
 class Scout extends Component {
   constructor(props, context) {
     super(props, context);
@@ -69,10 +71,19 @@ class Scout extends Component {
     return  <ul>{ info }</ul>
   }
 
+  // TEST GET request: Works!
+  componentDidMount() {
+    axios.get(`http://www.reddit.com/r/reactjs.json`)
+      .then(res => {
+        const posts = res.data.data.children.map(obj => obj.data);
+        console.log(posts);
+      });
+  }
+
   render() {
     return (
       <div className="scout">
-        <div className="nav">
+        <div className="navs">
           <TopNavBar/>
         </div>        
         <form onSubmit={this.handleSubmit} className="form">

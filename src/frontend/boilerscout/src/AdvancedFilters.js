@@ -99,7 +99,10 @@ class AdvancedFilters extends Component {
 
   render() {
     return (
-      <div className="AdvancedFilters">        
+      <div className="AdvancedFilters">   
+        <div className="navbar">
+          <Nav />
+        </div>     
           <div className="Form" className="left" >
             <FormGroup controlId="firstName" bsSize="large" className="padding">
               <ControlLabel>First Name:</ControlLabel>
