@@ -38,13 +38,13 @@ class Login extends Component {
     if (this.state.DEBUGGING) {
       return true;
     } else {
-      return (validEmail & validPassword  );
+      return (validEmail && validPassword);
     }
   }
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/home'/>
+      return <Redirect to='/scout'/>
     }
   }
 
@@ -69,6 +69,7 @@ class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const _this = this;
+
     var payload = JSON.stringify({
       "email": this.state.email,
       "password": this.state.password,

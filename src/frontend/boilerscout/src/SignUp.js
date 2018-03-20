@@ -9,7 +9,7 @@ class SignUp extends Component {
     super(props);
 
     this.state = {
-      email: "jmieczni@purdue.edu",
+      email: "ddd@purdue.edu",
       password: "Test1234!",
       repeatpassword: "Test1234!",
       fullname: "Jacob P Mieczni",
@@ -22,7 +22,6 @@ class SignUp extends Component {
     const email = this.state.email.toLowerCase();
     const regex = /^\S+@purdue.edu$/;
     const validEmail = regex.test(email);
-    console.log("Good email?: " + validEmail);
     
     const password = this.state.password;
     const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
@@ -42,7 +41,8 @@ class SignUp extends Component {
 
   handleSubmit = (event) => {
       event.preventDefault();
-      this.setState({ redirect: true });
+      const _this = this;
+
       const payload = JSON.stringify({
         "email": this.state.email,
         "password": this.state.password,
@@ -58,7 +58,10 @@ class SignUp extends Component {
         body: payload
       }).then(function(response) {
         if (response.ok) {
-          console.log("GOOD");
+          _this.setState({ redirect: true })
+        } else {
+          alert("count not work");
+          console.log(response);
         }
       })
   }
@@ -131,6 +134,9 @@ class SignUp extends Component {
         <Link to="/login">Already a member?</Link>
         <p></p>
         <Link to="/resend-confirmation">Resend Confirmation?</Link>
+        {this.state.redirect && (
+          <Redirect to={'/profile-created'}/>   
+        )}
       </div>
     )
   }
