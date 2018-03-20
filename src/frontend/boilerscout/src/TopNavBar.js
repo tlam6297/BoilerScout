@@ -34,12 +34,14 @@ class TopNavBar extends Component {
       <div class="container">
         <div class="grid-container">
           <div class="logo grid-item"> 
+          <a href='/scout'>
             <img
               id="mylogo"
-              href="/"
+              a="/scout"
               src={logo} 
               alt="logo"
             /> 
+            </a>
         </div>
         <div class="grid-item">
           <nav class="nav">
