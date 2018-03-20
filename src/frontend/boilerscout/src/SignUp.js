@@ -60,8 +60,7 @@ class SignUp extends Component {
         if (response.ok) {
           _this.setState({ redirect: true })
         } else {
-          alert("count not work");
-          console.log(response);
+          alert("Error: User Name already Exists!");
         }
       })
   }
