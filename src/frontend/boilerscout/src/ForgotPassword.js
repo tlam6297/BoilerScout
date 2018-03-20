@@ -19,8 +19,7 @@ class ForgotPassword extends Component {
     const email = this.state.email.toLowerCase();
     const regex = /^\S+@purdue.edu$/;
     const validEmail = regex.test(email);
-
-    console.log("Good email?: " + validEmail);
+    
     return (validEmail);
   }
 
@@ -32,7 +31,7 @@ class ForgotPassword extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ redirect: true })
+    const _this = this;
 
     fetch('http://localhost:8080/forgot-password', {
         method: 'POST',
@@ -45,7 +44,12 @@ class ForgotPassword extends Component {
         })
       })
       .then(function(response) {
-        alert(response.statusText);
+        if (response.ok) {
+          
+          _this.setState({ redirect: true })
+        } else {
+          alert(response.statusText);
+        }
       })
   }
 
