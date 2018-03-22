@@ -215,7 +215,6 @@ public class ProfileController extends ValidationUtility {
             throw new RuntimeException("[InternalServerError] - Error accessing data.");
         }
 
-        return response;
 
     }
 
