@@ -109,8 +109,10 @@ public class ProfileController extends ValidationUtility {
     }
 
 
-    public Map<String, Object> getProfile(String userId, String token, String goal) {
+    public Map<String, Object> getProfile(String userId, String token, String query) {
         Map<String, Object> response = new HashMap<String, Object>();
+        response.put("token",token);
+        response.put("userId",userId);
         if (!isValidToken(token, userId) || isExpiredToken(token)) {
             response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
             return response;
@@ -118,14 +120,15 @@ public class ProfileController extends ValidationUtility {
 
         try {
             //check if id exists
-            Integer existingID = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users WHERE user_id='" + goal + "'", Integer.class);
+            Integer existingID = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users WHERE user_id='" + query + "'", Integer.class);
             if (existingID <= 0) {
                 throw new RuntimeException("[BadRequest] - No user associated with this ID!");
             }
-
+            response.put("token",token);
+            response.put("userId",userId);
 
             //get info, THIS is the basic query that should always work, but currently db has some users where some values are not even NULL but simply literally dont exist, cant find, whatever you wanna call it
-            List<Map<String, Object>> userInfo = jdbcTemplate.queryForList("SELECT users.user_id, email, skill_name, profiles.bio, profiles.grad_year, profiles.major, profiles.full_name FROM users JOIN user_skills ON users.user_id = user_skills.user_id JOIN skills ON user_skills.skill_id = skills.skill_id JOIN profiles ON users.user_id = profiles.user_id WHERE users.user_id = '" + goal + "'");
+            List<Map<String, Object>> userInfo = jdbcTemplate.queryForList("SELECT users.user_id, email, skill_name, profiles.bio, profiles.grad_year, profiles.major, profiles.full_name FROM users JOIN user_skills ON users.user_id = user_skills.user_id JOIN skills ON user_skills.skill_id = skills.skill_id JOIN profiles ON users.user_id = profiles.user_id WHERE users.user_id = '" + query + "'");
             if(userInfo.size()>0){
 //if this check passes then cool, user has courses,bio, skills, and we reduce the number of pings to db to 2.
                 response.put("Email",userInfo.get(0).get("email"));
@@ -141,7 +144,7 @@ public class ProfileController extends ValidationUtility {
                     response.put("Skills",skills);
                 }
                 //now check courses
-                userInfo =jdbcTemplate.queryForList("SELECT course_name FROM users JOIN user_courses ON users.user_id=user_courses.user_id JOIN courses ON user_courses.course_id = courses.course_id WHERE users.user_id = '" + goal + "'");
+                userInfo =jdbcTemplate.queryForList("SELECT course_name FROM users JOIN user_courses ON users.user_id=user_courses.user_id JOIN courses ON user_courses.course_id = courses.course_id WHERE users.user_id = '" + query + "'");
                 if(userInfo.size()>0){
                     List<String> courses = new ArrayList<String>();
                     for(int i=0; i!=userInfo.size();i++){   // make this into a list not map-in-ma
@@ -158,7 +161,7 @@ public class ProfileController extends ValidationUtility {
                 boolean hasSkills = false;
                 boolean hasCourses = false;
                 //CHECK FOR SKILLS
-                List<Map<String, Object>> tempInfo = jdbcTemplate.queryForList("SELECT skill_name from user_skills JOIN skills on  user_skills.skill_id = skills.skill_id where user_id = '" + goal + "'");
+                List<Map<String, Object>> tempInfo = jdbcTemplate.queryForList("SELECT skill_name from user_skills JOIN skills on  user_skills.skill_id = skills.skill_id where user_id = '" + query + "'");
                 if(tempInfo.size() > 0){
                     hasSkills = true;
                     List<String> skills = new ArrayList<String>();
@@ -170,7 +173,7 @@ public class ProfileController extends ValidationUtility {
                     }
                 }
                 //CHECK FOR COURSES
-                tempInfo = jdbcTemplate.queryForList("SELECT course_name from user_courses JOIN courses on  user_courses.course_id = courses.course_id where user_id = '" + goal + "'");
+                tempInfo = jdbcTemplate.queryForList("SELECT course_name from user_courses JOIN courses on  user_courses.course_id = courses.course_id where user_id = '" + query + "'");
                 if(tempInfo.size() > 0) {
                     hasCourses = true;
                     List<String> courses = new ArrayList<String>();
@@ -182,7 +185,7 @@ public class ProfileController extends ValidationUtility {
                     }
                 }
                 //CHECK for FULL_NAME, BIO, MAJOR and put if exist
-                tempInfo = jdbcTemplate.queryForList("SELECT full_name, bio, major from profiles where user_id = '" + goal +"'");
+                tempInfo = jdbcTemplate.queryForList("SELECT full_name, bio, major from profiles where user_id = '" + query +"'");
                 if(tempInfo.size()>0){
                     hasBio = true;
                     if(tempInfo.get(0).get("full_name")!=null){
@@ -199,7 +202,7 @@ public class ProfileController extends ValidationUtility {
                     }
                 }
                 //GET EMAIL, should never run into issues but just safety check anyways
-                tempInfo = jdbcTemplate.queryForList("SELECT email from users where user_id =  '" + goal +"'");
+                tempInfo = jdbcTemplate.queryForList("SELECT email from users where user_id =  '" + query +"'");
 
                 response.put("Email",tempInfo.get(0).get("email"));
 
@@ -209,6 +212,7 @@ public class ProfileController extends ValidationUtility {
         } catch (DataAccessException ex) {
 
         }
+
         return response;
 
     }
