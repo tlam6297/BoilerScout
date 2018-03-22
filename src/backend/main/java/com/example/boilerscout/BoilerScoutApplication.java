@@ -28,12 +28,13 @@ public class BoilerScoutApplication {
 
     @Autowired
     private SearchController searchController;
+//
+//    @RequestMapping(value = "/test")
+//    public Map<String, Object> t(@RequestBody Map<String, String> body) {
+//        return signUpController.test(body);
+//    }
 
-    @RequestMapping(value = "/test")
-    public Map<String, Object> t(@RequestBody Map<String, String> body) {
-        return signUpController.test(body);
-    }
-
+    @CrossOrigin
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     @ResponseBody
     //TODO implement meaningful exception handling for badly formatted requests
@@ -41,6 +42,7 @@ public class BoilerScoutApplication {
         return signUpController.signUp(body);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> login(@Valid @RequestBody Map<String, String> body) {
@@ -48,12 +50,14 @@ public class BoilerScoutApplication {
 
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/update-profile", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> updateProfile(@Valid @RequestBody Map<String, Object> body) {
         return profileController.updateProfile(body);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/scout", method = RequestMethod.GET)
     public Map<String, Object> queryForUsers(@RequestParam String userId,
                                       @RequestParam String token,
