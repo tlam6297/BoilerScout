@@ -210,7 +210,9 @@ public class ProfileController extends ValidationUtility {
             }
 
         } catch (DataAccessException ex) {
-
+            log.info("Exception Message" + ex.getMessage());
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException("[InternalServerError] - Error accessing data.");
         }
 
         return response;
