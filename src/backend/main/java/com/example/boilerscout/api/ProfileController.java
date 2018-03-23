@@ -109,7 +109,7 @@ public class ProfileController extends ValidationUtility {
     }
 
 
-    public Map<String, Object> getProfile(String userId, String token, String query) {
+    public Map<String, Object> getProfile(@RequestParam String userId, @RequestParam String token, @RequestParam String query) {
         Map<String, Object> response = new HashMap<String, Object>();
      
         if (!isValidToken(token, userId) || isExpiredToken(token)) {
