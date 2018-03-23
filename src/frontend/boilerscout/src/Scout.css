@@ -1,7 +1,7 @@
 .scout {
   display: grid;
   min-height: 50%;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.3fr 0.3fr 1fr 1fr 1fr 1fr;
   grid-template-columns: 0.5fr 1fr 0.5fr;
 }
 
@@ -13,17 +13,18 @@
 .form {
   grid-column: 2;
   grid-row: 2;
-  padding: 1.5rem;
+  padding: 30px;
+  margin: 0px;
 }
 
 .results {
   grid-column: 2;
-  grid-row: 3 / 5;
+  grid-row: 3 / 9;
 }
 
 .advanced {
   grid-column: 3;
-  grid-row: 4;
+  grid-row: 3;
 }
 
 button {
@@ -38,14 +39,69 @@ button {
   width: 20%;
 }
 
-button {
-  color:black;
-}
- 
-.scoutbutton {
-  width: 20%;
+li {
+  list-style-type: none;
+  border: 6px solid rgb(139, 130, 0);
+  background-color: lightsteelblue;
+  padding: 2rem;
+  margin: 1rem;
+  border-radius: 30px;
+  text-decoration: none;
 }
 
-.ScoutForm {
-  width: 20%;
+.result {
+  list-style-type: none;
+  border: 6px solid rgb(139, 130, 0);
+  background-color: lightsteelblue;
+  padding: 1rem;
+  margin: 0.2rem;
+  border-radius: 30px;
+  display: grid;
+  min-height: 50%;
+  max-height: 100px;
+  grid-template-rows: 1fr 0.2fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 0.5fr 0.5fr;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.type {
+  color: salmon;
+  display: inline;
+}
+
+.entry {
+  padding: 0.2rem;
+  background-color: cornflowerblue;  
+}
+
+.pic {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.first {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: large;
+  
+}
+
+.last {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.major {
+  grid-column: 1;
+  grid-row: 2;
+  font-size: small;  
+}
+
+.grad {
+  grid-column: 2 / 4;
+  grid-row: 2;
+  font-size: small;
 }

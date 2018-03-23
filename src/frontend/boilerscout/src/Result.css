@@ -10,6 +10,7 @@
 
 .entry {
   padding: 1.5rem;
+  background-color: cornflowerblue;
 }
 
 .pic {
@@ -20,6 +21,7 @@
 .first {
   grid-column: 2;
   grid-row: 1;
+  background-color: cornflowerblue;
 }
 
 .last {

@@ -14,6 +14,7 @@ class SignUp extends Component {
       repeatpassword: "Test1234!",
       fullname: "Jacob P Mieczni",
       major: "Antropology",
+      grad: 2020,
       redirect: false,
     };
   }
@@ -46,6 +47,9 @@ class SignUp extends Component {
       const payload = JSON.stringify({
         "email": this.state.email,
         "password": this.state.password,
+        "fullName": this.state.fullname,
+        "major": this.state.major,
+        "grad_year": this.state.grad,
       });
 
       fetch('http://localhost:8080/sign-up', {
@@ -88,6 +92,16 @@ class SignUp extends Component {
                 autoFocus
                 type="text"
                 value={this.state.major}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup controlId="grad" bsSize="large">
+              <ControlLabel>Grad Year:</ControlLabel>
+              <FormControl
+                className="FormInput"
+                autoFocus
+                type="text"
+                value={this.state.grad}
                 onChange={this.handleChange}
               />
             </FormGroup>

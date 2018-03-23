@@ -1,11 +1,11 @@
 import React from 'react'
 import { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, Radio } from "react-bootstrap";
 import './Scout.css'
 import TopNavBar from './TopNavBar'
 import GETRequest from './GETRequest'
-import Result from './Result'
+import Popup from 'react-popup'
 
 import axios from 'axios';
 
@@ -16,68 +16,118 @@ class Scout extends Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
+      url: "",
       searchinput: '',
       showResult: false,
-      results: [{
-        firstName: "bonxie",
-        lastName: "trumper",
-        maj: "political science",
-        yearr: "Senior",
-      }],
+      submitClicked: false,
+      redirect: false,
+      results: [],
+      posts: [],
     };
   }
   
-  handleChange(e) {
-    this.setState({searchinput: e.target.searchinput});    
+  handleChange = (event) => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
   }
 
   handleSubmit = (e) => {
-    //const get = new GETRequest('http://localhost:8080/scout');
     e.preventDefault();
 
-    const testData = {
-      firstName: "jacob",
-      lastName: "mmmmmmmizeee",
-      maj: "Computer Science",
-      yearr: "Sophomore",
-    }
+    // get the user id and the token from localstorage
+    const id = this.getLocalStorage("id");
+    let token = this.getLocalStorage("token");
 
-    const numberOfResults = 2;
+    // uncomment this line to test amn invalid token
+    //token = "3ffadfadf"
 
-    // Add new object to list of objects in state
-    this.setState((prevState, props) => {
-      const test = prevState.results;
-      test.push(testData);
-      return {results: test};
-    });    
+    this.state.url = "http://localhost:8080/scout?" + "userId=" + id + "&token=" + token + "&type=" + this.state.type + "&query=" + this.state.searchinput
+    
+    // the real get request
+    axios.get(this.state.url)
+    .then(res => {
+      //const posts = res.data.data.children.map(obj => obj.data);
+      //this.setState({ posts });
+     // console.log(res);
+      //console.log(this.state.url)
+      console.log(res.data.query);
+
+      if (res.data.status == "OK") {
+        
+        // Put Results in state
+        this.setState({
+          results: res.data.query,
+        });
+        
+      } else {
+        //console.log(res.data);
+        alert("Invalid Token- Please login again");
+        this.setState({
+          redirect: true,
+        })
+      }
+      
+    });
+
+    this.setState({
+      submitClicked: true,
+    });
   }
 
   renderResults = () => {
+    const redirect_to_url = "/profile?user_id=" + ""
+    
+
     return (
       <div className="results">
-        {this.state.results.forEach(function(data) {
-          return <p>hello1</p>;
-        })}
+        <ul>
+          <div className='li'>
+            {this.state.results.map((result, index) =>
+              <Link to={
+                  `/profile?user_id=` + result.user_id + `&name=` + result.full_name + `&bio=` + result.bio + `&major=` + result.major + `year=` + result.grad_year
+                } className="link">
+                <li key={index}>
+                  <div className='result entry'>
+                    <div className="first entry">
+                      {result.full_name}
+                    </div>
+                    <div className="major entry">
+                      {result.major}
+                    </div>
+                    <div className="grad entry">
+                      Grad Year: {result.grad_year}
+                    </div>
+                  </div>
+                </li>
+              </Link>
+            )}
+          </div>
+        </ul>
       </div>
-    )
+    )    
   }
 
-  renderResultsOld = () => {
-    var stateList = [this.state.first, this.state.last, this.state.major, this.state.year];
-    var info = stateList.map(function(dataPoint){
-      return <li>{dataPoint}</li>;
-    })
-
-    return  <ul>{ info }</ul>
+  handleRadioName = (event) => {
+    this.setState({
+      type: "name",
+    });
   }
 
-  // TEST GET request: Works!
-  componentDidMount() {
-    axios.get(`http://www.reddit.com/r/reactjs.json`)
-      .then(res => {
-        const posts = res.data.data.children.map(obj => obj.data);
-        console.log(posts);
-      });
+  handleRadioOnlySkill = (event) => {
+    this.setState({
+      type: "skill",
+    });
+  }
+
+  handleRadioCourse = (event) => {
+    this.setState({
+      type: "course",
+    });
+  }
+
+  getLocalStorage = (key) => {
+    return localStorage.getItem(key);
   }
 
   render() {
@@ -87,17 +137,33 @@ class Scout extends Component {
           <TopNavBar/>
         </div>        
         <form onSubmit={this.handleSubmit} className="form">
-          <FormGroup controlId="search" bsSize="large">
+
+
+        <FormGroup controlId="searchinput" bsSize="large">
             <FormControl
               className="FormInput ScoutForm"
               autoFocus
               type="text"
-              value={this.state.searchinput}
               placeholder="Enter a name, class, or skill"
+              value={this.state.searchinput}
               onChange={this.handleChange}
             />
           </FormGroup>
           <p></p>
+          <div className="type">
+            <FormGroup>
+              <h3>Type:</h3>
+              <Radio name="radioGroup" onChange={this.handleRadioName}>
+                Name
+              </Radio>
+              <Radio name="radioGroup" onChange={this.handleRadioOnlySkill}>
+                Skill
+              </Radio>
+              <Radio name="radioGroup" onChange={this.handleRadioCourse}>
+                Course
+              </Radio>
+            </FormGroup>
+          </div>
           <Button
               block
               bsSize="small"
@@ -107,7 +173,10 @@ class Scout extends Component {
           <p></p>
         </form>
 
-        {this.renderResults()}
+        { this.renderResults() }
+        {this.state.redirect && (
+          <Redirect to={'/login'}/>   
+        )}
 
         <div className="advanced">
           <Route render={({ history}) => (

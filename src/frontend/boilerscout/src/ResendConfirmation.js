@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 import POSTRequest from './POSTRequest'
+import Logo from './Logo'
 
 class ForgotPassword extends Component {
   constructor(props) {
@@ -36,15 +37,22 @@ class ForgotPassword extends Component {
 
     const post = new POSTRequest(payload, 'http://localhost:8080/resend-confirmation');
     post.send();
+
+    // console.log(post.responseOk());
     
-    if (post.responseOk) {
+    if (post.responseOk()) {
       this.setState({ redirect: true });      
+    } else {
+      alert("ERROR: email doesn't exist");
     }
   }
 
   render() {
     return (
       <div className="ForgotPassword" class="fg">
+        <div className="logo">
+          <Logo />
+        </div>
         <form onSubmit={this.handleSubmit}>
           <div className="Form" class="Form">
             <FormGroup controlId="email" bsSize="large">

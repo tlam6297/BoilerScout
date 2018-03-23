@@ -74,6 +74,11 @@ class Profile extends Component {
    }
 
    render() {
+       // this variable needs to be manipulated to pull the data from it to display!
+       let all_data = this.props.location.search;
+
+       console.log(all_data);
+
        return (
                <div class="container">
                    <TopNavBar/>
