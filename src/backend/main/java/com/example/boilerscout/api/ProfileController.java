@@ -111,8 +111,7 @@ public class ProfileController extends ValidationUtility {
 
     public Map<String, Object> getProfile(String userId, String token, String query) {
         Map<String, Object> response = new HashMap<String, Object>();
-        response.put("token",token);
-        response.put("userId",userId);
+     
         if (!isValidToken(token, userId) || isExpiredToken(token)) {
             response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
             return response;
