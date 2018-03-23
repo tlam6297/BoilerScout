@@ -1,8 +1,7 @@
 package com.example.boilerscout;
 
 import com.example.boilerscout.api.LoginController;
-import com.example.boilerscout.api.ProfileController;
-import com.example.boilerscout.api.ValidationUtility;
+import com.example.boilerscout.api.MessageController;
 import com.example.boilerscout.api.SignUpController;
 import javafx.application.Application;
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ public class BoilerScoutApplication {
     private LoginController loginController;
 
     @Autowired
-    private ProfileController profileController;
+    private MessageController messageController;
 
     @RequestMapping(value = "/test")
     public Map<String, Object> t(@RequestBody Map<String, String> body) {
@@ -48,10 +47,11 @@ public class BoilerScoutApplication {
 
     }
 
-    @RequestMapping(value = "/update-profile", method = RequestMethod.POST)
+    @RequestMapping(value = "/message", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateProfile(@Valid @RequestBody Map<String, Object> body) {
-        return profileController.updateProfile(body);
+    public Map<String, Object> message(@Valid @RequestBody Map<String, String> body) {
+        return messageController.getMessage(body);
+
     }
 
     public static void main(String[] args) {
