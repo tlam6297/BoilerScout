@@ -28,6 +28,9 @@ public class BoilerScoutApplication {
 
     @Autowired
     private SearchController searchController;
+
+    @Autowired
+    private EmailServiceController emailServiceController;
 //
 //    @RequestMapping(value = "/test")
 //    public Map<String, Object> t(@RequestBody Map<String, String> body) {
@@ -66,6 +69,21 @@ public class BoilerScoutApplication {
         return searchController.search(userId, token, type, query);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/send/verification", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> sendEmail(@Valid @RequestBody Map<String, String> body) {
+        return emailServiceController.sendVerification(body);
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/send/forgot-pass", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> sendPassword(@Valid @RequestBody Map<String, String> body) {
+        return emailServiceController.sendNewPassword(body);
+
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(BoilerScoutApplication.class, args);
