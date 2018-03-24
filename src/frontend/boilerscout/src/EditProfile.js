@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import './ForgotPassword.css'
-
+import './EditProfile.css'
+import ClickToEdit from 'react-click-to-edit'
 class EditProfile extends Component {
   constructor() {
     super()
 
     this.state = {
       userid: null,
-      bio: "HELLOOOO"
+      old_bio: "HELLOOOO",
+      new_bio: "",
+      old_skills: "skills",
+      old_skills: "",
+      old_courses: "courses",
+      new_courses: "",
     }
   }
 
@@ -45,7 +50,30 @@ class EditProfile extends Component {
             Edit Profile
         </button>
         <h4> Bio </h4>
-        <p onClick={this.handleBioChange}>{this.state.bio} </p>
+        <div className="bio">
+            <ClickToEdit
+                endEditing={(value) => this.state.new_bio = value}
+            >
+                {this.state.old_bio}
+            </ClickToEdit>
+        </div>
+        <h4> Courses </h4>
+        <div className="courses">
+            <ClickToEdit
+                endEditing={(value) => this.state.new_courses = value}
+            >
+                {this.state.old_courses}
+            </ClickToEdit>
+            <h3> {this.state.new_courses} </h3>
+        </div>
+        <h4> Skills </h4>
+        <div className="skills">
+            <ClickToEdit
+                endEditing={(value) => this.state.new_skills = value}
+            >
+                {this.state.old_skills}
+            </ClickToEdit>
+        </div>
         </div>
       </div>
     )
