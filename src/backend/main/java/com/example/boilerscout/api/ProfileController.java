@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -106,6 +107,114 @@ public class ProfileController extends ValidationUtility {
         response.put("token", token);
         response.put("status", HttpStatus.OK);
         return response;
+    }
+
+    public Map<String, Object> getProfile(@RequestParam String userId, @RequestParam String token, @RequestParam String query) {
+        Map<String, Object> response = new HashMap<String, Object>();
+
+        if (!isValidToken(token, userId) || isExpiredToken(token)) {
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
+            return response;
+        }
+
+        try {
+            //check if id exists
+            Integer existingID = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users WHERE user_id='" + query + "'", Integer.class);
+            if (existingID <= 0) {
+                throw new RuntimeException("[BadRequest] - No user associated with this ID!");
+            }
+            response.put("token",token);
+            response.put("userId",userId);
+
+            //get info, THIS is the basic query that should always work, but currently db has some users where some values are not even NULL but simply literally dont exist, cant find, whatever you wanna call it
+            List<Map<String, Object>> userInfo = jdbcTemplate.queryForList("SELECT users.user_id, email, skill_name, profiles.bio, profiles.grad_year, profiles.major, profiles.full_name FROM users JOIN user_skills ON users.user_id = user_skills.user_id JOIN skills ON user_skills.skill_id = skills.skill_id JOIN profiles ON users.user_id = profiles.user_id WHERE users.user_id = '" + query + "'");
+            if(userInfo.size()>0){
+//if this check passes then cool, user has courses,bio, skills, and we reduce the number of pings to db to 2.
+                response.put("Email",userInfo.get(0).get("email"));
+                response.put("Name", userInfo.get(0).get("full_name"));
+                response.put("Major", userInfo.get(0).get("major"));
+                response.put("Bio", userInfo.get(0).get("bio"));
+                response.put("Graduation",userInfo.get(0).get("grad_year"));
+                List<String> skills = new ArrayList<String>();
+                for(int i=0; i!=userInfo.size();i++){   // make this into a list not map-in-ma
+                    skills.add(userInfo.get(i).get("skill_name").toString());
+                }
+                if(skills.size()>0){
+                    response.put("Skills",skills);
+                }
+                //now check courses
+                userInfo =jdbcTemplate.queryForList("SELECT course_name FROM users JOIN user_courses ON users.user_id=user_courses.user_id JOIN courses ON user_courses.course_id = courses.course_id WHERE users.user_id = '" + query + "'");
+                if(userInfo.size()>0){
+                    List<String> courses = new ArrayList<String>();
+                    for(int i=0; i!=userInfo.size();i++){   // make this into a list not map-in-ma
+                        courses.add(userInfo.get(i).get("course_name").toString());
+                    }
+                    if(courses.size()>0){
+                        response.put("Courses",courses);
+                    }
+                }
+                return response;
+//user lacks either a bio, courses, or skill, so we need to find out which.
+            } else {
+                boolean hasBio = false;
+                boolean hasSkills = false;
+                boolean hasCourses = false;
+                //CHECK FOR SKILLS
+                List<Map<String, Object>> tempInfo = jdbcTemplate.queryForList("SELECT skill_name from user_skills JOIN skills on  user_skills.skill_id = skills.skill_id where user_id = '" + query + "'");
+                if(tempInfo.size() > 0){
+                    hasSkills = true;
+                    List<String> skills = new ArrayList<String>();
+                    for(int i=0; i!=tempInfo.size();i++){   // make this into a list not map-in-ma
+                        skills.add(tempInfo.get(i).get("skill_name").toString());
+                    }
+                    if(skills.size()>0){
+                        response.put("Skills",skills);
+                    }
+                }
+                //CHECK FOR COURSES
+                tempInfo = jdbcTemplate.queryForList("SELECT course_name from user_courses JOIN courses on  user_courses.course_id = courses.course_id where user_id = '" + query + "'");
+                if(tempInfo.size() > 0) {
+                    hasCourses = true;
+                    List<String> courses = new ArrayList<String>();
+                    for (int i = 0; i != tempInfo.size(); i++) {   // make this into a list not map-in-ma
+                        courses.add(tempInfo.get(i).get("courses_name").toString());
+                    }
+                    if (courses.size() > 0) {
+                        response.put("Courses", courses);
+                    }
+                }
+                //CHECK for FULL_NAME, BIO, MAJOR and put if exist
+                tempInfo = jdbcTemplate.queryForList("SELECT full_name, bio, major from profiles where user_id = '" + query +"'");
+                if(tempInfo.size()>0){
+                    hasBio = true;
+                    if(tempInfo.get(0).get("full_name")!=null){
+                        response.put("Full Name",tempInfo.get(0).get("full_name"));
+                    }
+                    if(tempInfo.get(0).get("bio")!=null){
+                        response.put("Bio",tempInfo.get(0).get("bio"));
+                    }
+                    if(tempInfo.get(0).get("major")!=null){
+                        response.put("Major",tempInfo.get(0).get("major"));
+                    }
+                    if(tempInfo.get(0).get("grad_year")!=null){
+                        response.put("Graduation",tempInfo.get(0).get("grad_year"));
+                    }
+                }
+                //GET EMAIL, should never run into issues but just safety check anyways
+                tempInfo = jdbcTemplate.queryForList("SELECT email from users where user_id =  '" + query +"'");
+
+                response.put("Email",tempInfo.get(0).get("email"));
+
+                return response;
+            }
+
+        } catch (DataAccessException ex) {
+            log.info("Exception Message" + ex.getMessage());
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException("[InternalServerError] - Error accessing data.");
+        }
+
+
     }
 
 
