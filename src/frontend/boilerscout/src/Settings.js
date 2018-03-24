@@ -3,6 +3,8 @@ import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import UpdatePassword from './UpdatePassword.js'
 import TopNavBar from './TopNavBar.js'
+import EditProfile from './EditProfile.js'
+
 class Settings extends Component {
 constructor (props) {
   super(props);
@@ -87,6 +89,7 @@ render() {
            Update Password
            </button>
        <UpdatePassword active={this.state.active}/>
+       <EditProfile/>
        </div>
     </div>
   )
