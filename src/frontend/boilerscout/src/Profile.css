@@ -9,9 +9,26 @@ h4, h1 {
   grid-row-gap: 50px;
 }
 
+h2 {
+  color:white;
+}
+
+h3 {
+  color:white;
+}
+
+h3 {
+  color:white;
+}
+
+h4 {
+  color:white;
+}
+
 h5 {
   color:white;
 }
+
 
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);

@@ -5,6 +5,7 @@ import { Button, Panel, ControlLabel} from "react-bootstrap";
 import Logo from './Logo'
 import './Profile.css'
 import TopNavBar from './TopNavBar'
+import axios from 'axios'
 
 class Profile extends Component {
    constructor (props) {
@@ -15,12 +16,8 @@ class Profile extends Component {
 
        this.state = {
         user_id: "",
-        user_fullname: "",
-        user_bio: "",
-        user_skills: "",
-        user_courses: "",
-        user_major: "",
-        user_year: "",
+        bio: "",
+        name: "",
       };
      }
 
@@ -66,14 +63,19 @@ class Profile extends Component {
            if (response.ok) {
                // Get user info
                // Put them in state
-               console.log("GOOD");
+            //    console.log("GOOD");
            } else {
                throw new Error('Profile Not Found')
            }     
        })   
    }
 
-   componentDidMount = () => {
+   componentDidMountBAK = () => {
+        
+   }
+
+    componentDidMount = () => {
+
         // this variable needs to be manipulated to pull the data from it to display!
         const all_data = this.props.location.search;
         const split = all_data.split("&");
@@ -83,21 +85,49 @@ class Profile extends Component {
             const tokens = (split[i].split("="));
 
             const type = tokens[0];
+
+            let str = tokens[1];
+            str = str.split('%20').join(' ');
             
-            console.log(tokens[0] + " | " + tokens[1]);
+            //console.log(tokens[0] + " | " + str);
 
             this.setState({
-                [tokens[0]]: tokens[1],
+                [tokens[0]]: str,
             });
         }
-   }
 
-   componentDidUpdate = () => {       
+
+
+        /////////////////////////////////////////////////
+
+        const user_id = localStorage.getItem("id");
+        const token = localStorage.getItem("token");
+        const requested_id = this.state.user_id;
+
+        const url = "http://localhost:8080/profile/get?id=" + user_id + "&token=" + token + "&query=11812850-4481-42c9-a61c-18fab469f9b4";
+
+        axios.get(url)
+        .then(res => {
+            //console.log(res);
+            if (res.status == 200) {
+                this.setState({
+                    results: res.data,
+                });        
+            } else {
+                alert("Invalid Token- Please login again");
+                this.setState({
+                    redirect: true,
+                })
+            }      
+        });
+        }
+
+    componentDidUpdate = () => {       
 
         // see if state was update correcly
         //console.log(this.state);
         console.log(this.state);
-   }
+    }
 
    render() {
         return (
@@ -105,8 +135,8 @@ class Profile extends Component {
                    <TopNavBar/>
                    <div className="grid-container">
                        <div className="card grid-item">
-                           <h1>{this.state.user_id}</h1>
-                           <h4>{this.state.user_fullname}</h4>
+                           <h1>{this.state.name}</h1>
+                           <h4>{this.state.user_id}</h4>
                            <div
                                id="labels">
                                    <ControlLabel
@@ -115,7 +145,7 @@ class Profile extends Component {
                                    </ControlLabel>
                                    <p
                                        id="info">
-                                       {this.state.user_major}
+                                       {this.state.major}
                                    </p>
                                    <p></p>
                                    <ControlLabel
@@ -124,12 +154,13 @@ class Profile extends Component {
                                    </ControlLabel>
                                    <p
                                        id="info">
-                                       {this.state.user_year}
+                                       {this.state.year}
                                    </p>    
                            </div>
                        </div>
                        <div className="grid-item">
                            <h1> Bio </h1>
+                           <h3>{this.state.bio}</h3>
                        </div>
                        <div className="grid-item">
                            <h1> Courses </h1>
