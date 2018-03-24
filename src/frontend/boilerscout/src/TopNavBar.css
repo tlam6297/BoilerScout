@@ -6,13 +6,19 @@
 }
 
 a.nav-link {
+  color: #cc9900;
+  border-style: solid;
+  border-width: 1px;
   display: flex;
   padding: 0px 10px;
+  margin: 5px;
   font-size: 100%;
+  text-decoration: none;
 }
 
 .grid-container {
   grid-template-columns: auto auto auto;
+  grid-template-rows: 0.1fr 1fr;
 }
 
 #mylogo {

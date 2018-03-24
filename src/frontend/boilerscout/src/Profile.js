@@ -74,16 +74,28 @@ class Profile extends Component {
    }
 
    render() {
-       // this variable needs to be manipulated to pull the data from it to display!
-       let all_data = this.props.location.search;
+        // this variable needs to be manipulated to pull the data from it to display!
+        const all_data = this.props.location.search;
+        const split = all_data.split("&");
+        let i = 0;
 
-       console.log(all_data);
+        for (i = 0; i < split.length; i++) {
+            const tokens = (split[i].split("="));
 
-       return (
-               <div class="container">
+            const type = split[0];
+            this.setState({
+                type: split[1],
+            });
+        }
+
+        // see if state was update correcly
+        console.log(this.state);
+
+        return (
+               <div className="container">
                    <TopNavBar/>
-                   <div class="grid-container">
-                       <div class="card grid-item">
+                   <div className="grid-container">
+                       <div className="card grid-item">
                            <h1>{this.state.user_id}</h1>
                            <h4>{this.state.user_fullname}</h4>
                            <div
@@ -107,17 +119,17 @@ class Profile extends Component {
                                    </p>    
                            </div>
                        </div>
-                       <div class="grid-item">
+                       <div className="grid-item">
                            <h1> Bio </h1>
                        </div>
-                       <div class="grid-item">
+                       <div className="grid-item">
                            <h1> Courses </h1>
-                           <div class="grid-container">
+                           <div className="grid-container">
                                <h4>Currently Taking</h4>
                                <h4>Already Taken</h4>
                            </div>
                        </div>
-                       <div class="grid-item">
+                       <div className="grid-item">
                            <h1>Skills </h1>
                        </div>
                    </div>
