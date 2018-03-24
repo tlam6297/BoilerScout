@@ -9,7 +9,7 @@ class AdvancedFilters extends Component {
   constructor (props) {
       super(props);
 
-      this.url = 'http://localhost:8080/advanced-filters';;
+      this.url = 'http://localhost:8080/advanced-filters';
 
       this.state = {
         firstName : "",

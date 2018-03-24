@@ -6,7 +6,6 @@ import './Scout.css'
 import TopNavBar from './TopNavBar'
 import GETRequest from './GETRequest'
 import Popup from 'react-popup'
-
 import axios from 'axios';
 
 class Scout extends Component {
@@ -18,6 +17,7 @@ class Scout extends Component {
     this.state = {
       url: "",
       searchinput: '',
+      type: 'name',
       showResult: false,
       submitClicked: false,
       redirect: false,
@@ -35,7 +35,6 @@ class Scout extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    // get the user id and the token from localstorage
     const id = this.getLocalStorage("id");
     let token = this.getLocalStorage("token");
 
@@ -44,30 +43,20 @@ class Scout extends Component {
 
     this.state.url = "http://localhost:8080/scout?" + "userId=" + id + "&token=" + token + "&type=" + this.state.type + "&query=" + this.state.searchinput
     
-    // the real get request
+    // get request
     axios.get(this.state.url)
     .then(res => {
-      //const posts = res.data.data.children.map(obj => obj.data);
-      //this.setState({ posts });
-     // console.log(res);
-      //console.log(this.state.url)
-      console.log(res.data.query);
-
+      // console.log(res.data.query);
       if (res.data.status == "OK") {
-        
-        // Put Results in state
         this.setState({
           results: res.data.query,
-        });
-        
+        });        
       } else {
-        //console.log(res.data);
         alert("Invalid Token- Please login again");
         this.setState({
           redirect: true,
         })
-      }
-      
+      }      
     });
 
     this.setState({
@@ -76,9 +65,6 @@ class Scout extends Component {
   }
 
   renderResults = () => {
-    const redirect_to_url = "/profile?user_id=" + ""
-    
-
     return (
       <div className="results">
         <ul>
@@ -137,23 +123,21 @@ class Scout extends Component {
           <TopNavBar/>
         </div>        
         <form onSubmit={this.handleSubmit} className="form">
-
-
         <FormGroup controlId="searchinput" bsSize="large">
-            <FormControl
-              className="FormInput ScoutForm"
-              autoFocus
-              type="text"
-              placeholder="Enter a name, class, or skill"
-              value={this.state.searchinput}
-              onChange={this.handleChange}
-            />
+          <FormControl
+            className="FormInput ScoutForm"
+            autoFocus
+            type="text"
+            placeholder="Enter a name, class, or skill"
+            value={this.state.searchinput}
+            onChange={this.handleChange}
+          />
           </FormGroup>
           <p></p>
           <div className="type">
             <FormGroup>
               <h3>Type:</h3>
-              <Radio name="radioGroup" onChange={this.handleRadioName}>
+              <Radio name="radioGroup" onChange={this.handleRadioName} defaultChecked={true}>
                 Name
               </Radio>
               <Radio name="radioGroup" onChange={this.handleRadioOnlySkill}>
