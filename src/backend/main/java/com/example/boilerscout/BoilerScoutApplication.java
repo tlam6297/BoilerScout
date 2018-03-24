@@ -31,6 +31,9 @@ public class BoilerScoutApplication {
 
     @Autowired
     private EmailServiceController emailServiceController;
+
+    @Autowired
+    private VerificationController verificationController;
 //
 //    @RequestMapping(value = "/test")
 //    public Map<String, Object> t(@RequestBody Map<String, String> body) {
@@ -74,6 +77,14 @@ public class BoilerScoutApplication {
     @ResponseBody
     public Map<String, Object> sendEmail(@Valid @RequestBody Map<String, String> body) {
         return emailServiceController.sendVerification(body);
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/verify/get", params = {"id"}, method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> verifyUser(@RequestParam String id, @RequestParam int query){
+        return verificationController.verify(id,query);
 
     }
 
