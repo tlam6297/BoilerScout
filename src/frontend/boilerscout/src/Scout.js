@@ -75,7 +75,7 @@ class Scout extends Component {
           <div className='li'>
             {this.state.results.map((result, index) =>
               <Link to={
-                  `/profile?user_id=` + result.user_id + `&name=` + result.full_name + `&bio=` + result.bio + `&major=` + result.major + `year=` + result.grad_year
+                  `/profile?user_id=` + result.user_id + `&name=` + result.full_name + `&bio=` + result.bio + `&major=` + result.major + `&year=` + result.grad_year
                 } className="link">
                 <li key={index}>
                   <div className='result entry'>

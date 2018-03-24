@@ -14,14 +14,14 @@ class Profile extends Component {
        this.getID = this.getID.bind(this);
 
        this.state = {
-         user_id: "sovali",
-         user_fullname: "Selin Ovali",
-         user_bio: "Hello!!!1",
-         user_skills: "Java, C",
-         user_courses: "CS250, CS252",
-         user_major: "CS",
-         user_year: "Junior"
-       };
+        user_id: "",
+        user_fullname: "",
+        user_bio: "",
+        user_skills: "",
+        user_courses: "",
+        user_major: "",
+        user_year: "",
+      };
      }
 
    parseFields = (text) => {
@@ -73,24 +73,33 @@ class Profile extends Component {
        })   
    }
 
-   render() {
+   componentDidMount = () => {
         // this variable needs to be manipulated to pull the data from it to display!
         const all_data = this.props.location.search;
         const split = all_data.split("&");
+        
         let i = 0;
-
         for (i = 0; i < split.length; i++) {
             const tokens = (split[i].split("="));
 
-            const type = split[0];
+            const type = tokens[0];
+            
+            console.log(tokens[0] + " | " + tokens[1]);
+
             this.setState({
-                type: split[1],
+                [tokens[0]]: tokens[1],
             });
         }
+   }
+
+   componentDidUpdate = () => {       
 
         // see if state was update correcly
+        //console.log(this.state);
         console.log(this.state);
+   }
 
+   render() {
         return (
                <div className="container">
                    <TopNavBar/>
