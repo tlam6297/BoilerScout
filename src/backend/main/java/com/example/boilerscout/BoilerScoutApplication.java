@@ -64,6 +64,13 @@ public class BoilerScoutApplication {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/profile/get", params = {"id"}, method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getProfile(@RequestParam String id,@RequestParam String token, @RequestParam String query){
+        return profileController.getProfile(id,token,query);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/scout", method = RequestMethod.GET)
     public Map<String, Object> queryForUsers(@RequestParam String userId,
                                       @RequestParam String token,
@@ -81,7 +88,7 @@ public class BoilerScoutApplication {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/verify/get", params = {"id"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/verify", params = {"id"}, method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> verifyUser(@RequestParam String id, @RequestParam int query){
         return verificationController.verify(id,query);
