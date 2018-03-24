@@ -5,7 +5,7 @@ import { Button, FormGroup, FormControl, ControlLabel, Radio } from "react-boots
 import './Scout.css'
 import TopNavBar from './TopNavBar'
 import GETRequest from './GETRequest'
-import Popup from 'react-popup'
+// import Popup from 'react-popup'
 import axios from 'axios';
 
 class Scout extends Component {
@@ -34,6 +34,10 @@ class Scout extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    if (this.state.searchinput == '') {
+      return;
+    }
 
     const id = this.getLocalStorage("id");
     let token = this.getLocalStorage("token");
