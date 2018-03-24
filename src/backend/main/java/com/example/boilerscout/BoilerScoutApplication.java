@@ -57,8 +57,8 @@ public class BoilerScoutApplication {
     
     @RequestMapping(value = "/profile/get", params = {"id"}, method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getProfile(@RequestParam("id") String id,@RequestParam("token") String token, @RequestParam("goal") String goal){
-        return profileController.getProfile(id,token,goal);
+    public Map<String, Object> getProfile(@RequestParam String id,@RequestParam String token, @RequestParam String query){
+        return profileController.getProfile(id,token,query);
     }
     
     public static void main(String[] args) {
