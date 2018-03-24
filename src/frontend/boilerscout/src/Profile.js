@@ -11,13 +11,17 @@ class Profile extends Component {
    constructor (props) {
        super(props);
        this.getAccessToken = this.getAccessToken.bind(this);
-       this.getProfile = this.getProfile.bind(this);
        this.getID = this.getID.bind(this);
 
        this.state = {
+        Bio: "",
+        Courses: [],
+        Email: "",
+        Graduation: "",
+        Major: "",
+        Name: "",
+        Skills: [],
         user_id: "",
-        bio: "",
-        name: "",
       };
      }
 
@@ -44,74 +48,59 @@ class Profile extends Component {
        return id;
    }
 
-   getProfile = () => {
-       const payload = JSON.stringify({
-           "id": this.getID,
-           "token": this.getAccessToken,
-       });
-       // Endpoint will be different
-       fetch('http://localhost:8080/getprofile', {
-           method: 'GET',
-           headers: {
-               'Accept': 'application/json',
-               'Content-Type': 'application/json;charset=UTF-8',
-               'transfer-encoding': 'chunked',
-           },
-           body: payload,
-       })
-       .then(function(response) {
-           if (response.ok) {
-               // Get user info
-               // Put them in state
-            //    console.log("GOOD");
-           } else {
-               throw new Error('Profile Not Found')
-           }     
-       })   
-   }
-
-   componentDidMountBAK = () => {
-        
-   }
-
     componentDidMount = () => {
-
         // this variable needs to be manipulated to pull the data from it to display!
         const all_data = this.props.location.search;
         const split = all_data.split("&");
-        
-        let i = 0;
-        for (i = 0; i < split.length; i++) {
-            const tokens = (split[i].split("="));
 
-            const type = tokens[0];
+        const real_id_with_equals = split[0].substring(1);
+        const rea = real_id_with_equals.split("=");
 
-            let str = tokens[1];
-            str = str.split('%20').join(' ');
+        const real_id = rea[1];
+        // console.log("real id: " + real_id);
+
+        // ONLY get the user id passed.
+        // let i = 0;
+        // for (i = 0; i < split.length; i++) {
+        //     const tokens = (split[i].split("="));
+
+        //     const type = tokens[0];
             
-            //console.log(tokens[0] + " | " + str);
+        //     if (type != "?user_id") {
+        //         break;
+        //     }
 
-            this.setState({
-                [tokens[0]]: str,
-            });
-        }
+        //     let str = tokens[1];
+        //     str = str.split('%20').join(' ');
+            
+        //     //console.log(tokens[0] + " | " + str);
 
+        //     this.setState({
+        //         [tokens[0]]: str,
+        //     });
+        //     const t = this.state.;
+        // }
 
-
+        // this.setState({
+        //     user_id: real_id,
+        // })
+        
         /////////////////////////////////////////////////
+
+        //the do a GET with the user ID
 
         const user_id = localStorage.getItem("id");
         const token = localStorage.getItem("token");
-        const requested_id = this.state.user_id;
+        // const requested_id = this.state.user_id;
 
-        const url = "http://localhost:8080/profile/get?id=" + user_id + "&token=" + token + "&query=11812850-4481-42c9-a61c-18fab469f9b4";
+        const url = "http://localhost:8080/profile/get?id=" + user_id + "&token=" + token + "&query=" + real_id;
 
         axios.get(url)
         .then(res => {
-            //console.log(res);
+            console.log(res);
             if (res.status == 200) {
                 this.setState({
-                    results: res.data,
+                    ...res.data,
                 });        
             } else {
                 alert("Invalid Token- Please login again");
@@ -120,9 +109,12 @@ class Profile extends Component {
                 })
             }      
         });
-        }
 
-    componentDidUpdate = () => {       
+        console.log(this.state);
+
+    }
+
+    componentDidUpdate = () => {
 
         // see if state was update correcly
         //console.log(this.state);
@@ -135,42 +127,63 @@ class Profile extends Component {
                    <TopNavBar/>
                    <div className="grid-container">
                        <div className="card grid-item">
-                           <h1>{this.state.name}</h1>
-                           <h4>{this.state.user_id}</h4>
+                           <h1>{this.state.Name}</h1>
                            <div
                                id="labels">
                                    <ControlLabel
                                        id="label">
-                                       Major:
+                                       Major: &nbsp;
                                    </ControlLabel>
                                    <p
                                        id="info">
-                                       {this.state.major}
+                                       {this.state.Major}
                                    </p>
                                    <p></p>
                                    <ControlLabel
                                        id="label">
-                                       Class Standing:
+                                       Graduation Year: &nbsp;
                                    </ControlLabel>
                                    <p
                                        id="info">
-                                       {this.state.year}
-                                   </p>    
+                                       {this.state.Graduation}
+                                   </p>
                            </div>
                        </div>
                        <div className="grid-item">
                            <h1> Bio </h1>
-                           <h3>{this.state.bio}</h3>
+                           <h3>{this.state.Bio}</h3>
                        </div>
                        <div className="grid-item">
                            <h1> Courses </h1>
-                           <div className="grid-container">
-                               <h4>Currently Taking</h4>
-                               <h4>Already Taken</h4>
+                           <div className="grid-container">                                
+                                <div className="results">
+                                    <ul>
+                                        <div className='li'>
+                                            {this.state.Courses.map((result, index) =>
+                                                <li key={index}>
+                                                    {result}
+                                                </li>
+                                            )}
+                                        </div>
+                                    </ul>
+                                </div>                               
                            </div>
                        </div>
                        <div className="grid-item">
                            <h1>Skills </h1>
+                           <div className="grid-container">                                
+                                <div className="results">
+                                    <ul>
+                                        <div className='li'>
+                                            {this.state.Skills.map((result, index) =>
+                                                <li key={index}>
+                                                    {result}
+                                                </li>
+                                            )}
+                                        </div>
+                                    </ul>
+                                </div>                               
+                           </div>
                        </div>
                    </div>
                </div>
