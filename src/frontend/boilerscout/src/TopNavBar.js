@@ -9,6 +9,8 @@ class TopNavBar extends Component {
    super(props);
 
    this.state = {
+     id: "",
+     link: "",
    };
  }
 
@@ -22,6 +24,16 @@ class TopNavBar extends Component {
    event.preventDefault();
    this.setState({ redirect: true })
  }
+
+  componentDidMount = () => {
+    const user_id = localStorage.getItem('id');
+    this.setState({
+      id: user_id,
+      link: `/profile?user_id=` + user_id,
+    });
+  }
+
+
 
  render () {
    const style = {
@@ -57,7 +69,7 @@ class TopNavBar extends Component {
            </a>
            <a
              class="nav-link"
-             href="/profile">
+             href={this.state.link}>
              Profile
            </a>
            <a
