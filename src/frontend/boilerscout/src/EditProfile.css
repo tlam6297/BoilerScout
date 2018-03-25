@@ -13,3 +13,8 @@
 .graduation * {
     background-color: white;
 }
+
+#Bio {
+    height: 100px;
+    width: 200px;
+}

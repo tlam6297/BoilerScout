@@ -21,10 +21,6 @@ class EditProfile extends Component {
         Name: "",
         Skills: [],
         user_id: "",
-        userid: null,
-        edit_bio: "hi",
-        edit_courses: "co",
-        edit_skills: "skillz",
     }
   }
 
@@ -40,6 +36,14 @@ class EditProfile extends Component {
     this.setState(  
       {uid: user.uid}
     )
+  }
+
+  addSkill = (skill) => {
+    this.Skills.push(skill);
+  }
+
+  addCourse = (course) => {
+    this.Courses.push(course);
   }
 
 
@@ -95,7 +99,6 @@ class EditProfile extends Component {
 
     axios.get(url)
     .then(res => {
-        console.log(res);
         if (res.status == 200) {
             this.setState({
                 ...res.data,
@@ -107,12 +110,10 @@ class EditProfile extends Component {
             })
         }  
     });
-    this.setState ( {
-      edit_bio: this.Name,
-    }
-
-    )
+ 
   }
+
+
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -124,6 +125,8 @@ class EditProfile extends Component {
       "userId": id,
       "token": token,
       "bio": this.state.Bio,
+      "courses": this.state.Courses,
+      "skills": this.state.Skills,
     });
     
     fetch('http://localhost:8080/update-profile', {
@@ -177,7 +180,7 @@ class EditProfile extends Component {
         return id;
     }
   componentDidUpdate = () => {
-    console.log(this.new_bio);
+    console.log(this.state);
   }
   // handle unauth, remove userid
   handleUnauth = () => {
@@ -215,25 +218,26 @@ class EditProfile extends Component {
                 onChange={this.handleChange}
               />
             </FormGroup>
-              <FormGroup controlId="edit_courses" bsSize="large">
+              <FormGroup controlId="Courses" bsSize="large">
             <ControlLabel>Courses:</ControlLabel>
               <FormControl
                 className="FormInput"
                 autoFocus
                 type="text"
-                value={this.state.edit_courses}
+                value={this.state.Courses}
                 onChange={this.handleChange}
               />
             </FormGroup>
-              <FormGroup controlId="edit_skills" bsSize="large">
+              <FormGroup controlId="Skills" bsSize="large">
             <ControlLabel>Skills:</ControlLabel>
               <FormControl
                 className="FormInput"
                 autoFocus
                 type="text"
-                value={this.state.edit_skills}
+                value={this.state.Skills}
                 onChange={this.handleChange}
               />
+           
             </FormGroup>
               <Button
               bsSize="small"
