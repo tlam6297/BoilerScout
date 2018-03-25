@@ -9,6 +9,8 @@ class TopNavBar extends Component {
    super(props);
 
    this.state = {
+     id: "",
+     link: "",
    };
  }
 
@@ -23,14 +25,22 @@ class TopNavBar extends Component {
    this.setState({ redirect: true })
  }
 
+  componentDidMount = () => {
+    const user_id = localStorage.getItem('id');
+    this.setState({
+      id: user_id,
+      link: `/profile?user_id=` + user_id,
+    });
+  }
+
+
+
  render () {
    const style = {
      width: "400px",
      margin: 0,
      padding: 0,
    }
-   const user_id = localStorage.getItem('id');
-   const profile_link = `/profile?user_id=` + user_id;
 
    return (
      <div class="container">
@@ -59,7 +69,7 @@ class TopNavBar extends Component {
            </a>
            <a
              class="nav-link"
-             href={profile_link}>
+             href={this.state.link}>
              Profile
            </a>
            <a
