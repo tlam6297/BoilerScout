@@ -70,7 +70,7 @@ class Profile extends Component {
 
         axios.get(url)
         .then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             if (res.status == 200) {
                 this.setState({
                     ...res.data,

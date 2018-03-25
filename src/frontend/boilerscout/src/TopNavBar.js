@@ -29,6 +29,8 @@ class TopNavBar extends Component {
      margin: 0,
      padding: 0,
    }
+   const user_id = localStorage.getItem('id');
+   const profile_link = `/profile?user_id=` + user_id;
 
    return (
      <div class="container">
@@ -57,7 +59,7 @@ class TopNavBar extends Component {
            </a>
            <a
              class="nav-link"
-             href="/profile">
+             href={profile_link}>
              Profile
            </a>
            <a
