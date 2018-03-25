@@ -45,19 +45,20 @@ public class EmailServiceController extends ValidationUtility {
         }
         return sb.toString();
     }
-    public Map<String, Object> sendVerification(@RequestBody Map<String, String> body) {
+       public Map<String, Object> sendVerification(@RequestBody Map<String, String> body) {
 
         Map<String, Object> response = new HashMap<String, Object>();
-        String userId = body.get("id");
-        Integer existingID = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users WHERE user_id='" + userId + "'", Integer.class);
-        if (existingID <= 0) {
-            throw new RuntimeException("[BadRequest] - No user associated with this ID!");
+        String email = body.get("email");
+        Integer existingEmail = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users WHERE email='" + email + "'", Integer.class);
+        //CHECK user exists
+        if (existingEmail <= 0) {
+            throw new RuntimeException("[BadRequest] - No user associated with this email!");
         }
         try {
-            List<Map<String, Object>> email;
+           // List<Map<String, Object>> email;
             //got email
-            email = jdbcTemplate.queryForList("SELECT email from users where user_id =  '" + userId +"'");
-            String to = email.get(0).get("email").toString();
+            String userId = jdbcTemplate.queryForObject("SELECT user_id FROM users WHERE email='" + email + "'", String.class);
+            String to = email;
             //generate new verification code
             //  List<Map<String, Object>> prevVerificationCode = jdbcTemplate.queryForList("SELECT email from users where user_id =  '" + userId +"'");
             // int prev = (Integer) prevVerificationCode.get(0).get("email_verified"); //always is an int so this should be okay
@@ -70,12 +71,11 @@ public class EmailServiceController extends ValidationUtility {
 
 
             String subject ="BoilerScout. Account verification.";
-            String text = "Hi, you are now one step closer to your BoilerScout account.\n\n";
+            String text = "Hi,\nYou are now one step closer to your BoilerScout account.\n\n";
             text = text + "Please verifiy your account with the following link:\n\n\tlocalhost:8080/verify?id=";
-            String id = body.get("id");
             sendSimpleMessage(to,subject,text + userId + "&query=" + verificationCode);
             response.put("ok","ok");
-            response.put("userId",id);
+            response.put("userId",userId);
             return response;
 
 
