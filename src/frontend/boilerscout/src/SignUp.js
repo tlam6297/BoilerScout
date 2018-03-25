@@ -9,11 +9,11 @@ class SignUp extends Component {
     super(props);
 
     this.state = {
-      email: "ddd@purdue.edu",
-      password: "Test1234!",
-      repeatpassword: "Test1234!",
-      fullname: "Jacob P Mieczni",
-      major: "Antropology",
+      email: "",
+      password: "",
+      repeatpassword: "",
+      fullname: "",
+      major: "",
       grad: 2020,
       redirect: false,
     };
@@ -65,6 +65,7 @@ class SignUp extends Component {
           _this.setState({ redirect: true })
         } else {
           alert("Error: User Name already Exists!");
+          console.log(response);
         }
       })
   }

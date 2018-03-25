@@ -57,33 +57,6 @@ class Profile extends Component {
         const rea = real_id_with_equals.split("=");
 
         const real_id = rea[1];
-        // console.log("real id: " + real_id);
-
-        // ONLY get the user id passed.
-        // let i = 0;
-        // for (i = 0; i < split.length; i++) {
-        //     const tokens = (split[i].split("="));
-
-        //     const type = tokens[0];
-            
-        //     if (type != "?user_id") {
-        //         break;
-        //     }
-
-        //     let str = tokens[1];
-        //     str = str.split('%20').join(' ');
-            
-        //     //console.log(tokens[0] + " | " + str);
-
-        //     this.setState({
-        //         [tokens[0]]: str,
-        //     });
-        //     const t = this.state.;
-        // }
-
-        // this.setState({
-        //     user_id: real_id,
-        // })
         
         /////////////////////////////////////////////////
 
@@ -97,7 +70,7 @@ class Profile extends Component {
 
         axios.get(url)
         .then(res => {
-            console.log(res);
+            console.log(res.data);
             if (res.status == 200) {
                 this.setState({
                     ...res.data,
@@ -110,15 +83,15 @@ class Profile extends Component {
             }      
         });
 
-        console.log(this.state);
-
+        //console.log(this.state);
     }
 
     componentDidUpdate = () => {
-
         // see if state was update correcly
         //console.log(this.state);
+        console.log("_____");
         console.log(this.state);
+        console.log("------");
     }
 
    render() {
