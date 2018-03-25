@@ -71,7 +71,7 @@ public class EmailServiceController extends ValidationUtility {
 
             String subject ="BoilerScout. Account verification.";
             String text = "Hi, you are now one step closer to your BoilerScout account.\n\n";
-            text = text + "Please verifiy your account with the following link:\n\n\tlocalhost:8080/verify/get?id=";
+            text = text + "Please verifiy your account with the following link:\n\n\tlocalhost:8080/verify?id=";
             String id = body.get("id");
             sendSimpleMessage(to,subject,text + userId + "&query=" + verificationCode);
             response.put("ok","ok");
