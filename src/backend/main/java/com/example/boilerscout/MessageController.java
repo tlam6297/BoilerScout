@@ -1,7 +1,5 @@
 package com.example.boilerscout.api;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,15 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
-import javax.xml.bind.DatatypeConverter;
 import java.util.*;
 
 /*
 Created  by Baris Dingil
- */
+*/
 
 @Service
 public class MessageController {
@@ -39,18 +34,14 @@ public class MessageController {
             String message = body.get("message");
             String sender = body.get("sender");
 
-            List<Map<String, Object>> existingUser = jdbcTemplate.queryForList("SELECT * FROM profiles WHERE full_name ='" + dest + "'");
+            List<Map<String, Object>> existingUser = jdbcTemplate.queryForList("SELECT * FROM profiles WHERE user_id ='" + dest + "'");
 
-            if (existingUser.size() == 0) {
+            if (existingUser.size() == 0) throw new RuntimeException("User don't exist!");
 
-                throw new RuntimeException("User don't exist!");
 
-            }
-
-                jdbcTemplate.update("INSERT INTO Messages (User_Receiver, message, sender) VALUES (?, ?, ?)", dest, message, sender);
+                jdbcTemplate.update("INSERT INTO Mes (User_Receiver, message, sender) VALUES (?, ?, ?)", dest, message, sender);
 
                 response.put("status", HttpStatus.OK);
-                return response;
 
 
 
@@ -61,5 +52,6 @@ public class MessageController {
             throw new RuntimeException("[InternalServerError] - Error accessing data.");
 
         }
+        return response;
     }
 }
