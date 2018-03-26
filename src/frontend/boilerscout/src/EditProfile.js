@@ -122,9 +122,8 @@ class EditProfile extends Component {
     const _this = this;
     const id = _this.getLocalStorage("id");
     var skillsarray = this.state.Skills.split(",");
-    this.setState({
-      edit_skills: skillsarray,
-    })
+    var coursesarray = this.state.Courses.split(",");
+    
     console.log(skillsarray);
     let token = _this.getLocalStorage("token");
       var payload = JSON.stringify({
@@ -132,6 +131,7 @@ class EditProfile extends Component {
       "token": token,
       "bio": this.state.Bio,
       "skills": skillsarray,
+      "courses": coursesarray,
     });
     
     fetch('http://localhost:8080/update-profile', {
