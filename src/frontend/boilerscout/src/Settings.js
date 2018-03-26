@@ -82,16 +82,8 @@ render() {
   return (
     <div className="Settings">
       <TopNavBar/>
-     <div className="Update Password">
-           <button onClick={this.toggleUpdatePassword}
-             type='button'
-           >
-           Update Password
-           </button>
-       <UpdatePassword active={this.state.active}/>
        <EditProfile/>
        </div>
-    </div>
   )
 }
 }
