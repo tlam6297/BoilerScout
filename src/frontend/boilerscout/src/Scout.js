@@ -36,6 +36,9 @@ class Scout extends Component {
     e.preventDefault();
 
     if (this.state.searchinput == '') {
+      this.setState({
+        results: [],
+      })
       return;
     }
 
