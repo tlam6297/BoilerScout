@@ -15,7 +15,7 @@ class SignUp extends Component {
       repeatpassword: "",
       fullname: "",
       major: "",
-      grad: 2020,
+      grad: "",
       redirect: false,
     };
   }
@@ -46,12 +46,15 @@ class SignUp extends Component {
       const _this = this;
       const email = this.state.email;
 
+      const g = this.state.grad;
+      const year = parseInt(g);
+
       const payload = JSON.stringify({
         "email": this.state.email,
         "password": this.state.password,
         "fullName": this.state.fullname,
         "major": this.state.major,
-        "grad_year": this.state.grad,
+        "grad_year": year,
       });
 
       fetch('http://localhost:8080/sign-up', {
