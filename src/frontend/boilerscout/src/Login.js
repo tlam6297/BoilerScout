@@ -38,7 +38,8 @@ class Login extends Component {
     if (this.state.DEBUGGING) {
       return true;
     } else {
-      return (validEmail && validPassword);
+      //return (validEmail && validPassword);
+      return true;
     }
   }
 

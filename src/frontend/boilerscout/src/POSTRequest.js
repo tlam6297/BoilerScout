@@ -1,9 +1,11 @@
 class POSTRequest {
-  constructor(payload, url) {
-    this.payload = payload;
-    this.url = url;
-    this.ok = false;
-    this.resonse = null;
+  constructor(payloads, urls) {
+    this.state = {
+      payload: payloads,
+      url: urls,
+      ok: false,
+      resonse: null,
+    }
   }
 
   send = () => {
@@ -20,25 +22,30 @@ class POSTRequest {
     })
     .then(function(response) {
       if (response.ok) {
-        // redirect
-        _this.ok = true;
+        _this.setState({
+          ok: true,
+        })
 
         response.json().then(json => {
-          this.resonse = json;
+          _this.setState({
+            resonse: json,
+          })
         });
 
       } else {
-        _this.ok = false;
+        _this.setState({
+          ok: false,
+        })
       }      
     })
   }
 
   responseOk = () => {
-    return this.ok;
+    return this.state.ok;
   }
 
   getResponse = () => {
-    return this.resonse;
+    return this.state.resonse;
   }
 }
 

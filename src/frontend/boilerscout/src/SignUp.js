@@ -3,6 +3,7 @@ import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import './SignUp.css'
 import Logo from './Logo'
+import POSTRequest from './POSTRequest'
 
 class SignUp extends Component {
   constructor (props) {
@@ -43,6 +44,7 @@ class SignUp extends Component {
   handleSubmit = (event) => {
       event.preventDefault();
       const _this = this;
+      const email = this.state.email;
 
       const payload = JSON.stringify({
         "email": this.state.email,
@@ -62,6 +64,42 @@ class SignUp extends Component {
         body: payload
       }).then(function(response) {
         if (response.ok) {
+          const email2 = email;
+          const _this_ = _this;
+
+          // user created
+          // now send confimation FOR NEW INTIIAL USER
+
+          const payload = JSON.stringify ({
+            'email': email2,
+          });
+
+          /////////
+
+          
+          fetch('http://localhost:8080/send/verification', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json;charset=UTF-8',
+              'transfer-encoding': 'chunked',
+            },
+            body: payload,
+          })
+          .then(function(response) {
+            if (response.ok) {
+              console.log("Sent verification successfully");
+            } else {
+              console.log("error sending email verification")
+            }      
+          })
+
+
+          // ///////////////////
+      
+          // const post = new POSTRequest(payload, 'http://localhost:8080/send/verification');
+          // post.send();
+
           _this.setState({ redirect: true })
         } else {
           alert("Error: User Name already Exists!");

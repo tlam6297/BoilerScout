@@ -35,16 +35,41 @@ class ForgotPassword extends Component {
       'email': this.state.email,
     });
 
-    const post = new POSTRequest(payload, 'http://localhost:8080/resend-confirmation');
-    post.send();
+    // const post = new POSTRequest(payload, 'http://localhost:8080/send/verification');
+    // post.send();
 
-    // console.log(post.responseOk());
+    ////////////////////////
+    const _this = this;
+
+
+    fetch('http://localhost:8080/send/verification', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'transfer-encoding': 'chunked',
+      },
+      body: payload,
+    })
+    .then(function(response) {
+      console.log(response)
+      if (response.ok) {
+        _this.setState({ redirect: true });  
+      } else {
+        alert("ERROR: email doesn't exist");
+      }      
+    })
+
+
+    //////////////////////
+
+    // console.log(post.getResponse());
     
-    if (post.responseOk()) {
-      this.setState({ redirect: true });      
-    } else {
-      alert("ERROR: email doesn't exist");
-    }
+    // if (post.responseOk()) {
+    //   this.setState({ redirect: true });      
+    // } else {
+    //   alert("ERROR: email doesn't exist");
+    // }
   }
 
   render() {

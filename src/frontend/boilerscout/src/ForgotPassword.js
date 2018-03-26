@@ -34,7 +34,7 @@ class ForgotPassword extends Component {
     event.preventDefault();
     const _this = this;
 
-    fetch('http://localhost:8080/forgot-password', {
+    fetch('http://localhost:8080/send/forgot-pass', {
         method: 'POST',
         headers: {
           'Accept': 'application/json;charset=UTF-8',
@@ -49,7 +49,7 @@ class ForgotPassword extends Component {
           
           _this.setState({ redirect: true })
         } else {
-          alert(response.statusText);
+          alert("Email does not exist!");
         }
       })
   }
