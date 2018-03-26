@@ -21,6 +21,7 @@ class EditProfile extends Component {
         Name: "",
         Skills: [],
         user_id: "",
+        edit_skills: [],
     }
   }
 
@@ -120,13 +121,17 @@ class EditProfile extends Component {
     this.setState({ redirect: true })
     const _this = this;
     const id = _this.getLocalStorage("id");
+    var skillsarray = this.state.Skills.split(",");
+    this.setState({
+      edit_skills: skillsarray,
+    })
+    console.log(skillsarray);
     let token = _this.getLocalStorage("token");
       var payload = JSON.stringify({
       "userId": id,
       "token": token,
       "bio": this.state.Bio,
-      "courses": this.state.Courses,
-      "skills": this.state.Skills,
+      "skills": skillsarray,
     });
     
     fetch('http://localhost:8080/update-profile', {
@@ -151,7 +156,6 @@ class EditProfile extends Component {
         alert("Error in updating profile");
       }      
     })
-    
     }
 
     handleChange = (event) => {
