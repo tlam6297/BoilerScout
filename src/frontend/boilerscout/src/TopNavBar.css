@@ -17,8 +17,8 @@ a.nav-link {
 }
 
 .grid-container {
-  grid-template-columns: auto auto auto;
-  grid-template-rows: 0.1fr 1fr;
+  grid-template-columns: auto;
+  grid-template-rows: 0.1fr;
 }
 
 #mylogo {

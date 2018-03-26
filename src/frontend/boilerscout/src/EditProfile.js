@@ -21,7 +21,6 @@ class EditProfile extends Component {
         Name: "",
         Skills: [],
         user_id: "",
-        edit_skills: [],
     }
   }
 
@@ -133,6 +132,8 @@ class EditProfile extends Component {
       "skills": skillsarray,
       "courses": coursesarray,
     });
+
+    console.log(skillsarray);
     
     fetch('http://localhost:8080/update-profile', {
       method: 'POST',
