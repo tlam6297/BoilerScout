@@ -21,8 +21,6 @@ class EditProfile extends Component {
         Name: "",
         Skills: [],
         user_id: "",
-        edit_skills: false,
-        edit_courses: false,
     }
   }
 
@@ -38,14 +36,6 @@ class EditProfile extends Component {
     this.setState(  
       {uid: user.uid}
     )
-  }
-
-  addSkill = (skill) => {
-    this.Skills.push(skill);
-  }
-
-  addCourse = (course) => {
-    this.Courses.push(course);
   }
 
 
@@ -122,21 +112,19 @@ class EditProfile extends Component {
     this.setState({ redirect: true })
     const _this = this;
     const id = _this.getLocalStorage("id");
-    var skillsarray, coursesarray;
+    let token = _this.getLocalStorage("token");
     var skillsarray = this.state.Skills.split(",");
     var coursesarray = this.state.Courses.split(",");
-    
+    console.log(coursesarray);
     console.log(skillsarray);
-    let token = _this.getLocalStorage("token");
       var payload = JSON.stringify({
       "userId": id,
       "token": token,
       "bio": this.state.Bio,
-      "skills": skillsarray,
-      "courses": coursesarray,
-    });
+            "courses": coursesarray,
 
-    console.log(skillsarray);
+      "skills": skillsarray,
+    });
     
     fetch('http://localhost:8080/update-profile', {
       method: 'POST',
@@ -168,20 +156,6 @@ class EditProfile extends Component {
         });
         
     }
-
-    handleCourseChange = (event) => {
-      this.setState({
-        [event.target.id]: event.target.value
-      });
-      
-  }
-
-  handleSkillChange = (event) => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
-    
-}
     getAccessToken = () => {
         // The type of token might be JSON
         const token = localStorage.getItem("token");
@@ -228,7 +202,8 @@ class EditProfile extends Component {
             <option value="2021">2021</option>
             <option value="2022">2022</option>
           </select>
-          </div>           
+          </div>    
+       
           <FormGroup controlId="Bio" bsSize="large">
             <ControlLabel>Bio:</ControlLabel>
               <FormControl
@@ -247,7 +222,6 @@ class EditProfile extends Component {
                 type="text"
                 value={this.state.Courses}
                 onChange={this.handleChange}
-                onClick={this.state.edit_courses = true}
               />
             </FormGroup>
               <FormGroup controlId="Skills" bsSize="large">
@@ -258,7 +232,6 @@ class EditProfile extends Component {
                 type="text"
                 value={this.state.Skills}
                 onChange={this.handleChange}
-                onClick={this.state.edit_skills = true}
               />
            
             </FormGroup>
