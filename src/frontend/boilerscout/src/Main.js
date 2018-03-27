@@ -18,41 +18,40 @@ import Profile from './Profile'
 import ProfileCreated from './ProfileCreated'
 
 class Main extends Component  {
- constructor(props) {
-   super(props)
+constructor(props) {
+  super(props)
 
-   this.handleClick = this.handleClick.bind(this);
-   this.state = {
-   }
- }
+  this.handleClick = this.handleClick.bind(this);
+  this.state = {
+  }
+}
 
- handleClick = (e) => {
-   e.preventDefault();
- }
+handleClick = (e) => {
+  e.preventDefault();
+}
 
- render () {
-   return (
-     <div className="Home">           
-       <Switch>
-         <Route exact path="/" component={Buttons} />
-         <Route path="/sign-up" component={SignUp} />
-         <Route path="/login" component={Login} />
-         <Route path="/forgot-password" component={ForgotPassword} />
-         <Route path="/password-reset-sent" component={PasswordSent} />
-         <Route path="/confirmation-resent" component={ConfirmationSent} />
-         <Route path="/advanced-filters" component={AdvancedFilters} />
-         <Route path="/update-password" component={UpdatePassword} />
-         <Route path="/scout" component={Scout} />
-         <Route path="/resend-confirmation" component={ResendConfirmation} />
-         <Route path="/update-password" component={UpdatePassword} />
-         <Route path="/settings" component={Settings}/>
-         <Route path="/profile" component={Profile}/>
-         <Route path="/profile-created" component={ProfileCreated} />
-       </Switch>
-     </div>
-   )
- }
+render () {
+  return (
+    <div className="Home">          
+      <Switch>
+        <Route exact path="/" component={Buttons} />
+        <Route path="/sign-up" component={SignUp} />
+        <Route path="/login" component={Login} />
+        <Route path="/forgot-password" component={ForgotPassword} />
+        <Route path="/password-reset-sent" component={PasswordSent} />
+        <Route path="/confirmation-resent" component={ConfirmationSent} />
+        <Route path="/advanced-filters" component={AdvancedFilters} />
+        <Route path="/update-password" component={UpdatePassword} />
+        <Route path="/scout" component={Scout} />
+        <Route path="/resend-confirmation" component={ResendConfirmation} />
+        <Route path="/update-password" component={UpdatePassword} />
+        <Route path="/settings" component={Settings}/>
+        <Route path="/profile" component={Profile}/>
+        <Route path="/profile-created" component={ProfileCreated} />
+      </Switch>
+    </div>
+  )
+}
 }
 
 export default Main;
-

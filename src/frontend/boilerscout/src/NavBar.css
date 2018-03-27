@@ -1,18 +1,28 @@
-.navbar {
-    list-style-type: none;
-    margin: 10px;
-    padding: 0;
-    margin-bottom: 5rem;
-    background-color: darkcyan;
-    padding: 14px 16px;
-    overflow: hidden;
-}
-
-.link {
-    display: inline;
-}
-
-.left {
+.nav {
+    display: flex;
+    padding-top: 3rem;
+    float: right;
+    padding-left: 10rem;
+   }
+   
+   a.nav-link {
+    color: #cc9900;
+    border-style: solid;
+    border-width: 1px;
+    display: flex;
+    padding: 0px 10px;
+    margin: 5px;
+    font-size: 100%;
+    text-decoration: none;
+   }
+   
+   .grid-container {
+    grid-template-columns: auto;
+    grid-template-rows: 0.1fr;
+   }
+   
+   #mylogo {
     float: left;
-    display: inline;
-}
+    width: 9rem;
+    height: auto;
+   }   

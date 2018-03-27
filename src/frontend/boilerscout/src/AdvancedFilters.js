@@ -15,8 +15,6 @@ class AdvancedFilters extends Component {
         firstName : "",
         lastName : "",
         username : "",
-        currentlyEnrolled : false,
-        alreadyTaken : false,
         classStandingFreshman : false,
         classStandingSophomore : false,
         classStandingJunior : false,
@@ -59,14 +57,6 @@ class AdvancedFilters extends Component {
       [event.target.id]: event.target.value
     });
     
-  }
-
-  handleCheckCurentlyEnrolled = (event) => {    
-    this.state.currentlyEnrolled = !this.state.currentlyEnrolled;
-  }
-
-  handleCheckAlreadyTaken = (event) => {
-    this.state.alreadyTaken = !this.state.alreadyTaken;
   }
 
   handleCheckClassStandingFreshman = (event) => {
