@@ -1,0 +1,21 @@
+.bio * {
+  background-color: white;
+}
+
+.courses * {
+  background-color: white;
+}
+
+.skills * {
+  background-color: white;
+}
+
+.graduation * {
+  background-color: white;
+}
+
+#Bio {
+  height: 100px;
+  width: 200px;
+}
+

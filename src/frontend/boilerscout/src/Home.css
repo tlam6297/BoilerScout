@@ -1,0 +1,9 @@
+button {
+  margin: 5px;
+  width: 25%;
+  height: 35px;    
+}
+
+.Home-logo {
+  -webkit-margin-bottom-collapse: 20px;
+}
