@@ -28,6 +28,9 @@ public class BoilerScoutApplication {
 
     @Autowired
     private SearchController searchController;
+
+    @Autowired
+    private ForumController forumController;
 //
 //    @RequestMapping(value = "/test")
 //    public Map<String, Object> t(@RequestBody Map<String, String> body) {
@@ -65,6 +68,14 @@ public class BoilerScoutApplication {
                                       @RequestParam String query) {
         return searchController.search(userId, token, type, query);
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/forum/start-thread", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> startForumThread(@Valid @RequestBody Map<String, Object> body) {
+        return forumController.startThread(body);
+    }
+
 
 
     public static void main(String[] args) {

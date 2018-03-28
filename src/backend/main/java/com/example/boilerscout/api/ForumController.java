@@ -1,0 +1,73 @@
+package com.example.boilerscout.api;
+
+import javafx.application.Application;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+/**
+ * Created by terrylam on 3/27/18.
+ */
+
+@Service
+public class ForumController extends ValidationUtility {
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    public Map<String, Object> startThread(@RequestBody Map<String, Object> body) {
+
+        Map<String, Object> response = new HashMap<String, Object>();
+        Date d = new Date();
+        Timestamp threadDate = new Timestamp(d.getTime());
+
+        String userId = body.get("userId").toString();
+        String token = body.get("token").toString();
+        String newThreadId = UUID.randomUUID().toString();
+        String forumId = body.get("forumId").toString();
+        String threadTitle = body.get("threadTitle").toString();
+        String threadBody = body.get("threadBody").toString();
+
+
+        //Perform user validation
+
+        if (!isValidToken(token, userId) || isExpiredToken(token)) {
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
+            return response;
+        } else {
+            try {
+                jdbcTemplate.update("INSERT INTO threads (thread_id, forum_id, user_id, thread_title, thread_body, thread_date) " +
+                        "VALUES (?, ?, ?, ?, ?, ?)", newThreadId, forumId, userId, threadTitle, threadBody, threadDate);
+            } catch (DataAccessException ex) {
+                log.info("Exception Message" + ex.getMessage());
+                response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new RuntimeException("[InternalServerError] - Error accessing data.");
+            }
+            response.put("userId", userId);
+            response.put("token", token);
+            response.put("status", HttpStatus.OK);
+            return response;
+        }
+
+    }
+
+    public Map<String, Object> postReply(@RequestBody Map<String, Object> body) {
+        Map<String, Object> response = new HashMap<String, Object>();
+
+        return response;
+
+    }
+
+}
