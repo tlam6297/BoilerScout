@@ -16,6 +16,7 @@ import NavBar from './TopNavBar'
 import Settings from './Settings'
 import Profile from './Profile'
 import ProfileCreated from './ProfileCreated'
+import Community from './Community'
 
 class Main extends Component  {
 constructor(props) {
@@ -48,6 +49,7 @@ render () {
         <Route path="/settings" component={Settings}/>
         <Route path="/profile" component={Profile}/>
         <Route path="/profile-created" component={ProfileCreated} />
+        <Route path="/community" component={Community}/>
       </Switch>
     </div>
   )
