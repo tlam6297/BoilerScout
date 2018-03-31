@@ -17,6 +17,8 @@ import java.util.Map;
 public class BoilerScoutApplication {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
+    //TODO code documentation
+
     @Autowired
     private SignUpController signUpController;
 
@@ -31,11 +33,7 @@ public class BoilerScoutApplication {
 
     @Autowired
     private ForumController forumController;
-//
-//    @RequestMapping(value = "/test")
-//    public Map<String, Object> t(@RequestBody Map<String, String> body) {
-//        return signUpController.test(body);
-//    }
+
 
     @CrossOrigin
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
@@ -70,10 +68,19 @@ public class BoilerScoutApplication {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/forum/start-thread", method = RequestMethod.POST)
+    @RequestMapping(value = "/community/start-thread", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> startForumThread(@Valid @RequestBody Map<String, Object> body) {
         return forumController.startThread(body);
+    }
+
+
+
+    //ADMIN ONLY ENDPOINT (not for frontend use)
+    @RequestMapping(value = "/community/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateForum(@Valid @RequestBody Map<String, Object> body) {
+        return forumController.updateForum(body);
     }
 
 

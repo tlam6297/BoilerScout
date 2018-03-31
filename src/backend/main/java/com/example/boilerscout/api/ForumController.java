@@ -27,6 +27,49 @@ public class ForumController extends ValidationUtility {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
+    //TODO code documentation
+    //ADMIN ONLY FUNCTIONALITY ONLY
+    public void removeForum(String forumName) {
+        try {
+            jdbcTemplate.update("DELETE FROM forums WHERE forum_name='" + forumName + "'");
+        } catch (DataAccessException ex) {
+            log.info("Exception Message" + ex.getMessage());
+            throw new RuntimeException("[InternalServerError] - Error accessing data.");
+        }
+    }
+
+    public void insertForum(String forumName) {
+        try {
+            String newForumId = UUID.randomUUID().toString();
+            jdbcTemplate.update("INSERT INTO forums(forum_id, forum_name) VALUES (?, ?)", newForumId, forumName);
+        } catch (DataAccessException ex) {
+            log.info("Exception Message" + ex.getMessage());
+            throw new RuntimeException("[InternalServerError] - Error accessing data.");
+        }
+    }
+
+    public Map<String, Object> updateForum(@RequestBody Map<String, Object> body) {
+        Map<String, Object> response = new HashMap<String, Object>();
+        String forum = body.get("forumName").toString();
+        String action = body.get("action").toString(); //insert or remove
+
+        switch(action) {
+            case "insert":
+                insertForum(forum);
+                break;
+            case "remove":
+                removeForum(forum);
+                break;
+            default:
+                response.put("status", "Invalid action to perform on forums (insert/remove only)");
+        }
+        response.put("status", HttpStatus.OK);
+        return response;
+    }
+
+
+    //Forum controller functions
     public Map<String, Object> startThread(@RequestBody Map<String, Object> body) {
 
         Map<String, Object> response = new HashMap<String, Object>();
