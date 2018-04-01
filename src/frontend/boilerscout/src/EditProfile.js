@@ -21,6 +21,9 @@ class EditProfile extends Component {
        Name: "",
        Skills: [],
        user_id: "",
+       edit_bio: false,
+       edit_skills: false,
+       edit_courses: false,
    }
  }
 
@@ -112,20 +115,231 @@ class EditProfile extends Component {
    const _this = this;
    const id = _this.getLocalStorage("id");
    let token = _this.getLocalStorage("token");
-   var skillsarray = this.state.Skills.split(",");
-   var coursesarray = this.state.Courses.split(",");
-   console.log(coursesarray);
-   console.log(skillsarray);
-     var payload = JSON.stringify({
+
+   if (this.state.edit_bio && this.state.edit_courses && this.state.edit_skills) {
+    var skillsarray = this.state.Skills.split(",");
+    var coursesarray = this.state.Courses.split(","); 
+    var payload = JSON.stringify({
      "userId": id,
      "token": token,
      "bio": this.state.Bio,
-           "courses": coursesarray,
-
+    "courses": coursesarray,
      "skills": skillsarray,
    });
-  
+   console.log(payload);
    fetch('http://localhost:8080/update-profile', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'transfer-encoding': 'chunked',
+    },
+    body: payload,
+  })
+  .then(function(response) {
+    if (response.ok) {
+      // redirect to profile?
+      //_this.setState({ redirect: true })
+
+      response.json().then(json => {
+        console.log(json);
+      });
+
+    } else {
+      alert("Error in updating profile");
+    }     
+  })
+  } else if (this.state_bio) {
+    if (this.state.edit_courses) {
+      var coursesarray = this.state.Courses.split(","); 
+      var payload = JSON.stringify({
+        "userId": id,
+        "token": token,
+        "bio": this.state.Bio,
+       "courses": coursesarray,
+      });
+
+      fetch('http://localhost:8080/update-profile', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'transfer-encoding': 'chunked',
+        },
+        body: payload,
+      })
+      .then(function(response) {
+        if (response.ok) {
+          // redirect to profile?
+          //_this.setState({ redirect: true })
+   
+          response.json().then(json => {
+            console.log(json);
+          });
+   
+        } else {
+          alert("Error in updating profile");
+        }     
+      })
+    } else if (this.state.edit_skills) {
+      var skillsarray = this.state.Skills.split(",");
+      var payload = JSON.stringify({
+        "userId": id,
+        "token": token,
+        "bio": this.state.Bio,
+        "skills": skillsarray,
+      });
+
+      fetch('http://localhost:8080/update-profile', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'transfer-encoding': 'chunked',
+        },
+        body: payload,
+      })
+      .then(function(response) {
+        if (response.ok) {
+          // redirect to profile?
+          //_this.setState({ redirect: true })
+   
+          response.json().then(json => {
+            console.log(json);
+          });
+   
+        } else {
+          alert("Error in updating profile");
+        }     
+      })
+    } else {
+      var payload = JSON.stringify({
+        "userId": id,
+        "token": token,
+        "bio": this.state.Bio,
+      });
+
+      fetch('http://localhost:8080/update-profile', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'transfer-encoding': 'chunked',
+        },
+        body: payload,
+      })
+      .then(function(response) {
+        if (response.ok) {
+          // redirect to profile?
+          //_this.setState({ redirect: true })
+   
+          response.json().then(json => {
+            console.log(json);
+          });
+   
+        } else {
+          alert("Error in updating profile");
+        }     
+      })
+    }
+  } else if (this.state.edit_courses) {
+    if (this.state.edit_skills) {
+      var skillsarray = this.state.Skills.split(",");
+      var coursesarray = this.state.Courses.split(","); 
+      var payload = JSON.stringify({
+       "userId": id,
+       "token": token,
+      "courses": coursesarray,
+       "skills": skillsarray,
+     });
+
+     fetch('http://localhost:8080/update-profile', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'transfer-encoding': 'chunked',
+      },
+      body: payload,
+    })
+    .then(function(response) {
+      if (response.ok) {
+        // redirect to profile?
+        //_this.setState({ redirect: true })
+ 
+        response.json().then(json => {
+          console.log(json);
+        });
+ 
+      } else {
+        alert("Error in updating profile");
+      }     
+    })
+    } else {
+      var coursesarray = this.state.Courses.split(","); 
+      var payload = JSON.stringify({
+       "userId": id,
+       "token": token,
+      "courses": coursesarray,
+     });
+
+     fetch('http://localhost:8080/update-profile', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'transfer-encoding': 'chunked',
+      },
+      body: payload,
+    })
+    .then(function(response) {
+      if (response.ok) {
+        // redirect to profile?
+        //_this.setState({ redirect: true })
+ 
+        response.json().then(json => {
+          console.log(json);
+        });
+ 
+      } else {
+        alert("Error in updating profile");
+      }     
+    })
+    }
+  } else if (this.state.edit_skills) {
+    var skillsarray = this.state.Skills.split(",");
+    var payload = JSON.stringify({
+     "userId": id,
+     "token": token,
+     "skills": skillsarray,
+   });
+
+   fetch('http://localhost:8080/update-profile', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'transfer-encoding': 'chunked',
+    },
+    body: payload,
+  })
+  .then(function(response) {
+    if (response.ok) {
+      // redirect to profile?
+      //_this.setState({ redirect: true })
+
+      response.json().then(json => {
+        console.log(json);
+      });
+
+    } else {
+      alert("Error in updating profile");
+    }     
+  })
+  }
+
+  
+  /*fetch('http://localhost:8080/update-profile', {
      method: 'POST',
      headers: {
        'Accept': 'application/json',
@@ -146,13 +360,31 @@ class EditProfile extends Component {
      } else {
        alert("Error in updating profile");
      }     
-   })
+   })*/
    }
+
 
    handleChange = (event) => {
        this.setState({
          [event.target.id]: event.target.value
        });
+
+       console.log(event.target.className);
+
+       if (event.target.className == "FormInput bio form-control") {
+        this.setState({
+          edit_bio: true
+        });
+        console.log("hu");
+       } else if (event.target.className == "FormInput courses form-control") {
+        this.setState({
+          edit_courses: true
+        });
+      } else if (event.target.className == "FormInput skills form-control") {
+        this.setState({
+          edit_skills: true
+        });
+      } 
       
    }
    getAccessToken = () => {
@@ -205,7 +437,7 @@ class EditProfile extends Component {
          <FormGroup controlId="Bio" bsSize="large">
            <ControlLabel>Bio:</ControlLabel>
              <FormControl
-               className="FormInput"
+               className="FormInput bio"
                autoFocus
                type="text"
                value={this.state.Bio}
@@ -215,7 +447,7 @@ class EditProfile extends Component {
              <FormGroup controlId="Courses" bsSize="large">
            <ControlLabel>Courses:</ControlLabel>
              <FormControl
-               className="FormInput"
+               className="FormInput courses"
                autoFocus
                type="text"
                value={this.state.Courses}
@@ -225,7 +457,7 @@ class EditProfile extends Component {
              <FormGroup controlId="Skills" bsSize="large">
            <ControlLabel>Skills:</ControlLabel>
              <FormControl
-               className="FormInput"
+               className="FormInput skills"
                autoFocus
                type="text"
                value={this.state.Skills}
