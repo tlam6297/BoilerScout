@@ -11,6 +11,10 @@ li {
     border-radius: 30px;
     text-decoration: none;
   }
+
+  .link {
+    text-decoration: none;
+  }
   
   .result {
     list-style-type: none;
