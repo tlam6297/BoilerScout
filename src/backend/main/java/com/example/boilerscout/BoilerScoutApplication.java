@@ -17,6 +17,8 @@ import java.util.Map;
 public class BoilerScoutApplication {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
+    //TODO code documentation
+
     @Autowired
     private SignUpController signUpController;
 
@@ -30,6 +32,11 @@ public class BoilerScoutApplication {
     private SearchController searchController;
 
     @Autowired
+
+    private ForumController forumController;
+
+
+    @Autowired
     private EmailServiceController emailServiceController;
 
     @Autowired
@@ -39,6 +46,7 @@ public class BoilerScoutApplication {
 //    public Map<String, Object> t(@RequestBody Map<String, String> body) {
 //        return signUpController.test(body);
 //    }
+
 
     @CrossOrigin
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
@@ -73,6 +81,27 @@ public class BoilerScoutApplication {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/community/start-thread", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> startForumThread(@Valid @RequestBody Map<String, Object> body) {
+        return forumController.startThread(body);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/community", method = RequestMethod.GET)
+    public Map<String, Object> queryForUsers(@RequestParam String userId,
+                                             @RequestParam String token) {
+        return forumController.getForums(userId, token);
+    }
+
+    //ADMIN ONLY ENDPOINT (not for frontend use)
+    @RequestMapping(value = "/community/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateForum(@Valid @RequestBody Map<String, Object> body) {
+        return forumController.updateForum(body);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/send/verification", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> sendEmail(@Valid @RequestBody Map<String, String> body) {
@@ -95,6 +124,7 @@ public class BoilerScoutApplication {
         return emailServiceController.sendNewPassword(body);
 
     }
+
 
     public static void main(String[] args) {
         SpringApplication.run(BoilerScoutApplication.class, args);

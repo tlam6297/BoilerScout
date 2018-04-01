@@ -27,17 +27,8 @@ public class SignUpController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-//    public Map<String, Object> test(@RequestBody Map<String, String> body) {
-//        Map<String, Object> response = new HashMap<String, Object>();
-//        String token = body.get("token");
-//        Claims claims = Jwts.parser()
-//                .setSigningKey(DatatypeConverter.parseBase64Binary("TerryLam"))
-//                .parseClaimsJws(token).getBody();
-//        response.put("user_id", claims.get("userId"));
-//        response.put("expiration", claims.getExpiration());
-//        response.put("subject", claims.getSubject());
-//        return response;
-//    }
+    //TODO code documentation
+
 
     public Map<String, Object> signUp(@RequestBody Map<String, Object> body) {
 
