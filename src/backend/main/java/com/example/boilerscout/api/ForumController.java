@@ -96,6 +96,29 @@ public class ForumController extends ValidationUtility {
 
     }
 
+    public Map<String, Object> getThreads(@RequestParam String userId,
+                                          @RequestParam String token,
+                                          @RequestParam String forumId) {
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("userId", userId);
+        response.put("token", token);
+        if (!isValidToken(token, userId) || isExpiredToken(token)) {
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
+            return response;
+        } else {
+            try {
+                List<Map<String, Object>> listOfThreads = jdbcTemplate.queryForList("SELECT * FROM threads WHERE forum_id='" + forumId + "'");
+                response.put("threads", listOfThreads);
+            } catch (DataAccessException ex) {
+                log.info("Exception Message" + ex.getMessage());
+                response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new RuntimeException("[InternalServerError] - Error accessing data.");
+            }
+        }
+        response.put("status", HttpStatus.OK);
+        return response;
+    }
+
 
     public Map<String, Object> startThread(@RequestBody Map<String, Object> body) {
 

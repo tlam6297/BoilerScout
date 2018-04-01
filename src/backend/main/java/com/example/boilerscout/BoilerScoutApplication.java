@@ -67,6 +67,8 @@ public class BoilerScoutApplication {
         return searchController.search(userId, token, type, query);
     }
 
+
+
     @CrossOrigin
     @RequestMapping(value = "/community/start-thread", method = RequestMethod.POST)
     @ResponseBody
@@ -75,8 +77,18 @@ public class BoilerScoutApplication {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/community/get-threads", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> retrieveThreads(@RequestParam String userId,
+                                               @RequestParam String token,
+                                               @RequestParam String forumId) {
+        return forumController.getThreads(userId, token, forumId);
+    }
+
+
+    @CrossOrigin
     @RequestMapping(value = "/community", method = RequestMethod.GET)
-    public Map<String, Object> queryForUsers(@RequestParam String userId,
+    public Map<String, Object> retrieveForums(@RequestParam String userId,
                                              @RequestParam String token) {
         return forumController.getForums(userId, token);
     }
