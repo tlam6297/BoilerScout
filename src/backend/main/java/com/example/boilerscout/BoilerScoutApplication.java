@@ -32,7 +32,20 @@ public class BoilerScoutApplication {
     private SearchController searchController;
 
     @Autowired
+
     private ForumController forumController;
+
+
+    @Autowired
+    private EmailServiceController emailServiceController;
+
+    @Autowired
+    private VerificationController verificationController;
+//
+//    @RequestMapping(value = "/test")
+//    public Map<String, Object> t(@RequestBody Map<String, String> body) {
+//        return signUpController.test(body);
+//    }
 
 
     @CrossOrigin
@@ -88,6 +101,29 @@ public class BoilerScoutApplication {
         return forumController.updateForum(body);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/send/verification", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> sendEmail(@Valid @RequestBody Map<String, String> body) {
+        return emailServiceController.sendVerification(body);
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/verify", params = {"id"}, method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> verifyUser(@RequestParam String id, @RequestParam int query){
+        return verificationController.verify(id,query);
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/send/forgot-pass", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> sendPassword(@Valid @RequestBody Map<String, String> body) {
+        return emailServiceController.sendNewPassword(body);
+
+    }
 
 
     public static void main(String[] args) {
