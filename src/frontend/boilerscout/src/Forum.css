@@ -1,0 +1,32 @@
+.forum {
+  display: grid;
+  min-height: 50%;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 1fr 0.5fr; 
+}
+
+li {
+  list-style-type: none;
+}
+
+.heading {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: center;
+}
+
+.search {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.threads {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.thread {
+  border: 4px solid;
+  border-radius: 30px;
+  border-color: aliceblue;
+}
