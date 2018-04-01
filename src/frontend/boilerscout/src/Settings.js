@@ -80,6 +80,7 @@ render() {
  return (
    <div className="Settings">
      <TopNavBar/>
+     <h2> Settings </h2>
       <EditProfile/>
       </div>
  )

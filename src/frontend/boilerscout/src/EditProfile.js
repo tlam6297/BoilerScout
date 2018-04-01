@@ -123,7 +123,7 @@ class EditProfile extends Component {
      "userId": id,
      "token": token,
      "bio": this.state.Bio,
-    "courses": coursesarray,
+      "courses": coursesarray,
      "skills": skillsarray,
    });
    console.log(payload);
@@ -140,7 +140,7 @@ class EditProfile extends Component {
     if (response.ok) {
       // redirect to profile?
       //_this.setState({ redirect: true })
-
+      document.getElementById("success").value="Your profile was successfully updated!";
       response.json().then(json => {
         console.log(json);
       });
@@ -172,7 +172,7 @@ class EditProfile extends Component {
         if (response.ok) {
           // redirect to profile?
           //_this.setState({ redirect: true })
-   
+          document.getElementById("success").value="Your profile was successfully updated!";
           response.json().then(json => {
             console.log(json);
           });
@@ -203,7 +203,7 @@ class EditProfile extends Component {
         if (response.ok) {
           // redirect to profile?
           //_this.setState({ redirect: true })
-   
+          document.getElementById("success").value="Your profile was successfully updated!";
           response.json().then(json => {
             console.log(json);
           });
@@ -232,7 +232,7 @@ class EditProfile extends Component {
         if (response.ok) {
           // redirect to profile?
           //_this.setState({ redirect: true })
-   
+          document.getElementById("success").value="Your profile was successfully updated!";
           response.json().then(json => {
             console.log(json);
           });
@@ -266,7 +266,7 @@ class EditProfile extends Component {
       if (response.ok) {
         // redirect to profile?
         //_this.setState({ redirect: true })
- 
+        document.getElementById("success").value="Your profile was successfully updated!";
         response.json().then(json => {
           console.log(json);
         });
@@ -296,7 +296,7 @@ class EditProfile extends Component {
       if (response.ok) {
         // redirect to profile?
         //_this.setState({ redirect: true })
- 
+        document.getElementById("success").value="Your profile was successfully updated!";
         response.json().then(json => {
           console.log(json);
         });
@@ -327,10 +327,11 @@ class EditProfile extends Component {
     if (response.ok) {
       // redirect to profile?
       //_this.setState({ redirect: true })
-
+      document.getElementById("success").value="Your profile was successfully updated!";
       response.json().then(json => {
         console.log(json);
       });
+
 
     } else {
       alert("Error in updating profile");
@@ -369,7 +370,8 @@ class EditProfile extends Component {
          [event.target.id]: event.target.value
        });
 
-       console.log(event.target.className);
+       document.getElementById("success").value=" ";
+
 
        if (event.target.className == "FormInput bio form-control") {
         this.setState({
@@ -463,7 +465,9 @@ class EditProfile extends Component {
                value={this.state.Skills}
                onChange={this.handleChange}
              />
-         
+          <div id="success">
+           
+          </div>
            </FormGroup>
              <Button
              bsSize="small"
