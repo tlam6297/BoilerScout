@@ -22,6 +22,7 @@ import java.util.UUID;
 
 public class ValidationUtility {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
+    //TODO code documentation
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -92,6 +93,15 @@ public class ValidationUtility {
     public boolean courseExists(String courseName) {
         Integer existingCourse = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM courses WHERE course_name='" + courseName + "'", Integer.class);
         if (existingCourse == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean forumExists(String forumName) {
+        Integer existingForum = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM forums WHERE forum_name='" + forumName + "'", Integer.class);
+        if (existingForum == 0) {
             return false;
         } else {
             return true;
