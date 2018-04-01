@@ -111,7 +111,7 @@ public class ProfileController extends ValidationUtility {
 
     public Map<String, Object> getProfile(@RequestParam String userId, @RequestParam String token, @RequestParam String query) {
         Map<String, Object> response = new HashMap<String, Object>();
-     
+
         if (!isValidToken(token, userId) || isExpiredToken(token)) {
             response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
             return response;
@@ -184,11 +184,11 @@ public class ProfileController extends ValidationUtility {
                     }
                 }
                 //CHECK for FULL_NAME, BIO, MAJOR and put if exist
-                tempInfo = jdbcTemplate.queryForList("SELECT full_name, bio, major from profiles where user_id = '" + query +"'");
+                tempInfo = jdbcTemplate.queryForList("SELECT full_name, bio, major, grad_year from profiles where user_id = '" + query +"'");
                 if(tempInfo.size()>0){
                     hasBio = true;
                     if(tempInfo.get(0).get("full_name")!=null){
-                        response.put("Full Name",tempInfo.get(0).get("full_name"));
+                        response.put("Name",tempInfo.get(0).get("full_name"));
                     }
                     if(tempInfo.get(0).get("bio")!=null){
                         response.put("Bio",tempInfo.get(0).get("bio"));
@@ -216,6 +216,7 @@ public class ProfileController extends ValidationUtility {
 
 
     }
+
 
 
 }
