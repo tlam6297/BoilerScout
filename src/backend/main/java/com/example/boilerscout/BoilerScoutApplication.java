@@ -81,7 +81,7 @@ public class BoilerScoutApplication {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/verify/get", params = {"id"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/verify", params = {"id"}, method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> verifyUser(@RequestParam String id, @RequestParam int query){
         return verificationController.verify(id,query);
