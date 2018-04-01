@@ -74,7 +74,12 @@ public class BoilerScoutApplication {
         return forumController.startThread(body);
     }
 
-
+    @CrossOrigin
+    @RequestMapping(value = "/community", method = RequestMethod.GET)
+    public Map<String, Object> queryForUsers(@RequestParam String userId,
+                                             @RequestParam String token) {
+        return forumController.getForums(userId, token);
+    }
 
     //ADMIN ONLY ENDPOINT (not for frontend use)
     @RequestMapping(value = "/community/update", method = RequestMethod.POST)

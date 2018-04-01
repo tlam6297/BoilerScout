@@ -98,4 +98,13 @@ public class ValidationUtility {
             return true;
         }
     }
+
+    public boolean forumExists(String forumName) {
+        Integer existingForum = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM forums WHERE forum_name='" + forumName + "'", Integer.class);
+        if (existingForum == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

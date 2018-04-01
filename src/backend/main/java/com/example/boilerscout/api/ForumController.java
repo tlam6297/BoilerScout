@@ -9,12 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by terrylam on 3/27/18.
@@ -39,10 +37,10 @@ public class ForumController extends ValidationUtility {
         }
     }
 
-    public void insertForum(String forumName) {
+    public void insertForum(String forumName, String description) {
         try {
             String newForumId = UUID.randomUUID().toString();
-            jdbcTemplate.update("INSERT INTO forums(forum_id, forum_name) VALUES (?, ?)", newForumId, forumName);
+            jdbcTemplate.update("INSERT INTO forums(forum_id, forum_name, forum_description) VALUES (?, ?, ?)", newForumId, forumName, description);
         } catch (DataAccessException ex) {
             log.info("Exception Message" + ex.getMessage());
             throw new RuntimeException("[InternalServerError] - Error accessing data.");
@@ -51,25 +49,52 @@ public class ForumController extends ValidationUtility {
 
     public Map<String, Object> updateForum(@RequestBody Map<String, Object> body) {
         Map<String, Object> response = new HashMap<String, Object>();
-        String forum = body.get("forumName").toString();
+        String forumName = body.get("forumName").toString();
         String action = body.get("action").toString(); //insert or remove
 
-        switch(action) {
+        switch (action) {
             case "insert":
-                insertForum(forum);
+                String description = body.get("description").toString();
+                insertForum(forumName, description);
+                response.put("status", HttpStatus.OK);
                 break;
             case "remove":
-                removeForum(forum);
-                break;
+                if (forumExists(forumName)) {
+                    removeForum(forumName);
+                    response.put("status", HttpStatus.OK);
+                } else {
+                    response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - Forum could not be removed: does not exist!");
+                } break;
             default:
-                response.put("status", "Invalid action to perform on forums (insert/remove only)");
+                response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - Could not perform action (insert/remove only)");
         }
-        response.put("status", HttpStatus.OK);
         return response;
     }
 
 
     //Forum controller functions
+    public Map<String, Object> getForums(@RequestParam String userId,
+                                         @RequestParam String token) {
+        Map<String, Object> response = new HashMap<String, Object>();
+        if (!isValidToken(token, userId) || isExpiredToken(token)) {
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
+            return response;
+        } else {
+            try {
+                List<Map<String, Object>> listOfForums = jdbcTemplate.queryForList("SELECT * FROM forums");
+                response.put("forums", listOfForums);
+            } catch (DataAccessException ex) {
+                log.info("Exception Message" + ex.getMessage());
+                response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new RuntimeException("[InternalServerError] - Error accessing data.");
+            }
+        }
+        response.put("status", HttpStatus.OK);
+        return response;
+
+    }
+
+
     public Map<String, Object> startThread(@RequestBody Map<String, Object> body) {
 
         Map<String, Object> response = new HashMap<String, Object>();
