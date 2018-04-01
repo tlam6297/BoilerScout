@@ -8,7 +8,7 @@ class Forum extends Component {
         super(props);
 
         this.state = {
-            forum: "Class Help",
+            forum: "",
             forum_id: "",
             listOfThreads: [],
         }
@@ -18,7 +18,7 @@ class Forum extends Component {
         const user_id = localStorage.getItem("id");
         const token = localStorage.getItem("token"); 
 
-        this.state.url = "http://localhost:8080/forums"
+        this.state.url = "http://localhost:8080/community"
     
         // get request
         axios.get(this.state.url)
@@ -35,6 +35,8 @@ class Forum extends Component {
             })
           }      
         });
+
+        console.log(res);
     }
 
 renderPosts = () => {
