@@ -76,6 +76,8 @@ public class ForumController extends ValidationUtility {
     public Map<String, Object> getForums(@RequestParam String userId,
                                          @RequestParam String token) {
         Map<String, Object> response = new HashMap<String, Object>();
+        response.put("userId", userId);
+        response.put("token", token);
         if (!isValidToken(token, userId) || isExpiredToken(token)) {
             response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
             return response;
