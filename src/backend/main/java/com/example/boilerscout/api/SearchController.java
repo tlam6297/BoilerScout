@@ -27,7 +27,9 @@ public class SearchController extends ValidationUtility {
     public Map<String, Object> search(@RequestParam String userId,
                                       @RequestParam String token,
                                       @RequestParam String type,
-                                      @RequestParam String query) {
+                                      @RequestParam String query,
+                                      @RequestParam String graduation,
+                                      @RequestParam String major) {
 
         Map<String, Object> response = new HashMap<String, Object>();
 
