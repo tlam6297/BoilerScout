@@ -107,7 +107,8 @@ public class ForumController extends ValidationUtility {
             return response;
         } else {
             try {
-                List<Map<String, Object>> listOfThreads = jdbcTemplate.queryForList("SELECT * FROM threads WHERE forum_id='" + forumId + "'");
+                String query = "SELECT t.*, p.full_name FROM threads t INNER JOIN profiles p ON t.user_id = p.user_id WHERE forum_id='" + forumId + "'";
+                List<Map<String, Object>> listOfThreads = jdbcTemplate.queryForList(query);
                 response.put("threads", listOfThreads);
             } catch (DataAccessException ex) {
                 log.info("Exception Message" + ex.getMessage());
