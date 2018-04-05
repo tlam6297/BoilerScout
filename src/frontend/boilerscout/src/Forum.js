@@ -15,18 +15,8 @@ class Forum extends Component {
       description: "",
       input: "",
       found: false,
-      threads: [
-        {
-          "thread_title": "Cs252 is not good for my life",
-          "full_name": "Terry Lamb",
-          "thread_date": "fkjashdfkjasdf",
-        },
-        {
-          "thread_title": "Cant wait to work at an internship",
-          "full_name": "Slein Olive",
-          "thread_date": "u3h3hu3hu3",
-        }
-      ],
+      displayTitle: true,
+      threads: [],
     };
   }
 
@@ -65,7 +55,19 @@ class Forum extends Component {
       if (res.data.threads.length < 1) { 
         this.setState({
           found: true,
-        })
+          displayTitle: false,
+        }) 
+      }else {
+        let title1 = "Complaining Forum";
+        //title1 = this.getLocalStorage("forum_title");
+
+        let desp = "Let's all meet up and complain about stuff";
+        //desp = this.getLocalStorage("forum_description");
+
+        this.setState({
+          title: title1,
+          description: desp,
+        });
       }
       this.setState({
         threads: res.data.threads,
@@ -73,23 +75,10 @@ class Forum extends Component {
     });  
   }
 
-  buildTitle = () => {
-    let title1 = "Complaining Forum";
-    //title1 = this.getLocalStorage("forum_title");
-
-    let desp = "Let's all meet up and complain about stuff";
-    //desp = this.getLocalStorage("forum_description");
-
-    this.setState({
-      title: title1,
-      description: desp,
-    });
-  }
-
-  // do GET while page is loading
+  // Make page while loading
   componentWillMount = () => {
-    this.buildTitle();
-    this.getThreads();  
+    this.getThreads();
+    //this.buildTitle(); 
   }
 
   render = () => {
@@ -119,8 +108,13 @@ class Forum extends Component {
                 />
               </FormGroup>
             </form>
-          </div>
+          </div>          
           <div className="threads">
+            {this.state.found && (
+              <div className="noResults">
+                <h4>Forum does not exist</h4>
+              </div>
+            )}
             <ul>
               {this.state.threads.map((thread, index) =>
                 <li id={index}>
