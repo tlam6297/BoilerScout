@@ -204,7 +204,7 @@ class Scout extends Component {
         <div className="navs">
           <TopNavBar/>
         </div>        
-        <form onSubmit={this.handleSubmit} className="form">
+        <form onSubmit={this.handleSubmit} className="form">  
         <FormGroup controlId="searchinput" bsSize="large">
           <FormControl
             className="FormInput ScoutForm"

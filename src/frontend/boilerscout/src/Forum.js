@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { FormGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios'
 import Nav from './TopNavBar'
@@ -10,30 +11,85 @@ class Forum extends Component {
     super(props);
 
     this.state = {
-      title: "Complaining Forum",
-      description: "Let's all meet up and complain about stuff",
+      title: "",
+      description: "",
       input: "",
+      found: false,
       threads: [
         {
-          "title": "Cs252 is not good for my life",
-          "author": "Terry Lamb",
+          "thread_title": "Cs252 is not good for my life",
+          "full_name": "Terry Lamb",
+          "thread_date": "fkjashdfkjasdf",
         },
         {
-          "title": "Cant wait to work at an internship",
-          "author": "Slein Olive",
+          "thread_title": "Cant wait to work at an internship",
+          "full_name": "Slein Olive",
+          "thread_date": "u3h3hu3hu3",
         }
       ],
     };
   }
 
   handleChange = (event) => {
+    //console.log(this.state);
     this.setState({
       [event.target.id]: event.target.value
     });
   }
 
+  getLocalStorage = (key) => {
+    return localStorage.getItem(key);
+  }
+
+  //setLocalStorage
+  setLocalStorage = (key, data) => {
+    localStorage.setItem(key, data);
+  }
+
   componentDidUpdate = () => {
     // console.log(this.state.input);
+  }
+
+  getThreads = () => {
+    const id = this.getLocalStorage("id");
+    let token = this.getLocalStorage("token");
+
+    //get forum ID from localStorage (dummy forum ID for now)
+    let forum_id = "528fc18a-ebbc-4b0a-9ca3-bd00d6db006c";
+    //forum_id = this.getLocalStorage("forum_id");
+
+    const url = "http://localhost:8080/community/get-threads?userId=" + id + "&token=" + token + "&forumId=" + forum_id;    
+
+    axios.get(url)
+    .then(res => {
+      if (res.data.threads.length < 1) { 
+        this.setState({
+          found: true,
+        })
+      }
+      this.setState({
+        threads: res.data.threads,
+      });      
+    });  
+  }
+
+  buildTitle = () => {
+    let title1 = "Complaining Forum";
+    //title1 = this.getLocalStorage("forum_title");
+
+    let desp = "Let's all meet up and complain about stuff";
+    //desp = this.getLocalStorage("forum_description");
+
+    this.setState({
+      title: title1,
+      description: desp,
+    });
+  }
+
+  // do GET while page is loading
+  componentWillMount = () => {
+    this.buildTitle();
+    this.getThreads();  
   }
 
   render = () => {
@@ -68,14 +124,19 @@ class Forum extends Component {
             <ul>
               {this.state.threads.map((thread, index) =>
                 <li id={index}>
-                  <div className="thread">
-                    <div className="thread-title">
-                      <h3>{thread.title}</h3>
+                  <Link to={{pathname: '/thread', search: '?id=' + thread.thread_id,}} className="link">
+                    <div className="thread">
+                      <div className="thread-title">
+                        <h3>{thread.thread_title}</h3>
+                      </div>
+                      <div className="thread-author">
+                        <h6>{thread.full_name}</h6>
+                      </div>
+                      <div className="time">
+                        <h6>{thread.thread_date}</h6>
+                      </div>
                     </div>
-                    <div className="thread-author">
-                      <h6>{thread.author}</h6>
-                    </div>
-                  </div>
+                  </Link>
                 </li>
               )}
             </ul>
