@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import './EditProfile.css'
 import { Button, FormGroup, FormControl, ControlLabel, Radio, Checkbox, DropdownButton, InputGroup, MenuItem, ButtonGroup } from "react-bootstrap";
 import axios from 'axios'
-
 class EditProfile extends Component {
  constructor() {
    super()
@@ -115,7 +114,6 @@ class EditProfile extends Component {
    const _this = this;
    const id = _this.getLocalStorage("id");
    let token = _this.getLocalStorage("token");
-
    if (this.state.edit_bio && this.state.edit_courses && this.state.edit_skills) {
     var skillsarray = this.state.Skills.split(",");
     var coursesarray = this.state.Courses.split(","); 
@@ -123,7 +121,7 @@ class EditProfile extends Component {
      "userId": id,
      "token": token,
      "bio": this.state.Bio,
-      "courses": coursesarray,
+    "courses": coursesarray,
      "skills": skillsarray,
    });
    console.log(payload);
@@ -158,6 +156,7 @@ class EditProfile extends Component {
         "bio": this.state.Bio,
        "courses": coursesarray,
       });
+      console.log(payload);
 
       fetch('http://localhost:8080/update-profile', {
         method: 'POST',
@@ -189,6 +188,7 @@ class EditProfile extends Component {
         "bio": this.state.Bio,
         "skills": skillsarray,
       });
+      console.log(payload);
 
       fetch('http://localhost:8080/update-profile', {
         method: 'POST',
@@ -218,6 +218,7 @@ class EditProfile extends Component {
         "token": token,
         "bio": this.state.Bio,
       });
+      console.log(payload);
 
       fetch('http://localhost:8080/update-profile', {
         method: 'POST',
@@ -249,9 +250,10 @@ class EditProfile extends Component {
       var payload = JSON.stringify({
        "userId": id,
        "token": token,
-      "courses": coursesarray,
+       "courses": coursesarray,
        "skills": skillsarray,
      });
+     console.log(payload);
 
      fetch('http://localhost:8080/update-profile', {
       method: 'POST',
@@ -282,6 +284,7 @@ class EditProfile extends Component {
        "token": token,
       "courses": coursesarray,
      });
+     console.log(payload);
 
      fetch('http://localhost:8080/update-profile', {
       method: 'POST',
@@ -313,6 +316,7 @@ class EditProfile extends Component {
      "token": token,
      "skills": skillsarray,
    });
+   console.log(payload);
 
    fetch('http://localhost:8080/update-profile', {
     method: 'POST',
@@ -339,6 +343,12 @@ class EditProfile extends Component {
   })
   }
 
+  
+  this.setState ({
+    edit_bio: false,
+    edit_courses: false,
+    edit_skills: false,
+  });
   
   /*fetch('http://localhost:8080/update-profile', {
      method: 'POST',

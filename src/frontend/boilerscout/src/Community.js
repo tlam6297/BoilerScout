@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 import NavBar from './TopNavBar.js'
 import './Community.css'
+import axios from 'axios'
 
 class Community extends Component {
     constructor(props) {
