@@ -124,10 +124,11 @@ class CreateAThread extends Component {
           <TopNavBar/>
           <form onSubmit={this.handleSubmit}>
             <div className="Form">
+            <h1> Create A Thread </h1>
                 <div 
                     id="threadTitle"
                     contenteditable="true"> 
-                    Enter a header
+                    Enter a title
                 </div>
                 <div 
                     id="threadBody"

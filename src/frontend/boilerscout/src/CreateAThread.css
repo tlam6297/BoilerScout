@@ -1,3 +1,16 @@
 #threadTitle {
     color: white;
+    font-size: 2rem;
+}
+
+#threadBody {
+    color: black;
+    font-size: 1rem;
+    background-color: white;
+    width: 25em;
+    height: 8rem;
+}
+
+h1 {
+    color: #cc9900,
 }
