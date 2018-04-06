@@ -7,6 +7,7 @@ class EditProfile extends Component {
  constructor() {
    super()
    this.handleSubmit = this.handleSubmit.bind(this);
+   this.removeWhiteSpaces = this.removeWhiteSpaces.bind(this);
    this.handleChange = this.handleChange.bind(this);
    this.getAccessToken = this.getAccessToken.bind(this);
       this.getID = this.getID.bind(this);
@@ -20,9 +21,9 @@ class EditProfile extends Component {
        Name: "",
        Skills: [],
        user_id: "",
-       edit_bio: false,
        edit_skills: false,
        edit_courses: false,
+       edit_bio: false,
    }
  }
 
@@ -46,47 +47,8 @@ class EditProfile extends Component {
  }
 
  componentDidMount = () => {
-   // this variable needs to be manipulated to pull the data from it to display!
-   //const all_data = this.props.location.search;
-   //const split = all_data.split("&");
-
-   //const real_id_with_equals = split[0].substring(1);
-   //const rea = real_id_with_equals.split("=");
-
-   // console.log("real id: " + real_id);
-
-   // ONLY get the user id passed.
-   // let i = 0;
-   // for (i = 0; i < split.length; i++) {
-   //     const tokens = (split[i].split("="));
-
-   //     const type = tokens[0];
-      
-   //     if (type != "?user_id") {
-   //         break;
-   //     }
-
-   //     let str = tokens[1];
-   //     str = str.split('%20').join(' ');
-      
-   //     //console.log(tokens[0] + " | " + str);
-
-   //     this.setState({
-   //         [tokens[0]]: str,
-   //     });
-   //     const t = this.state.;
-   // }
-
-   // this.setState({
-   //     user_id: real_id,
-   // })
-  
-   /////////////////////////////////////////////////
-
-   //the do a GET with the user ID
-
-   const user_id = localStorage.getItem("id");
-   const token = localStorage.getItem("token");
+   const user_id = this.getLocalStorage("id");
+   const token = this.getLocalStorage("token");
    // const requested_id = this.state.user_id;
 
    const url = "http://localhost:8080/profile/get?id=" + user_id + "&token=" + token + "&query=" + user_id;
@@ -106,6 +68,20 @@ class EditProfile extends Component {
    });
  }
 
+ removeWhiteSpaces = (array) => {
+  var i;
+
+  for (i = 0; i < array.length; i++) {
+    var curr = array[i];
+    var nowhite = curr.replace(/\s/g, "");
+    array[i] = nowhite;
+  }
+
+  console.log(array);
+
+  return array;
+ }
+
 
 
  handleSubmit = (event) => {
@@ -114,280 +90,136 @@ class EditProfile extends Component {
    const _this = this;
    const id = _this.getLocalStorage("id");
    let token = _this.getLocalStorage("token");
-   if (this.state.edit_bio && this.state.edit_courses && this.state.edit_skills) {
-    var skillsarray = this.state.Skills.split(",");
-    var coursesarray = this.state.Courses.split(","); 
-    var payload = JSON.stringify({
-     "userId": id,
-     "token": token,
-     "bio": this.state.Bio,
-    "courses": coursesarray,
-     "skills": skillsarray,
-   });
-   console.log(payload);
-   fetch('http://localhost:8080/update-profile', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json;charset=UTF-8',
-      'transfer-encoding': 'chunked',
-    },
-    body: payload,
-  })
-  .then(function(response) {
-    if (response.ok) {
-      // redirect to profile?
-      //_this.setState({ redirect: true })
-      document.getElementById("success").value="Your profile was successfully updated!";
-      response.json().then(json => {
-        console.log(json);
-      });
-
-    } else {
-      alert("Error in updating profile");
-    }     
-  })
-  } else if (this.state_bio) {
-    if (this.state.edit_courses) {
-      var coursesarray = this.state.Courses.split(","); 
+    if (this.state.edit_courses && this.state.edit_skills) {
+      var skillsarray = this.removeWhiteSpaces(this.state.Skills.split(","));
+      var coursesarray = this.removeWhiteSpaces(this.state.Courses.split(",")); 
       var payload = JSON.stringify({
-        "userId": id,
-        "token": token,
-        "bio": this.state.Bio,
-       "courses": coursesarray,
-      });
-      console.log(payload);
-
-      fetch('http://localhost:8080/update-profile', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'transfer-encoding': 'chunked',
-        },
-        body: payload,
-      })
-      .then(function(response) {
-        if (response.ok) {
-          // redirect to profile?
-          //_this.setState({ redirect: true })
-          document.getElementById("success").value="Your profile was successfully updated!";
-          response.json().then(json => {
-            console.log(json);
-          });
-   
-        } else {
-          alert("Error in updating profile");
-        }     
-      })
-    } else if (this.state.edit_skills) {
-      var skillsarray = this.state.Skills.split(",");
-      var payload = JSON.stringify({
-        "userId": id,
-        "token": token,
-        "bio": this.state.Bio,
-        "skills": skillsarray,
-      });
-      console.log(payload);
-
-      fetch('http://localhost:8080/update-profile', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'transfer-encoding': 'chunked',
-        },
-        body: payload,
-      })
-      .then(function(response) {
-        if (response.ok) {
-          // redirect to profile?
-          //_this.setState({ redirect: true })
-          document.getElementById("success").value="Your profile was successfully updated!";
-          response.json().then(json => {
-            console.log(json);
-          });
-   
-        } else {
-          alert("Error in updating profile");
-        }     
-      })
-    } else {
-      var payload = JSON.stringify({
-        "userId": id,
-        "token": token,
-        "bio": this.state.Bio,
-      });
-      console.log(payload);
-
-      fetch('http://localhost:8080/update-profile', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'transfer-encoding': 'chunked',
-        },
-        body: payload,
-      })
-      .then(function(response) {
-        if (response.ok) {
-          // redirect to profile?
-          //_this.setState({ redirect: true })
-          document.getElementById("success").value="Your profile was successfully updated!";
-          response.json().then(json => {
-            console.log(json);
-          });
-   
-        } else {
-          alert("Error in updating profile");
-        }     
-      })
-    }
-  } else if (this.state.edit_courses) {
-    if (this.state.edit_skills) {
-      var skillsarray = this.state.Skills.split(",");
-      var coursesarray = this.state.Courses.split(","); 
-      var payload = JSON.stringify({
-       "userId": id,
-       "token": token,
-       "courses": coursesarray,
-       "skills": skillsarray,
-     });
-     console.log(payload);
-
-     fetch('http://localhost:8080/update-profile', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8',
-        'transfer-encoding': 'chunked',
-      },
-      body: payload,
-    })
-    .then(function(response) {
-      if (response.ok) {
-        // redirect to profile?
-        //_this.setState({ redirect: true })
-        document.getElementById("success").value="Your profile was successfully updated!";
-        response.json().then(json => {
-          console.log(json);
-        });
- 
-      } else {
-        alert("Error in updating profile");
-      }     
-    })
-    } else {
-      var coursesarray = this.state.Courses.split(","); 
-      var payload = JSON.stringify({
-       "userId": id,
-       "token": token,
+      "userId": id,
+      "token": token,
+      "bio": this.state.Bio,
       "courses": coursesarray,
-     });
-     console.log(payload);
-
-     fetch('http://localhost:8080/update-profile', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8',
-        'transfer-encoding': 'chunked',
-      },
-      body: payload,
-    })
-    .then(function(response) {
-      if (response.ok) {
-        // redirect to profile?
-        //_this.setState({ redirect: true })
-        document.getElementById("success").value="Your profile was successfully updated!";
-        response.json().then(json => {
-          console.log(json);
-        });
- 
-      } else {
-        alert("Error in updating profile");
-      }     
-    })
-    }
-  } else if (this.state.edit_skills) {
-    var skillsarray = this.state.Skills.split(",");
-    var payload = JSON.stringify({
-     "userId": id,
-     "token": token,
-     "skills": skillsarray,
-   });
-   console.log(payload);
-
-   fetch('http://localhost:8080/update-profile', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json;charset=UTF-8',
-      'transfer-encoding': 'chunked',
-    },
-    body: payload,
-  })
-  .then(function(response) {
-    if (response.ok) {
-      // redirect to profile?
-      //_this.setState({ redirect: true })
-      document.getElementById("success").textContent="Your profile was successfully updated!";
-      response.json().then(json => {
-        console.log(json);
+      "skills": skillsarray,
       });
-
-
+      console.log(payload);
+      fetch('http://localhost:8080/update-profile', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'transfer-encoding': 'chunked',
+        },
+        body: payload,
+      })
+      .then(function(response) {
+        if (response.ok) {
+          document.getElementById("success").value="Your profile was successfully updated!";
+          response.json().then(json => {
+            console.log(json);
+          });
+        } else {
+          alert("Error in updating profile");
+        }     
+      })
+    } else if (this.state.edit_courses && !this.state.edit_skills) {
+      var coursesarray = this.removeWhiteSpaces(this.state.Courses.split(","));       var payload = JSON.stringify({
+      "userId": id,
+      "token": token,
+      "bio": this.state.Bio,
+      "courses": coursesarray,
+      });
+      console.log(payload);
+      fetch('http://localhost:8080/update-profile', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'transfer-encoding': 'chunked',
+        },
+        body: payload,
+      })
+      .then(function(response) {
+        if (response.ok) {
+          document.getElementById("success").value="Your profile was successfully updated!";
+          response.json().then(json => {
+            console.log(json);
+          });
+        } else {
+          alert("Error in updating profile");
+        }     
+      })
+    } else if (!this.state.edit_courses && this.state.edit_skills) {
+      var skillsarray = this.removeWhiteSpaces(this.state.Skills.split(","));
+      var payload = JSON.stringify({
+      "userId": id,
+      "token": token,
+      "bio": this.state.Bio,
+      "skills": skillsarray,
+      });
+      console.log(payload);
+      fetch('http://localhost:8080/update-profile', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'transfer-encoding': 'chunked',
+        },
+        body: payload,
+      })
+      .then(function(response) {
+        if (response.ok) {
+          document.getElementById("success").value="Your profile was successfully updated!";
+          response.json().then(json => {
+            console.log(json);
+          });
+        } else {
+          alert("Error in updating profile");
+        }     
+      })
+    } else if (this.state.edit_bio && !this.state.edit_courses && !this.state.edit_skills) {
+      var payload = JSON.stringify({
+      "userId": id,
+      "token": token,
+      "bio": this.state.Bio,
+      });
+      console.log(payload);
+      fetch('http://localhost:8080/update-profile', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'transfer-encoding': 'chunked',
+        },
+        body: payload,
+      })
+      .then(function(response) {
+        if (response.ok) {
+          document.getElementById("success").value="Your profile was successfully updated!";
+          response.json().then(json => {
+            console.log(json);
+          });
+        } else {
+          alert("Error in updating profile");
+        }     
+      })
     } else {
-      alert("Error in updating profile");
-    }     
-  })
-  }
 
-  
-  this.setState ({
-    edit_bio: false,
-    edit_courses: false,
-    edit_skills: false,
-  });
-  
-  /*fetch('http://localhost:8080/update-profile', {
-     method: 'POST',
-     headers: {
-       'Accept': 'application/json',
-       'Content-Type': 'application/json;charset=UTF-8',
-       'transfer-encoding': 'chunked',
-     },
-     body: payload,
-   })
-   .then(function(response) {
-     if (response.ok) {
-       // redirect to profile?
-       //_this.setState({ redirect: true })
-
-       response.json().then(json => {
-         console.log(json);
-       });
-
-     } else {
-       alert("Error in updating profile");
-     }     
-   })*/
+    }
+    this.setState ({
+      edit_courses: false,
+      edit_skills: false,
+      edit_bio: false,
+    });
    }
 
 
    handleChange = (event) => {
-       this.setState({
+      this.setState({
          [event.target.id]: event.target.value
-       });
+      });
 
-       document.getElementById("success").value=" ";
-
-
-       if (event.target.className == "FormInput bio form-control") {
-        this.setState({
-          edit_bio: true
-        });
-       } else if (event.target.className == "FormInput courses form-control") {
+      document.getElementById("success").value=" ";
+        
+      if (event.target.className == "FormInput courses form-control") {
         this.setState({
           edit_courses: true
         });
@@ -395,11 +227,13 @@ class EditProfile extends Component {
         this.setState({
           edit_skills: true
         });
+      } else if (event.target.className == "FormInput bio form-control") {
+        this.setState({
+          edit_bio: true
+        });
       } 
 
       document.getElementById("success").textContent="";
-
-      
    }
    getAccessToken = () => {
        // The type of token might be JSON

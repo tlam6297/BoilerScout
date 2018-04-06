@@ -18,7 +18,7 @@ class CreateAThread extends Component {
           threadBody: "",
       }
     }
-   
+    
     // Return user id if signed in, null if not
     signedIn = () => {
       return this.state.signedIn
@@ -121,26 +121,29 @@ class CreateAThread extends Component {
       return (
         <div className="CreateAThread">
           <div className="Container">
-          <TopNavBar/>
+          <Button
+            bsSize="small">
+            Create A New Thread       
+          </Button>
           <form onSubmit={this.handleSubmit}>
-            <div className="Form">
-            <h1> Create A Thread </h1>
+          <p/>
                 <div 
                     id="threadTitle"
                     contenteditable="true"> 
                     Enter a title
                 </div>
+                <p/>
                 <div 
                     id="threadBody"
                     contenteditable="true"> 
                     Body
                 </div>
+                <p/>
                 <Button
                 bsSize="small"
                 type="submit">
                 SUBMIT       
               </Button>
-            </div>
           </form>
           </div>
         </div>

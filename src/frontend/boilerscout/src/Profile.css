@@ -6,7 +6,7 @@ h4, h1 {
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;
-  grid-row-gap: 50px;
+  grid-row-gap: 10px;
 }
 
 h2 {
