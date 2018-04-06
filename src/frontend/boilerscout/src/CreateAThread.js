@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import './EditProfile.css'
-import { Button, FormGroup, FormControl, ControlLabel, Radio, Checkbox, DropdownButton, InputGroup, MenuItem, ButtonGroup } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import './CreateAThread.css'
-import TopNavBar from './TopNavBar.js'
 
 class CreateAThread extends Component {
     constructor() {
@@ -121,10 +120,6 @@ class CreateAThread extends Component {
       return (
         <div className="CreateAThread">
           <div className="Container">
-          <Button
-            bsSize="small">
-            Create A New Thread       
-          </Button>
           <form onSubmit={this.handleSubmit}>
           <p/>
                 <div 

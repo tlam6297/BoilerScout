@@ -4,10 +4,11 @@ import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 import NavBar from './TopNavBar.js'
 import './Community.css'
 import axios from 'axios'
-
+import Forum from './Forum.js'
 class Community extends Component {
     constructor(props) {
         super(props);
+        this.saveForumInfo = this.saveForumInfo.bind(this);
 
         this.state = {
             token: "",
@@ -50,21 +51,28 @@ class Community extends Component {
 
 
     }
+
+    saveForumInfo = (id, name, description) => {
+      localStorage.setItem('forum_id', id);
+      localStorage.setItem('forum_title', name);
+      localStorage.setItem('forum_description', description);
+    }
   render() {
     return (
       <div className="Community">
         <div className="NavBar">
           <NavBar/>
         </div>
+        <div className="onlyCommunity">
         <h2> Community </h2>
         <div class="grid-container-comm forums">
         <ul>
           <div className='li'>
             {this.state.forums.map((result, index) =>
               <Link to={
-                  `/community/get-threads?userId=` + result.user_id + `&token=` + result.token + `&forumId=` + result.forumId + `&major=` + result.major + `&year=` + result.grad_year
+                  `/community/get-threads?userId=` + localStorage.getItem("id") + `&token=` + localStorage.getItem("token") + `&forumId=` + result.forum_id
                 } className="link">
-                <li key={index}>
+                <li key={index} onClick={this.saveForumInfo(result.forum_id, result.forum_name, result.forum_description)}>
                   <div className='result entry'>
                     <div className="first entry">
                       {result.forum_name}
@@ -78,6 +86,7 @@ class Community extends Component {
             )}
           </div>
         </ul>
+        </div>
         </div>
         </div>
     );

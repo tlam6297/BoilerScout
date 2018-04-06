@@ -1,66 +1,143 @@
+import React from 'react';
 import { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
-import NavBar from './TopNavBar.js'
-import './Community.css'
+import { Link } from 'react-router-dom';
+import { FormGroup, FormControl } from 'react-bootstrap';
+import axios from 'axios'
+import Nav from './TopNavBar'
+import './Forum.css'
 
 class Forum extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            forum: "",
-            forum_id: "",
-            listOfThreads: [],
-        }
-    }
-
-    componentDidMount = () => {
-        const user_id = localStorage.getItem("id");
-        const token = localStorage.getItem("token"); 
-
-        this.state.url = "http://localhost:8080/community"
-    
-        // get request
-        axios.get(this.state.url)
-        .then(res => {
-          // console.log(res.data.query);
-          if (res.data.status == "OK") {
-            this.setState({
-              // set listOfThreads to result
-            });        
-          } else {
-            alert("Invalid Token- Please login again");
-            this.setState({
-              redirect: true,
-            })
-          }      
-        });
-
-        console.log(res);
-    }
-
-renderPosts = () => {
-    return (
-      <div className="results">
-        <ul>
-          <div className='li'>
-            Put list of threads here
-          </div>
-        </ul>
-      </div>
-    )    
+    this.state = {
+      title: "",
+      description: "",
+      input: "",
+      found: false,
+      displayTitle: true,
+      threads: [],
+    };
   }
-    render() {
-        return (
-        <div className="Forum">
-            <div className="NavBar">
-                <NavBar/>
-                </div>
-                <div class="grid-container">
-                    <h2> {this.state.forum} </h2>
-                </div>
+
+  handleChange = (event) => {
+    //console.log(this.state);
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  getLocalStorage = (key) => {
+    return localStorage.getItem(key);
+  }
+
+  //setLocalStorage
+  setLocalStorage = (key, data) => {
+    localStorage.setItem(key, data);
+  }
+
+  componentDidUpdate = () => {
+    // console.log(this.state.input);
+  }
+
+  getThreads = () => {
+    const id = this.getLocalStorage("id");
+    let token = this.getLocalStorage("token");
+
+    //get forum ID from localStorage (dummy forum ID for now)
+    let forum_id = "528fc18a-ebbc-4b0a-9ca3-bd00d6db006c";
+    //forum_id = this.getLocalStorage("forum_id");
+
+    const url = "http://localhost:8080/community/get-threads?userId=" + id + "&token=" + token + "&forumId=" + forum_id;    
+
+    axios.get(url)
+    .then(res => {
+      if (res.data.threads.length < 1) { 
+        this.setState({
+          found: true,
+          displayTitle: false,
+        }) 
+      }else {
+        let title1 = "Complaining Forum";
+        //title1 = this.getLocalStorage("forum_title");
+
+        let desp = "Let's all meet up and complain about stuff";
+        //desp = this.getLocalStorage("forum_description");
+
+        this.setState({
+          title: title1,
+          description: desp,
+        });
+      }
+      this.setState({
+        threads: res.data.threads,
+      });      
+    });  
+  }
+
+  // Make page while loading
+  componentWillMount = () => {
+    this.getThreads();
+    //this.buildTitle(); 
+  }
+
+  render = () => {
+    return (
+      <div>
+        <Nav />
+          <div className="forum">
+            <div className="heading">
+              <div className="title">
+                <h1>{this.state.title}</h1>
+              </div>
+              <div className="descp">
+                {this.state.description}
+              </div>
             </div>
-    );
+          <div className="search">
+            <form onSubmit={this.handleSubmit} className="form">
+              <FormGroup controlId="input" bsSize="large">
+                <FormControl
+                  className="FormInput"
+                  autoFocus
+                  type="text"
+                  bsSize="large"
+                  placeholder="Search for a thread..."
+                  value={this.state.input}
+                  onChange={this.handleChange}
+                />
+              </FormGroup>
+            </form>
+          </div>          
+          <div className="threads">
+            {this.state.found && (
+              <div className="noResults">
+                <h4>Forum does not exist</h4>
+              </div>
+            )}
+            <ul>
+              {this.state.threads.map((thread, index) =>
+                <li id={index}>
+                  <Link to={{pathname: '/thread', search: '?id=' + thread.thread_id,}} className="link">
+                    <div className="thread">
+                      <div className="thread-title">
+                        <h3>{thread.thread_title}</h3>
+                      </div>
+                      <div className="thread-author">
+                        <h6>{thread.full_name}</h6>
+                      </div>
+                      <div className="time">
+                        <h6>{thread.thread_date}</h6>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </div>
+        </div>
+      </div>
+    )
   }
 }
 

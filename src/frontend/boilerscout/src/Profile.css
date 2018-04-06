@@ -1,6 +1,7 @@
 
 h4, h1 {
   color:#cc9900;
+  display: inline-block;
 }
 
 .grid-container {
