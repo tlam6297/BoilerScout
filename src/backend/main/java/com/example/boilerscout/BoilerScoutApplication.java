@@ -71,6 +71,13 @@ public class BoilerScoutApplication {
         return profileController.updateProfile(body);
     }
 
+     @CrossOrigin
+    @RequestMapping(value = "/profile/get", params = {"id"}, method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getProfile(@RequestParam String id,@RequestParam String token, @RequestParam String query){
+        return profileController.getProfile(id,token,query);
+    }
+    
     @CrossOrigin
     @RequestMapping(value = "/scout", method = RequestMethod.GET)
     public Map<String, Object> queryForUsers(@RequestParam String userId,
