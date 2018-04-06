@@ -331,7 +331,7 @@ class EditProfile extends Component {
     if (response.ok) {
       // redirect to profile?
       //_this.setState({ redirect: true })
-      document.getElementById("success").value="Your profile was successfully updated!";
+      document.getElementById("success").textContent="Your profile was successfully updated!";
       response.json().then(json => {
         console.log(json);
       });
@@ -387,7 +387,6 @@ class EditProfile extends Component {
         this.setState({
           edit_bio: true
         });
-        console.log("hu");
        } else if (event.target.className == "FormInput courses form-control") {
         this.setState({
           edit_courses: true
@@ -397,6 +396,9 @@ class EditProfile extends Component {
           edit_skills: true
         });
       } 
+
+      document.getElementById("success").textContent="";
+
       
    }
    getAccessToken = () => {
@@ -475,15 +477,15 @@ class EditProfile extends Component {
                value={this.state.Skills}
                onChange={this.handleChange}
              />
-          <div id="success">
-           
-          </div>
            </FormGroup>
              <Button
              bsSize="small"
              type="submit">
              SUBMIT       
            </Button>
+           <div id="success">
+          
+          </div>
          </div>
        </form>
        </div>
