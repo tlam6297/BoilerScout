@@ -1,5 +1,6 @@
 package com.example.boilerscout;
 
+import com.example.boilerscout.api.InboxController;
 import com.example.boilerscout.api.LoginController;
 import com.example.boilerscout.api.MessageController;
 import com.example.boilerscout.api.SignUpController;
@@ -9,10 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
+
+import static com.example.boilerscout.api.InboxController.*;
 
 @RestController
 @SpringBootApplication
@@ -27,6 +31,9 @@ public class BoilerScoutApplication {
 
     @Autowired
     private MessageController messageController;
+
+    @Autowired
+    private InboxController inboxController;
 
     @RequestMapping(value = "/test")
     public Map<String, Object> t(@RequestBody Map<String, String> body) {
@@ -51,6 +58,13 @@ public class BoilerScoutApplication {
     @ResponseBody
     public Map<String, Object> message(@Valid @RequestBody Map<String, String> body) {
         return messageController.getMessage(body);
+
+    }
+
+    @RequestMapping(value = "/inbox", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> inbox(@RequestParam String user_Id,@RequestParam int sort, @RequestParam String search,@RequestParam int inorout ){//,@RequestParam String token ) {
+        return inboxController.getInbox(user_Id, sort, search, inorout);//, token);
 
     }
 
