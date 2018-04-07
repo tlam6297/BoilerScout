@@ -57,7 +57,7 @@ class Forum extends Component {
           found: true,
           displayTitle: false,
         }) 
-      }else {
+      } else {
         let title1 = "Complaining Forum";
         //title1 = this.getLocalStorage("forum_title");
 
@@ -78,10 +78,14 @@ class Forum extends Component {
   // Make page while loading
   componentWillMount = () => {
     this.getThreads();
-    //this.buildTitle(); 
   }
 
   render = () => {
+    let searchResults = this.state.threads.filter( (thread) => {
+      const input_lower = this.state.input.toLowerCase();
+      return thread.thread_title.toLowerCase().indexOf(input_lower) != -1;
+    });
+    
     return (
       <div>
         <Nav />
@@ -116,7 +120,7 @@ class Forum extends Component {
               </div>
             )}
             <ul>
-              {this.state.threads.map((thread, index) =>
+              {searchResults.map((thread, index) =>
                 <li id={index}>
                   <Link to={{pathname: '/thread', search: '?id=' + thread.thread_id,}} className="link">
                     <div className="thread">
