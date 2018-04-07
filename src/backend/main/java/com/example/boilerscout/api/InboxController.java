@@ -26,17 +26,20 @@ public class InboxController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Map<String, Object> getInbox (@RequestParam String user_Id, @RequestParam int sort, @RequestParam String search){
+    public Map<String, Object> getInbox (@RequestParam String user_Id, @RequestParam int sort, @RequestParam String search,@RequestParam int inorout){
 
         Map<String, Object> response = new HashMap<String, Object>();
 
         response.put("user_Id", user_Id);
         response.put("sort", sort);
         response.put("search",search);
+        response.put("inorout",inorout);
 
         try {
 
-            List<Map<String, Object>> listOfinbox = jdbcTemplate.queryForList("SELECT * FROM Mes WHERE User_Receiver='" + user_Id + "'");
+              List<Map<String, Object>> listOfinbox = jdbcTemplate.queryForList("SELECT * FROM Mes WHERE User_Receiver='" + user_Id + "'");
+              if(inorout==0) listOfinbox = jdbcTemplate.queryForList("SELECT * FROM Mes WHERE sender='" + user_Id + "'");
+
 
             if(search.equals("")) {
                 if (sort == 0) viseVersa(listOfinbox);
