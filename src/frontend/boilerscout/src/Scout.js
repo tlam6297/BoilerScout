@@ -65,6 +65,15 @@ class Scout extends Component {
     //token = "3ffadfadf"
 
     this.state.url = "http://localhost:8080/scout?" + "userId=" + id + "&token=" + token + "&type=" + this.state.type + "&query=" + this.state.searchinput
+
+    if (this.state.advanced) {
+      const oldURL = this.state.url;
+      const newURL = oldURL + "&graduation=" + this.state.selectedYear + "&major=" + this.state.selectedMajor;
+      this.setState({
+        url: newURL,
+      })
+      //console.log(this.state)
+    }
     
     // get request
     axios.get(this.state.url)
