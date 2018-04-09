@@ -1,0 +1,16 @@
+.inbox {
+  display: grid;
+  min-height: 50%;
+  grid-template-rows: 0.4fr 1fr 1fr;
+  grid-template-columns: 0.5fr 1fr 0.5fr; 
+}
+
+.title {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.threads {
+  grid-column: 2;
+  grid-row: 2;
+}
