@@ -18,6 +18,7 @@ import Profile from './Profile'
 import ProfileCreated from './ProfileCreated'
 import Community from './Community'
 import CreateAThread from './CreateAThread'
+import Forum from './Forum'
 
 class Main extends Component  {
 constructor(props) {
@@ -52,6 +53,7 @@ render () {
         <Route path="/profile-created" component={ProfileCreated} />
         <Route path="/community" component={Community}/>
         <Route path="/create-thread" component={CreateAThread}/>
+        <Route path="/forum" component={Forum}/>
       </Switch>
     </div>
   )

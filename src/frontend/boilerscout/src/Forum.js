@@ -46,7 +46,7 @@ class Forum extends Component {
 
     //get forum ID from localStorage (dummy forum ID for now)
     let forum_id = "528fc18a-ebbc-4b0a-9ca3-bd00d6db006c";
-    //forum_id = this.getLocalStorage("forum_id");
+    forum_id = this.getLocalStorage("forum_id");
 
     const url = "http://localhost:8080/community/get-threads?userId=" + id + "&token=" + token + "&forumId=" + forum_id;    
 
@@ -57,7 +57,7 @@ class Forum extends Component {
           found: true,
           displayTitle: false,
         }) 
-      }else {
+      } else {
         let title1 = "Complaining Forum";
         //title1 = this.getLocalStorage("forum_title");
 
@@ -78,10 +78,14 @@ class Forum extends Component {
   // Make page while loading
   componentWillMount = () => {
     this.getThreads();
-    //this.buildTitle(); 
   }
 
   render = () => {
+    let searchResults = this.state.threads.filter( (thread) => {
+      const input_lower = this.state.input.toLowerCase();
+      return thread.thread_title.toLowerCase().indexOf(input_lower) != -1;
+    });
+    
     return (
       <div>
         <Nav />
@@ -116,7 +120,7 @@ class Forum extends Component {
               </div>
             )}
             <ul>
-              {this.state.threads.map((thread, index) =>
+              {searchResults.map((thread, index) =>
                 <li id={index}>
                   <Link to={{pathname: '/thread', search: '?id=' + thread.thread_id,}} className="link">
                     <div className="thread">

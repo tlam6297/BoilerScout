@@ -52,11 +52,17 @@ class Community extends Component {
 
     }
 
-    saveForumInfo = (id, name, description) => {
+    saveForumInfo = (event) => {
+      let key = event.target.parentNode.getAttribute("id");
+      console.log(this.state.forums[key]);
+      let id = this.state.forums[key].forum_id;
+      let name = this.state.forums[key].forum_name;
+      let description = this.state.forums[key].forum_description;
       localStorage.setItem('forum_id', id);
       localStorage.setItem('forum_title', name);
       localStorage.setItem('forum_description', description);
     }
+
   render() {
     return (
       <div className="Community">
@@ -69,20 +75,17 @@ class Community extends Component {
         <ul>
           <div className='li'>
             {this.state.forums.map((result, index) =>
-              <Link to={
-                  `/community/get-threads?userId=` + localStorage.getItem("id") + `&token=` + localStorage.getItem("token") + `&forumId=` + result.forum_id
-                } className="link">
-                <li key={index} onClick={this.saveForumInfo(result.forum_id, result.forum_name, result.forum_description)}>
-                  <div className='result entry'>
+            <Link to={
+                `/forum`}>
+                <li id={index} onClick={this.saveForumInfo}>
                     <div className="first entry">
                       {result.forum_name}
                     </div>
                     <div className="description entry">
                       {result.forum_description}
                     </div>
-                  </div>
                 </li>
-              </Link>
+                </Link>
             )}
           </div>
         </ul>
