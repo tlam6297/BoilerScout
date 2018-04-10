@@ -69,6 +69,8 @@ class Scout extends Component {
       if (this.state.selectedMajor != "") {
         this.state.url = this.state.url + "&major=" + this.state.selectedMajor;
       }
+      this.state.url = oldURL + "&graduation=" + this.state.selectedYear + "&major=" + this.state.selectedMajor;
+      console.log(this.state)
     }
     // get request
     axios.get(this.state.url)
