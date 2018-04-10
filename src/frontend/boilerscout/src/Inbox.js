@@ -3,6 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 import Navbar from './TopNavBar'
+import { Button, FormGroup, FormControl, ControlLabel, } from "react-bootstrap";
+import 'react-responsive-modal/lib/react-responsive-modal.css';
+import Modal from 'react-responsive-modal/lib/css';
 import "./Inbox.css"
 
 class Inbox extends Component {
@@ -11,17 +14,87 @@ class Inbox extends Component {
 
     this.state = {
       name: "Jacob",
+      open: false,
       threads: [{
         "id": "fasdf3hff",
         "preview": "Hey i was just wondering if...",
         "name": "Selin Olive",
         "date": "May 2, 2018",
       }],
+      title: "",
+      author: "",
+      body: "",
+      reply: "",
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
 
   renderTitle = () => {
     return (<h1>Hello, {this.state.name}</h1>)
+  }
+
+  validateForm = () => {
+    return (this.state.reply.length > 0);
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (this.validateForm() == false) { return; }
+    const _this = this;
+
+    //send POST
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  handleChangeInput = (event) => {
+    this.setState({
+      reply: event.target.value
+    });
+  }
+
+  renderModal = () => {
+    const { open } = this.state;
+
+    return (
+      <Modal
+        open={open}
+        onClose={this.onCloseModal}
+        little
+        classNames={{
+          transitionEnter: 'transition-enter',
+          transitionEnterActive: 'transition-enter-active',
+          transitionExit: 'transition-exit-active',
+          transitionExitActive: 'transition-exit-active',
+        }}
+        animationDuration={1000}
+      >
+        <h1 className="padding">{this.state.title}</h1>
+        <h2 className="padding">From: {this.state.author}</h2>
+        <p className="padding">
+          {this.state.body}
+        </p>
+        
+        <form onSubmit={this.handleSubmit} className="padding">
+          <label>
+            <p className="">Reply:</p>
+            <textarea rows="4" cols="104" onChange={this.handleChangeInput}>{this.state.reply}</textarea>
+          </label>
+          <button type="submit" value="Submit" disabled={!this.validateForm}>SEND</button>
+        </form>
+      </Modal>
+    )
   }
 
   renderThreads = () => {
@@ -29,7 +102,14 @@ class Inbox extends Component {
       <ul>
         {this.state.threads.map((thread, index) =>
           <li id={index}>
-            <Link to={{pathname: '/message', search: '?id=' + thread.id,}} className="link">
+            <div onClick={() => {
+                this.setState({
+                  open: true,
+                  title: "Can we meet?",
+                  author: thread.name,
+                  body: "So a customer came in, and the shoes suited him so well that he willingly paid a price higher than usual for them; and the poor shoemaker, with the money, bought leather enough to make two pairs more. In the evening he cut out the work, and went to bed early, that he might get up and begin betimes next day; but he was saved all the trouble, for when he got up in the morning the work was done ready to his hand. So can we meet?",
+                });
+              }}>
               <div className="thread">
                 <div className="thread-preview">
                   <h3>{thread.preview}</h3>
@@ -41,9 +121,10 @@ class Inbox extends Component {
                   <h6>{thread.date}</h6>
                 </div>
               </div>
-            </Link>
+            </ div>
           </li>
         )}
+        {this.renderModal()}
       </ul>
     )
   }
