@@ -66,6 +66,11 @@ class Scout extends Component {
 
     this.state.url = "http://localhost:8080/scout?" + "userId=" + id + "&token=" + token + "&type=" + this.state.type + "&query=" + this.state.searchinput
     
+    if (this.state.advanced == true) {
+      const oldURL = this.state.url;
+      this.state.url = oldURL + "&graduation=" + this.state.selectedYear + "&major=" + this.state.selectedMajor;
+      console.log(this.state)
+    }
     // get request
     axios.get(this.state.url)
     .then(res => {
@@ -95,6 +100,13 @@ class Scout extends Component {
   }
 
   renderResults = () => {
+    if (this.state.results.length == 0) {
+      return (
+        <div className="noResults">
+          <h2>No Results</h2>
+        </div>
+      )
+    }
     return (
       <div className="results">
         <ul>
