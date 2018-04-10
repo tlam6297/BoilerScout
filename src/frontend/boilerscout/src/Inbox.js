@@ -17,7 +17,7 @@ class Inbox extends Component {
       open: false,
       threads: [{
         "id": "fasdf3hff",
-        "preview": "Hey i was just wondering if...",
+        "body": "Hey i was just wondering if...",
         "name": "Selin Olive",
         "date": "May 2, 2018",
       }],
@@ -32,7 +32,7 @@ class Inbox extends Component {
   }
 
   onCloseModal = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, reply: "", });
   };
 
   renderTitle = () => {
@@ -62,6 +62,15 @@ class Inbox extends Component {
     this.setState({
       reply: event.target.value
     });
+  }
+
+  getPreview = (text) => {
+    if (text.length < 30) { return text; }
+
+    let str = text.substring(0, 30);
+    str += "..";
+
+    return str;
   }
 
   renderModal = () => {
@@ -112,7 +121,7 @@ class Inbox extends Component {
               }}>
               <div className="thread">
                 <div className="thread-preview">
-                  <h3>{thread.preview}</h3>
+                  <h3>{this.getPreview(thread.body)}</h3>
                 </div>
                 <div className="thread-author">
                   <h6>{thread.name}</h6>
