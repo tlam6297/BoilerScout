@@ -25,6 +25,7 @@ class Inbox extends Component {
       author: "",
       body: "",
       reply: "",
+      input: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -73,6 +74,31 @@ class Inbox extends Component {
     return str;
   }
 
+  removeDuplicates = (array) => {
+    for (var i = 0; i < array.length; i++) {
+      for (var j = 0; j < array.length; j++) {
+        if (JSON.stringify(array[i]) === JSON.stringify(array[j]) && i != j) {
+          array.splice(i, 1);
+        }
+      }
+    }
+  }
+
+  getSearchResults = () => {
+    let searchResultsName = this.state.threads.filter((thread) => {
+      return thread.name.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
+    });
+
+    let searchResultsBody = this.state.threads.filter((thread) => {
+      return thread.body.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
+    });
+
+    const searchResults = searchResultsName.concat(searchResultsBody);
+    this.removeDuplicates(searchResults);
+
+    return searchResults;
+  }
+
   renderModal = () => {
     const { open } = this.state;
 
@@ -89,7 +115,6 @@ class Inbox extends Component {
         }}
         animationDuration={1000}
       >
-        <h1 className="padding">{this.state.title}</h1>
         <h2 className="padding">From: {this.state.author}</h2>
         <p className="padding">
           {this.state.body}
@@ -107,14 +132,23 @@ class Inbox extends Component {
   }
 
   renderThreads = () => {
+    const searchResults = this.getSearchResults();
+
+    if (searchResults.length == 0) {
+      return (
+        <div className="noResults">
+          <h2>No Results</h2>
+        </div>
+      )
+    }
+
     return (
       <ul>
-        {this.state.threads.map((thread, index) =>
+        {searchResults.map((thread, index) =>
           <li id={index}>
             <div onClick={() => {
                 this.setState({
                   open: true,
-                  title: "Can we meet?",
                   author: thread.name,
                   body: "So a customer came in, and the shoes suited him so well that he willingly paid a price higher than usual for them; and the poor shoemaker, with the money, bought leather enough to make two pairs more. In the evening he cut out the work, and went to bed early, that he might get up and begin betimes next day; but he was saved all the trouble, for when he got up in the morning the work was done ready to his hand. So can we meet?",
                 });
@@ -138,6 +172,24 @@ class Inbox extends Component {
     )
   }
 
+  renderSearch = () => {
+    return (
+      <form onSubmit={this.handleSubmit} className="form">
+        <FormGroup controlId="input" bsSize="large">
+          <FormControl
+            className="FormInput"
+            autoFocus
+            type="text"
+            bsSize="large"
+            placeholder="Search for a message..."
+            value={this.state.input}
+            onChange={this.handleChange}
+          />
+        </FormGroup>
+      </form>
+    )
+  }
+
   render = () => {
     return (
       <div>
@@ -146,7 +198,9 @@ class Inbox extends Component {
           <div className="title">
             {this.renderTitle()}
           </div>
-        
+          <div className="search">
+            {this.renderSearch()}
+          </div>        
           <div className="threads">
             {this.renderThreads()}
           </div>
