@@ -100,6 +100,13 @@ class Scout extends Component {
   }
 
   renderResults = () => {
+    if (this.state.results.length == 0) {
+      return (
+        <div className="noResults">
+          <h2>No Results</h2>
+        </div>
+      )
+    }
     return (
       <div className="results">
         <ul>
