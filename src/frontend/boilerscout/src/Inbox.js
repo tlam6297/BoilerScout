@@ -19,6 +19,7 @@ class Inbox extends Component {
         "id": "fasdf3hff",
         "body": "Hey i was just wondering if...",
         "name": "Selin Olive",
+        "email": "dfs2purdu.edu",
         "date": "May 2, 2018",
       }],
       title: "",
@@ -33,8 +34,28 @@ class Inbox extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount = () => {
-    axios.get()
+  getLocalStorage = (key) => {
+    return localStorage.getItem(key);
+  }
+
+  componentDidUpdate () {
+    console.log(this.state);
+  }
+
+  // delete this             '1'
+  componentWillMount1 = () => {
+    const id = this.getLocalStorage("id");
+    let token = this.getLocalStorage("token");
+
+    const url = "http://localhost:8080/inbox?" + "userId=" + id + "&token=" + token;
+
+    axios.get(url)
+    .then(res => {
+      console.log(res.data.inbox);
+      this.setState({
+        threads: res.data.inbox,
+      })      
+    });
   }
 
   onCloseModal = () => {
@@ -55,7 +76,35 @@ class Inbox extends Component {
     if (this.validateForm() == false) { return; }
     const _this = this;
 
+    const id = this.getLocalStorage("id");
+    let token = this.getLocalStorage("token"); 
+
+    const payload = JSON.stringify ({
+      'userId': id,
+      'token': token,
+      'recipientEmail': "sovali@purdue.edu",
+      'messageBody ': "did this message work?",
+    })
+
+    console.log(payload)
+
     //send POST
+    fetch('http://localhost:8080/send-message', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json;charset=UTF-8',
+          'Content-Type':'application/json;charset=UTF-8'
+        },
+        body: payload
+      })
+      .then(function(response) {
+        console.log(response);
+        if (response.ok) {
+          alert("Message Sent");
+        } else {
+          alert("Message not sent");
+        }
+      })
   }
 
   handleChange = (event) => {
@@ -90,18 +139,24 @@ class Inbox extends Component {
   }
 
   getSearchResults = () => {
-    let searchResultsName = this.state.threads.filter((thread) => {
-      return thread.name.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
-    });
-
-    let searchResultsBody = this.state.threads.filter((thread) => {
-      return thread.body.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
-    });
-
-    const searchResults = searchResultsName.concat(searchResultsBody);
-    this.removeDuplicates(searchResults);
-
-    return searchResults;
+    if (this.state.threads != undefined) {
+      let searchResultsName = this.state.threads.filter((thread) => {
+        return thread.name.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
+      });
+  
+      let searchResultsBody = this.state.threads.filter((thread) => {
+        return thread.body.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
+      });
+  
+      const searchResults = searchResultsName.concat(searchResultsBody);
+      this.removeDuplicates(searchResults);
+  
+      return searchResults;
+    } else {
+      return (
+        []
+      )
+    }
   }
 
   handleSort = (e) => {
@@ -151,7 +206,7 @@ class Inbox extends Component {
     if (searchResults.length == 0) {
       return (
         <div className="noResults">
-          <h2>No Results</h2>
+          <h2>No Messages</h2>
         </div>
       )
     }
