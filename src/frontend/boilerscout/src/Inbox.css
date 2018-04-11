@@ -34,3 +34,8 @@
   padding: 20px;
   margin: 10px;
 }
+
+.sort {
+  grid-column: 3;
+  grid-row: 2;
+}

@@ -26,10 +26,15 @@ class Inbox extends Component {
       body: "",
       reply: "",
       input: "",
+      buttonText: "Descending",
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount = () => {
+    axios.get()
   }
 
   onCloseModal = () => {
@@ -97,6 +102,15 @@ class Inbox extends Component {
     this.removeDuplicates(searchResults);
 
     return searchResults;
+  }
+
+  handleSort = (e) => {
+    e.preventDefault();
+    if (this.state.buttonText == "Descending") {
+      this.setState({ buttonText: "Ascending" });
+    } else {
+      this.setState({ buttonText: "Descending" })
+    }
   }
 
   renderModal = () => {
@@ -190,6 +204,12 @@ class Inbox extends Component {
     )
   }
 
+  renderSort = () => {
+    return (
+      <button onClick={this.handleSort}>SORT {this.state.buttonText}</button>
+    )
+  }
+
   render = () => {
     return (
       <div>
@@ -200,7 +220,10 @@ class Inbox extends Component {
           </div>
           <div className="search">
             {this.renderSearch()}
-          </div>        
+          </div>
+          <div className="sort">
+            {this.renderSort()}
+          </div>   
           <div className="threads">
             {this.renderThreads()}
           </div>
