@@ -25,7 +25,7 @@ public class ProfileController extends ValidationUtility {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Map<String, Object> updateProfile(@RequestBody Map<String, Object> body) {
+   public Map<String, Object> updateProfile(@RequestBody Map<String, Object> body) {
 
         Map<String, Object> response = new HashMap<String, Object>();
 
@@ -96,6 +96,22 @@ public class ProfileController extends ValidationUtility {
                         }
                     }
                 }
+                //
+                if(body.containsKey("major")){
+                    String major = body.get("major").toString();
+                    jdbcTemplate.update("UPDATE profiles SET major='" + major + "' WHERE user_id='" + userId + "'");
+                }
+                //
+                if(body.containsKey("grad_year")){
+                    int graduation = (Integer)body.get("grad_year");
+                    jdbcTemplate.update("UPDATE profiles SET grad_year=" + graduation + " WHERE user_id='" + userId + "'");
+                }
+
+                if(body.containsKey("fullName")){
+                    String name = body.get("fullName").toString();
+                    jdbcTemplate.update("UPDATE profiles SET full_name='" + name + "' WHERE user_id='" + userId + "'");
+                }
+
             } catch (DataAccessException ex) {
                 log.info("Exception Message" + ex.getMessage());
                 response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
