@@ -16,17 +16,19 @@ class Inbox extends Component {
       name: "Jacob",
       open: false,
       threads: [{
-        "id": "fasdf3hff",
-        "body": "Hey i was just wondering if...",
-        "name": "Selin Olive",
+        "message_id": "fasdf3hff",
+        "message_body": "Hey i was just wondering if...",
+        "full_name": "Selin Olive",
         "email": "dfs2purdu.edu",
-        "date": "May 2, 2018",
+        "message_date": "May 2, 2018",
       }],
       title: "",
       author: "",
       body: "",
       reply: "",
       input: "",
+      email: "",
+      name: "",
       buttonText: "Descending",
     };
 
@@ -39,11 +41,15 @@ class Inbox extends Component {
   }
 
   componentDidUpdate () {
-    console.log(this.state);
+   // console.log(this.state);
   }
 
-  // delete this             '1'
-  componentWillMount1 = () => {
+  componentWillMount = () => {
+    this.getInitialMessages();
+    this.setName();
+  }
+
+  getInitialMessages = () => {
     const id = this.getLocalStorage("id");
     let token = this.getLocalStorage("token");
 
@@ -51,10 +57,28 @@ class Inbox extends Component {
 
     axios.get(url)
     .then(res => {
-      console.log(res.data.inbox);
       this.setState({
         threads: res.data.inbox,
       })      
+    });
+  }
+
+  setName = () => {
+    const user_id = localStorage.getItem("id");
+    const token = localStorage.getItem("token");
+
+    const url = "http://localhost:8080/profile/get?id=" + user_id + "&token=" + token + "&query=" + user_id;
+
+    axios.get(url)
+    .then(res => {
+        console.log(res.data);
+        if (res.status == 200) {
+            this.setState({
+                name: res.data.Name,
+            });        
+        } else {
+            alert("error");
+        }      
     });
   }
 
@@ -80,13 +104,11 @@ class Inbox extends Component {
     let token = this.getLocalStorage("token"); 
 
     const payload = JSON.stringify ({
-      'userId': id,
-      'token': token,
-      'recipientEmail': "sovali@purdue.edu",
-      'messageBody ': "did this message work?",
+      "userId": id,
+      "token": token,
+      "recipientEmail": this.state.email,
+      "messageBody": this.state.reply,
     })
-
-    console.log(payload)
 
     //send POST
     fetch('http://localhost:8080/send-message', {
@@ -98,7 +120,6 @@ class Inbox extends Component {
         body: payload
       })
       .then(function(response) {
-        console.log(response);
         if (response.ok) {
           alert("Message Sent");
         } else {
@@ -141,11 +162,11 @@ class Inbox extends Component {
   getSearchResults = () => {
     if (this.state.threads != undefined) {
       let searchResultsName = this.state.threads.filter((thread) => {
-        return thread.name.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
+        return thread.full_name.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
       });
   
       let searchResultsBody = this.state.threads.filter((thread) => {
-        return thread.body.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
+        return thread.message_body.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
       });
   
       const searchResults = searchResultsName.concat(searchResultsBody);
@@ -218,19 +239,20 @@ class Inbox extends Component {
             <div onClick={() => {
                 this.setState({
                   open: true,
-                  author: thread.name,
-                  body: "So a customer came in, and the shoes suited him so well that he willingly paid a price higher than usual for them; and the poor shoemaker, with the money, bought leather enough to make two pairs more. In the evening he cut out the work, and went to bed early, that he might get up and begin betimes next day; but he was saved all the trouble, for when he got up in the morning the work was done ready to his hand. So can we meet?",
+                  author: thread.full_name,
+                  body: thread.message_body,
+                  email: thread.email,
                 });
               }}>
               <div className="thread">
                 <div className="thread-preview">
-                  <h3>{this.getPreview(thread.body)}</h3>
+                  <h3>{this.getPreview(thread.message_body)}</h3>
                 </div>
                 <div className="thread-author">
-                  <h6>{thread.name}</h6>
+                  <h6>{thread.full_name}</h6>
                 </div>
                 <div className="time">
-                  <h6>{thread.date}</h6>
+                  <h6>{thread.message_date}</h6>
                 </div>
               </div>
             </ div>
