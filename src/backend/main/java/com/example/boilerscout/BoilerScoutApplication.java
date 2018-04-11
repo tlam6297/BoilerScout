@@ -81,13 +81,10 @@ public class BoilerScoutApplication {
     @CrossOrigin
     @RequestMapping(value = "/scout", method = RequestMethod.GET)
     public Map<String, Object> queryForUsers(@RequestParam String userId,
-                                             @RequestParam String token,
-                                             @RequestParam String type,
-                                             @RequestParam String query,
-                                             @RequestParam(value = "graduation",required = false) String graduation,
-                                             @RequestParam(value = "major", required = false) String major
-    ) {
-        return searchController.search(userId, token, type, query, graduation, major);
+                                      @RequestParam String token,
+                                      @RequestParam String type,
+                                      @RequestParam String query) {
+        return searchController.search(userId, token, type, query);
     }
 
 

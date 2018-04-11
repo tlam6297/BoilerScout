@@ -17,6 +17,9 @@ import Settings from './Settings'
 import Profile from './Profile'
 import ProfileCreated from './ProfileCreated'
 import Forum from './Forum'
+import Inbox from './Inbox'
+
+import Outbox from './Outbox'
 
 class Main extends Component  {
 constructor(props) {
@@ -50,6 +53,8 @@ render () {
         <Route path="/profile" component={Profile}/>
         <Route path="/profile-created" component={ProfileCreated} />
         <Route path="/forum" component={Forum} />
+        <Route path="/inbox" component={Inbox} />
+        <Route path="/outbox" component={Outbox} />
       </Switch>
     </div>
   )
