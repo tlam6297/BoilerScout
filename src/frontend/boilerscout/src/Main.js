@@ -18,6 +18,7 @@ import Profile from './Profile'
 import ProfileCreated from './ProfileCreated'
 import Forum from './Forum'
 import Inbox from './Inbox'
+
 import Outbox from './Outbox'
 
 class Main extends Component  {

@@ -22,8 +22,8 @@ class Scout extends Component {
       redirect: false,
       advanced: false,
       advText: "ADVANCED FILTERS",
-      selectedMajor: "Computer Science",
-      selectedYear: 2018,
+      selectedMajor: "",
+      selectedYear: "",
       noResults: true,
       results: [],
       posts: [],
@@ -68,6 +68,19 @@ class Scout extends Component {
 
 
     
+    if (this.state.advanced == true) {
+      const oldURL = this.state.url;
+
+      if (this.state.selectedYear != "" ) {
+        this.state.url = oldURL + "&graduation=" + this.state.selectedYear
+      }
+
+      if (this.state.selectedMajor != "") {
+        this.state.url = this.state.url + "&major=" + this.state.selectedMajor;
+      }
+      this.state.url = oldURL + "&graduation=" + this.state.selectedYear + "&major=" + this.state.selectedMajor;
+      console.log(this.state)
+    }
     // get request
     axios.get(this.state.url)
     .then(res => {
@@ -97,6 +110,13 @@ class Scout extends Component {
   }
 
   renderResults = () => {
+    if (this.state.results.length == 0) {
+      return (
+        <div className="noResults">
+          <h2>No Results</h2>
+        </div>
+      )
+    }
     return (
       <div className="results">
         <ul>
@@ -128,6 +148,7 @@ class Scout extends Component {
 
   renderAdvanced = () => {
     const majors = [
+      "",
       "Computer Science",
       "Anthropology",
       "Mechanical Engineering",
@@ -139,6 +160,15 @@ class Scout extends Component {
     ];
 
     const grad_years = [
+      "",
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
       2018,
       2019,
       2020,
