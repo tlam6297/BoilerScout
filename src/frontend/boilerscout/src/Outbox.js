@@ -16,25 +16,68 @@ class Outbox extends Component {
       name: "Jacob",
       open: false,
       threads: [{
-        "id": "fasdf3hff",
-        "body": "Hey i was just wondering if...",
-        "name": "Selin Olive",
-        "date": "May 2, 2018",
+        "message_id": "fasdf3hff",
+        "message_body": "Hey i was just wondering if...",
+        "full_name": "Selin Olive",
+        "email": "dfs2purdu.edu",
+        "message_date": "May 2, 2018",
       }],
       title: "",
       author: "",
       body: "",
       reply: "",
       input: "",
+      email: "",
+      name: "",
       buttonText: "Descending",
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  getLocalStorage = (key) => {
+    return localStorage.getItem(key);
+  }
+
+  componentDidUpdate () {
+   // console.log(this.state);
   }
 
   componentWillMount = () => {
-    axios.get()
+    this.getInitialMessages();
+    this.setName();
+  }
+
+  getInitialMessages = () => {
+    const id = this.getLocalStorage("id");
+    let token = this.getLocalStorage("token");
+
+    const url = "http://localhost:8080/outbox?" + "userId=" + id + "&token=" + token;
+
+    axios.get(url)
+    .then(res => {
+      this.setState({
+        threads: res.data.outbox,
+      })      
+    });
+  }
+
+  setName = () => {
+    const user_id = localStorage.getItem("id");
+    const token = localStorage.getItem("token");
+
+    const url = "http://localhost:8080/profile/get?id=" + user_id + "&token=" + token + "&query=" + user_id;
+
+    axios.get(url)
+    .then(res => {
+        if (res.status == 200) {
+            this.setState({
+                name: res.data.Name,
+            });        
+        } else {
+            alert("error");
+        }      
+    });
   }
 
   onCloseModal = () => {
@@ -47,15 +90,6 @@ class Outbox extends Component {
 
   validateForm = () => {
     return (this.state.reply.length > 0);
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (this.validateForm() == false) { return; }
-    const _this = this;
-
-    //send POST
   }
 
   handleChange = (event) => {
@@ -90,18 +124,24 @@ class Outbox extends Component {
   }
 
   getSearchResults = () => {
-    let searchResultsName = this.state.threads.filter((thread) => {
-      return thread.name.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
-    });
-
-    let searchResultsBody = this.state.threads.filter((thread) => {
-      return thread.body.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
-    });
-
-    const searchResults = searchResultsName.concat(searchResultsBody);
-    this.removeDuplicates(searchResults);
-
-    return searchResults;
+    if (this.state.threads != undefined) {
+      let searchResultsName = this.state.threads.filter((thread) => {
+        return thread.full_name.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
+      });
+  
+      let searchResultsBody = this.state.threads.filter((thread) => {
+        return thread.message_body.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
+      });
+  
+      const searchResults = searchResultsName.concat(searchResultsBody);
+      this.removeDuplicates(searchResults);
+  
+      return searchResults;
+    } else {
+      return (
+        []
+      )
+    }
   }
 
   handleSort = (e) => {
@@ -129,18 +169,10 @@ class Outbox extends Component {
         }}
         animationDuration={1000}
       >
-        <h2 className="padding">From: {this.state.author}</h2>
+        <h2 className="padding">To: {this.state.author}</h2>
         <p className="padding">
           {this.state.body}
         </p>
-        
-        <form onSubmit={this.handleSubmit} className="padding">
-          <label>
-            <p className="">Reply:</p>
-            <textarea rows="4" cols="104" onChange={this.handleChangeInput}>{this.state.reply}</textarea>
-          </label>
-          <button type="submit" value="Submit" disabled={!this.validateForm}>SEND</button>
-        </form>
       </Modal>
     )
   }
@@ -151,7 +183,7 @@ class Outbox extends Component {
     if (searchResults.length == 0) {
       return (
         <div className="noResults">
-          <h2>No Results</h2>
+          <h2>No Messages</h2>
         </div>
       )
     }
@@ -163,19 +195,20 @@ class Outbox extends Component {
             <div onClick={() => {
                 this.setState({
                   open: true,
-                  author: thread.name,
-                  body: "So a customer came in, and the shoes suited him so well that he willingly paid a price higher than usual for them; and the poor shoemaker, with the money, bought leather enough to make two pairs more. In the evening he cut out the work, and went to bed early, that he might get up and begin betimes next day; but he was saved all the trouble, for when he got up in the morning the work was done ready to his hand. So can we meet?",
+                  author: thread.full_name,
+                  body: thread.message_body,
+                  email: thread.email,
                 });
               }}>
               <div className="thread">
                 <div className="thread-preview">
-                  <h3>{this.getPreview(thread.body)}</h3>
+                  <h3>{this.getPreview(thread.message_body)}</h3>
                 </div>
                 <div className="thread-author">
-                  <h6>{thread.name}</h6>
+                  <h6>{thread.full_name}</h6>
                 </div>
                 <div className="time">
-                  <h6>{thread.date}</h6>
+                  <h6>{thread.message_date}</h6>
                 </div>
               </div>
             </ div>
@@ -188,7 +221,7 @@ class Outbox extends Component {
 
   renderSearch = () => {
     return (
-      <form onSubmit={this.handleSubmit} className="form">
+      <form className="form">
         <FormGroup controlId="input" bsSize="large">
           <FormControl
             className="FormInput"
@@ -214,7 +247,7 @@ class Outbox extends Component {
     return (
       <div>
         <Navbar />
-        <div className="inbox">
+        <div className="outbox">
           <div className="title">
             {this.renderTitle()}
           </div>
