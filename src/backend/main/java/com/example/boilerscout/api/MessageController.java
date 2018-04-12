@@ -1,5 +1,6 @@
 package com.example.boilerscout.api;
 
+
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.sql.Types;
 import java.util.*;
+
 
 /*
 Created  by Baris Dingil
@@ -38,13 +41,26 @@ public class MessageController extends ValidationUtility {
         } else {
             try {
 
-
                 List<Map<String, Object>> existingUser = jdbcTemplate.queryForList("SELECT user_id FROM users WHERE email ='" + dest + "'");
 
                 if (existingUser.size() == 0) throw new RuntimeException("User don't exist!");
 
                 String user_ = jdbcTemplate.queryForObject("SELECT user_id FROM users WHERE email ='" + dest + "'", String.class);
-                jdbcTemplate.update("INSERT INTO Mes (User_Receiver, message, sender) VALUES (?, ?, ?)", user_, message, sender);
+
+                java.sql.Timestamp a = new java.sql.Timestamp(System.currentTimeMillis());
+                Object[] params = new Object[]{
+                        user_,
+                        message,
+                        sender,
+                        a
+                };
+
+                int[] types = new int[]{
+                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP
+                };
+
+
+                jdbcTemplate.update("INSERT INTO Mes (User_Receiver, message,sender,datesent) VALUES (?, ?, ?,?)", params,types);
 
                 response.put("status", HttpStatus.OK);
 
