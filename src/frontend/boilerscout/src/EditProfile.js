@@ -16,7 +16,6 @@ class EditProfile extends Component {
        Bio: "",
        Courses: [],
        Email: "",
-       Graduation: "",
        Major: "",
        Name: "",
        Skills: [],
@@ -24,7 +23,8 @@ class EditProfile extends Component {
        edit_skills: false,
        edit_courses: false,
        edit_bio: false, 
-       edit_name: false,      
+       edit_name: false, 
+       edit_grad: false,     
    }
  }
 
@@ -104,6 +104,7 @@ class EditProfile extends Component {
       "courses": coursesarray,
       "skills": skillsarray,
       "fullName": this.state.Name,
+      "grad_year": this.state.Graduation,
       });
       console.log(payload);
       fetch('http://localhost:8080/update-profile', {
@@ -132,6 +133,7 @@ class EditProfile extends Component {
       "bio": this.state.Bio,
       "courses": coursesarray,
       "fullName": this.state.Name,
+      "grad_year": this.state.Graduation,
       });
       console.log(payload);
       fetch('http://localhost:8080/update-profile', {
@@ -161,6 +163,7 @@ class EditProfile extends Component {
       "bio": this.state.Bio,
       "skills": skillsarray,
       "fullName": this.state.Name,
+      "grad_year": this.state.Graduation,
       });
       console.log(payload);
       fetch('http://localhost:8080/update-profile', {
@@ -188,6 +191,7 @@ class EditProfile extends Component {
       "token": token,
       "bio": this.state.Bio,
       "fullName": this.state.Name,
+      "grad_year": this.state.Graduation,
       });
       console.log(payload);
       fetch('http://localhost:8080/update-profile', {
@@ -210,11 +214,64 @@ class EditProfile extends Component {
         }     
       })
     } else if (!this.state.edit_bio && !this.state.edit_courses && !this.state.edit_courses) {
-      if (this.state.edit_name) {
+      if (this.state.edit_name && this.state.edit_grad) {
         var payload = JSON.stringify({
           "userId": id,
           "token": token,
           "fullName": this.state.Name,
+          "grad_year": this.state.Graduation,
+          });
+          console.log(payload);
+          fetch('http://localhost:8080/update-profile', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json;charset=UTF-8',
+              'transfer-encoding': 'chunked',
+            },
+            body: payload,
+          })
+          .then(function(response) {
+            if (response.ok) {
+              document.getElementById("success").value="Your profile was successfully updated!";
+              response.json().then(json => {
+                console.log(json);
+              });
+            } else {
+              alert("Error in updating profile");
+            }     
+          }) 
+      } else if (this.state.edit_name && !this.state.edit_grad) {
+        var payload = JSON.stringify({
+          "userId": id,
+          "token": token,
+          "fullName": this.state.Name,
+          });
+          console.log(payload);
+          fetch('http://localhost:8080/update-profile', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json;charset=UTF-8',
+              'transfer-encoding': 'chunked',
+            },
+            body: payload,
+          })
+          .then(function(response) {
+            if (response.ok) {
+              document.getElementById("success").value="Your profile was successfully updated!";
+              response.json().then(json => {
+                console.log(json);
+              });
+            } else {
+              alert("Error in updating profile");
+            }     
+          }) 
+      } else if (this.state.edit_grad && !this.state.edit_name) {
+        var payload = JSON.stringify({
+          "userId": id,
+          "token": token,
+          "grad_year": this.state.Graduation,
           });
           console.log(payload);
           fetch('http://localhost:8080/update-profile', {
@@ -243,6 +300,7 @@ class EditProfile extends Component {
       edit_skills: false,
       edit_bio: false,
       edit_name: false,
+      edit_grad: false,
     });
    }
 
@@ -270,7 +328,13 @@ class EditProfile extends Component {
         this.setState({
           edit_name: true
         });
+      } else if (event.target.className == "FormInput graduation") {
+        this.setState({
+          edit_grad: true
+        });
       } 
+
+      console.log(this.state.Graduation);
 
       document.getElementById("success").textContent="";
    }
@@ -300,26 +364,29 @@ class EditProfile extends Component {
    localStorage.removeItem('uid')
  }
 
- render() {
+ render() {    
    return (
      <div className="EditProfile">
        <div className="Container">
-       <h4>Hello, {this.state.Name}!</h4>
          <button
            type="button">
            Edit Information
        </button>
+       <br/>
+       <h4>Hello, {this.state.Name}!</h4>
        <form onSubmit={this.handleSubmit}>
          <div className="Form">
          <ControlLabel>Graduation Year:</ControlLabel>
-         <div className="graduation">
-         <select>
+         <select
+            className="FormInput graduation"
+            id="Graduation"
+            value={this.state.Graduation} 
+            onChange={this.handleChange}>
            <option value="2019">2019</option>
            <option value="2020">2020</option>
            <option value="2021">2021</option>
            <option value="2022">2022</option>
          </select>
-         </div>  
          <FormGroup controlId="Name" bsSize="large">
          <ControlLabel>Name:</ControlLabel>
              <FormControl
