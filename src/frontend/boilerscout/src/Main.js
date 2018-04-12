@@ -18,6 +18,7 @@ import Profile from './Profile'
 import ProfileCreated from './ProfileCreated'
 import Forum from './Forum'
 import Inbox from './Inbox'
+import PassUp from './PasswordUpdated'
 
 import Outbox from './Outbox'
 
@@ -55,6 +56,7 @@ render () {
         <Route path="/forum" component={Forum} />
         <Route path="/inbox" component={Inbox} />
         <Route path="/outbox" component={Outbox} />
+        <Route path="/password-updated" component={PassUp} />
       </Switch>
     </div>
   )
