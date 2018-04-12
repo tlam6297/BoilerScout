@@ -113,6 +113,7 @@ public class EmailServiceController extends ValidationUtility {
             String to = email;
             String subject ="BoilerScout. New password requested.";
             String text = "Hi,\n\n You have requested to reset your password.  Please click the following link:\n\n\t";
+            //this is were frontend would want to change to 3000 for testing.
             text = text + "localhost:8080/validate-reset?query=" + hashedEmail;
             text = text + "&id=" + userId;
 
