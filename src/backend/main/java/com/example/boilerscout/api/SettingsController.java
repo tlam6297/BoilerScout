@@ -90,10 +90,13 @@ public class SettingsController extends ValidationUtility {
         if (!encoder.matches(email, hashedEmail)) {
             throw new RuntimeException("[BadRequest] - Invalid link!");
         }
-
+        String hashId = encoder.encode(userId);
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("userId",userId);
         response.put("status","valid");
+        response.put("hashedEmail",hashedEmail);
+        response.put("hashedId",hashId);
+
         return response;
     }
 
@@ -102,7 +105,8 @@ public class SettingsController extends ValidationUtility {
 
         Map<String, Object> response = new HashMap<String, Object>();
         String userId = body.get("userId").toString();
-
+        String hashedEmail = body.get("hashedEmail").toString();
+        String hashedId = body.get("hashedId").toString();
 
             try {
                 String newPass = body.get("newPassword").toString();
@@ -114,9 +118,22 @@ public class SettingsController extends ValidationUtility {
                     throw new RuntimeException("[BadRequest] - The new passwords don't match each other!");
                 }
 
-                //check if current password matches the one in database, (I thought it would be better to do this late only once all other requirements are met)
-                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                newPass = passwordEncoder.encode(newPass);
+
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+                //security checks, the hashed values cannot be accessed unless the user has accesed this page from a valid link
+                String email = jdbcTemplate.queryForObject("SELECT email FROM users WHERE user_id='" + userId + "'", String.class);
+                if (!encoder.matches(email, hashedEmail)) {
+                    throw new RuntimeException("[BadRequest] - Invalid attempt!");
+                }
+
+                if(!encoder.matches(userId,hashedId)){
+                    throw new RuntimeException("[BadRequest] - Invalid attempt!");
+                }
+
+
+
+                newPass = encoder.encode(newPass);
                 newPass = '"'+newPass+'"';
                 jdbcTemplate.update("UPDATE users SET password=" + newPass + " WHERE user_id='" + userId + "'");
 
@@ -135,3 +152,4 @@ public class SettingsController extends ValidationUtility {
     }
 
 }
+
