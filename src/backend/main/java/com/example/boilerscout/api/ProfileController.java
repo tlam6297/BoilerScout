@@ -103,8 +103,9 @@ public class ProfileController extends ValidationUtility {
                 }
                 //
                 if(body.containsKey("grad_year")){
-                    int graduation = (Integer)body.get("grad_year");
-                    jdbcTemplate.update("UPDATE profiles SET grad_year=" + graduation + " WHERE user_id='" + userId + "'");
+                    String graduation = body.get("grad_year").toString();
+                    int grad = Integer.parseInt(graduation);
+                    jdbcTemplate.update("UPDATE profiles SET grad_year=" + grad + " WHERE user_id='" + userId + "'");
                 }
 
                 if(body.containsKey("fullName")){
