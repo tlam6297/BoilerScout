@@ -11,11 +11,17 @@ li {
     border-radius: 40px;
     text-decoration: none;
 }
+
+.li * {
+  text-decoration: none;
+}
   
   .result {
     list-style-type: none;
     border: 2px solid rgb(139, 130, 0);
-    padding: 2rem;
+    background-color: #cc9900;
+    text-decoration: none;
+    padding: 1rem;
     margin: 0.2rem;
     border-radius: 30px;
     display: grid;
@@ -29,6 +35,7 @@ li {
     padding: 0.2rem;
     background-color: white;  
     border-radius: 30px;
+    text-decoration: none;
   }
 
 
@@ -36,12 +43,15 @@ li {
     grid-column: 1;
     grid-row: 1;
     font-size: large;
+    text-decoration: none;
     
   }
 
   .description {
     grid-column: 1;
     grid-row: 2;
-    font-size: small;  
+    font-size: small;
+    text-decoration: none;
+  
   }
   

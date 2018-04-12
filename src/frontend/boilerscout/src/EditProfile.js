@@ -23,7 +23,8 @@ class EditProfile extends Component {
        user_id: "",
        edit_skills: false,
        edit_courses: false,
-       edit_bio: false,
+       edit_bio: false, 
+       edit_name: false,      
    }
  }
 
@@ -58,7 +59,9 @@ class EditProfile extends Component {
        if (res.status == 200) {
            this.setState({
                ...res.data,
-           });       
+           });  
+           
+           console.log(res.data);
        } else {
            alert("Invalid Token- Please login again");
            this.setState({
@@ -66,6 +69,7 @@ class EditProfile extends Component {
            })
        } 
    });
+
  }
 
  removeWhiteSpaces = (array) => {
@@ -99,6 +103,7 @@ class EditProfile extends Component {
       "bio": this.state.Bio,
       "courses": coursesarray,
       "skills": skillsarray,
+      "fullName": this.state.Name,
       });
       console.log(payload);
       fetch('http://localhost:8080/update-profile', {
@@ -126,6 +131,7 @@ class EditProfile extends Component {
       "token": token,
       "bio": this.state.Bio,
       "courses": coursesarray,
+      "fullName": this.state.Name,
       });
       console.log(payload);
       fetch('http://localhost:8080/update-profile', {
@@ -154,6 +160,7 @@ class EditProfile extends Component {
       "token": token,
       "bio": this.state.Bio,
       "skills": skillsarray,
+      "fullName": this.state.Name,
       });
       console.log(payload);
       fetch('http://localhost:8080/update-profile', {
@@ -180,6 +187,7 @@ class EditProfile extends Component {
       "userId": id,
       "token": token,
       "bio": this.state.Bio,
+      "fullName": this.state.Name,
       });
       console.log(payload);
       fetch('http://localhost:8080/update-profile', {
@@ -201,13 +209,40 @@ class EditProfile extends Component {
           alert("Error in updating profile");
         }     
       })
-    } else {
-
+    } else if (!this.state.edit_bio && !this.state.edit_courses && !this.state.edit_courses) {
+      if (this.state.edit_name) {
+        var payload = JSON.stringify({
+          "userId": id,
+          "token": token,
+          "fullName": this.state.Name,
+          });
+          console.log(payload);
+          fetch('http://localhost:8080/update-profile', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json;charset=UTF-8',
+              'transfer-encoding': 'chunked',
+            },
+            body: payload,
+          })
+          .then(function(response) {
+            if (response.ok) {
+              document.getElementById("success").value="Your profile was successfully updated!";
+              response.json().then(json => {
+                console.log(json);
+              });
+            } else {
+              alert("Error in updating profile");
+            }     
+          }) 
+      }
     }
     this.setState ({
       edit_courses: false,
       edit_skills: false,
       edit_bio: false,
+      edit_name: false,
     });
    }
 
@@ -230,6 +265,10 @@ class EditProfile extends Component {
       } else if (event.target.className == "FormInput bio form-control") {
         this.setState({
           edit_bio: true
+        });
+      } else if (event.target.className == "FormInput name form-control") {
+        this.setState({
+          edit_name: true
         });
       } 
 
@@ -280,7 +319,17 @@ class EditProfile extends Component {
            <option value="2021">2021</option>
            <option value="2022">2022</option>
          </select>
-         </div>   
+         </div>  
+         <FormGroup controlId="Name" bsSize="large">
+         <ControlLabel>Name:</ControlLabel>
+             <FormControl
+               className="FormInput name"
+               autoFocus
+               type="text"
+               value={this.state.Name}
+               onChange={this.handleChange}
+             />
+          </FormGroup>
      
          <FormGroup controlId="Bio" bsSize="large">
            <ControlLabel>Bio:</ControlLabel>
