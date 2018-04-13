@@ -15,40 +15,48 @@ import java.sql.Timestamp;
 import java.util.*;
 
 @Service
-public class OutboxController {
+public class OutboxController extends ValidationUtility {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Map<String, Object> getOutbox (@RequestParam String user_Id, @RequestParam int sort) {
+    public Map<String, Object> getOutbox (@RequestParam String user_Id, @RequestParam int sort, @RequestParam String token) {
 
         Map<String, Object> response = new HashMap<String, Object>();
 
         response.put("user_Id", user_Id);
+        response.put("token", token);
         response.put("sort", sort);
 
-        try {
+        if (!isValidToken(token, user_Id) || isExpiredToken(token)) {
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
+            return response;
 
-            List<Map<String, Object>> listOfinbox = jdbcTemplate.queryForList("SELECT message, User_Receiver, sender, dateString FROM Mes WHERE sender='" + user_Id + "'ORDER BY datesent ASC");
+        } else {
 
-            if(sort==0) {
+            try {
 
-                listOfinbox = jdbcTemplate.queryForList("SELECT message, User_Receiver, sender, dateString  FROM Mes WHERE sender='" + user_Id + "'ORDER BY datesent DESC ");
+                List<Map<String, Object>> listOfinbox = jdbcTemplate.queryForList("SELECT message, email, dateString FROM Mes WHERE sender='" + user_Id + "'ORDER BY datesent ASC");
+
+                if (sort == 2) {
+
+                    listOfinbox = jdbcTemplate.queryForList("SELECT message, email, dateString  FROM Mes WHERE sender='" + user_Id + "'ORDER BY datesent DESC ");
+
+                }
+
+                response.put("listOfinbox", listOfinbox);
+                response.put("status", HttpStatus.OK);
+
+            } catch (DataAccessException e) {
+
+                log.info("Exception Message" + e.getMessage());
+                response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new RuntimeException("[InternalServerError] - Error accessing data.");
 
             }
-
-            response.put("listOfinbox", listOfinbox);
-            response.put("status", HttpStatus.OK);
-
-        } catch(DataAccessException e) {
-
-            log.info("Exception Message" + e.getMessage());
-            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
-            throw new RuntimeException("[InternalServerError] - Error accessing data.");
-
+            return response;
         }
-        return response;
     }
 }
