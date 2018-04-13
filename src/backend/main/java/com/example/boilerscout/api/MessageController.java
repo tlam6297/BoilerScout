@@ -43,9 +43,11 @@ public class MessageController extends ValidationUtility {
 
                 List<Map<String, Object>> existingUser = jdbcTemplate.queryForList("SELECT user_id FROM users WHERE email ='" + dest + "'");
 
+
                 if (existingUser.size() == 0) throw new RuntimeException("User don't exist!");
 
                 String user_ = jdbcTemplate.queryForObject("SELECT user_id FROM users WHERE email ='" + dest + "'", String.class);
+                String user_s = jdbcTemplate.queryForObject("SELECT email FROM users WHERE user_id ='" + sender + "'", String.class);
                
 
                 java.sql.Timestamp a = new java.sql.Timestamp(System.currentTimeMillis());
@@ -54,15 +56,17 @@ public class MessageController extends ValidationUtility {
                         message,
                         sender,
                         a,
-                        a.toString()
+                        a.toString(),
+                        dest,
+                        user_s
                 };
 
                 int[] types = new int[]{
-                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR
+                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR,Types.VARCHAR,Types.VARCHAR
                 };
 
 
-                jdbcTemplate.update("INSERT INTO Mes (User_Receiver, message,sender,datesent,dateString) VALUES (?, ?, ?,?,?)", params,types);
+                jdbcTemplate.update("INSERT INTO Mes (User_Receiver, message,sender,datesent,dateString,email,emailsender) VALUES (?, ?, ?,?,?,?,?)", params,types);
 
                 response.put("status", HttpStatus.OK);
 
