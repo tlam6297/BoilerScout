@@ -105,6 +105,22 @@ public class BoilerScoutApplication {
         return forumController.getThreads(userId, token, forumId);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/community/view-thread", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> viewThread(@RequestParam String userId,
+                                               @RequestParam String token,
+                                               @RequestParam String threadId) {
+        return forumController.viewThread(userId, token, threadId);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/community/post-reply", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> postReply(@Valid @RequestBody Map<String, Object> body) {
+        return forumController.postReply(body);
+    }
+
 
     @CrossOrigin
     @RequestMapping(value = "/community", method = RequestMethod.GET)
