@@ -108,7 +108,7 @@ public class ForumController extends ValidationUtility {
             return response;
         } else {
             try {
-                String query = "SELECT t.*, p.full_name FROM threads t INNER JOIN profiles p ON t.user_id = p.user_id WHERE forum_id='" + forumId + "'";
+                String query = "SELECT t.*, p.full_name FROM threads t INNER JOIN profiles p ON t.user_id = p.user_id WHERE forum_id='" + forumId + "' ORDER BY t.thread_date DESC";
                 List<Map<String, Object>> listOfThreads = jdbcTemplate.queryForList(query);
                 response.put("threads", listOfThreads);
             } catch (DataAccessException ex) {
@@ -167,7 +167,7 @@ public class ForumController extends ValidationUtility {
         } else {
             try {
                 String queryForThread = "SELECT t.*, p.full_name FROM threads t INNER JOIN profiles p ON t.user_id = p.user_id WHERE t.thread_id='" + threadId + "'";
-                String queryForComments = "SELECT tp.*, p.full_name FROM thread_posts tp INNER JOIN profiles p ON tp.user_id = p.user_id WHERE tp.thread_id='" + threadId + "'";
+                String queryForComments = "SELECT tp.*, p.full_name FROM thread_posts tp INNER JOIN profiles p ON tp.user_id = p.user_id WHERE tp.thread_id='" + threadId + "' ORDER BY tp.post_date ASC";
                 List<Map<String, Object>> parentThread = jdbcTemplate.queryForList(queryForThread);
                 List<Map<String, Object>> threadComments = jdbcTemplate.queryForList(queryForComments);
                 response.put("thread", parentThread);
