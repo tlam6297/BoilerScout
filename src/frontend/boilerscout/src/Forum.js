@@ -5,6 +5,7 @@ import { FormGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios'
 import Nav from './TopNavBar'
 import './Forum.css'
+import CreateThread from './CreateAThread.js'
 
 class Forum extends Component {
   constructor(props) {

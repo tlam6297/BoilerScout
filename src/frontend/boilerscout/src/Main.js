@@ -54,6 +54,7 @@ render () {
         <Route path="/community" component={Community}/>
         <Route path="/create-thread" component={CreateAThread}/>
         <Route path="/forum" component={Forum}/>
+        <Route path="/view-thread" component={Thread}/>
       </Switch>
     </div>
   )

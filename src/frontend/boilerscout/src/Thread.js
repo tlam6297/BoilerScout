@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import './EditProfile.css'
 import { Button } from "react-bootstrap";
 import './CreateAThread.css'
+import NavBar from './TopNavBar'
 
-class CreateAThread extends Component {
+class Thread extends Component {
     constructor() {
       super()
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,6 +16,10 @@ class CreateAThread extends Component {
          this.state = {
           threadTitle: "",
           threadBody: "",
+          threadId: "",
+          token: "",
+          userId: "",
+          postBody: "",
       }
     }
     
@@ -31,6 +36,34 @@ class CreateAThread extends Component {
         {uid: user.uid}
       )
     }
+
+    componentWillMount = () => {
+        const user_id = localStorage.getItem("id");
+        const token = localStorage.getItem("token");
+        const threadId = localStorage.getItem("thread_id");
+
+        this.setState({
+            token: token,
+            threadId: threadId,
+            userId: user_id,
+        })
+        const url = "http://localhost:8080/view-thread?userId=" + user_id + "&token=" + token + "&threadId=" + threadId;
+
+        axios.get(this.state.url)
+        .then(res => {
+            // console.log(res.data.query);
+            if (res.data.status == "OK") {
+                this.setState({
+                results: res.data.query,
+                });        
+            } else {
+                alert("Invalid Token- Please login again");
+                this.setState({
+                redirect: true,
+                })
+            }      
+        });
+    }
    
    
     getLocalStorage = (key) => {
@@ -45,21 +78,17 @@ class CreateAThread extends Component {
       let token = _this.getLocalStorage("token");
       let forum_id = this.getLocalStorage("forum_id");
       let title = document.getElementById('threadTitle').textContent;
-      let body = document.getElementById('threadBody').textContent;
-      console.log(title);
-      this.setState ({
-          threadTitle: title,
-      });
+
 
       var payload = JSON.stringify({
         "userId": id,
         "token": token,
         "forumId": forum_id,
-        "threadTitle": this.state.threadTitle,
-        "threadBody": this.state.threadBody,
+        "threadId": this.state.threadTitle,
+        "postBody": this.state.postBody,
       });
       
-      fetch('http://localhost:8080/communitys/start-thread', {
+      fetch('http://localhost:8080/post-reply', {
        method: 'POST',
        headers: {
          'Accept': 'application/json',
@@ -117,34 +146,26 @@ class CreateAThread extends Component {
    
     render() {
       return (
-        <div className="CreateAThread">
+        <div className="Thread">
+        <NavBar/>
           <div className="Container">
-          <form onSubmit={this.handleSubmit}>
           <p/>
                 <div 
-                    id="threadTitle"
-                    contenteditable="true"> 
-                    Enter a title
+                    id="threadTitle"> 
+                    {this.state.threadTitle}
                 </div>
                 <p/>
                 <div 
-                    id="threadBody"
-                    contenteditable="true"> 
-                    Body
+                    id="threadBody"> 
+                    {this.state.threadBody}
                 </div>
                 <p/>
-                <Button
-                bsSize="small"
-                type="submit">
-                SUBMIT       
-              </Button>
-          </form>
           </div>
         </div>
       )
     }
    }
    
-   export default CreateAThread;
+   export default Thread;
    
    
