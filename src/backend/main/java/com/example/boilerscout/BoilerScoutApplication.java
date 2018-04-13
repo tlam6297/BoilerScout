@@ -63,10 +63,16 @@ public class BoilerScoutApplication {
 
     @RequestMapping(value = "/inbox", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> inbox(@RequestParam String user_Id,@RequestParam int sort, @RequestParam String search,@RequestParam int inorout ){//,@RequestParam String token ) {
-        return inboxController.getInbox(user_Id, sort, search, inorout);//, token);
+        public Map<String, Object> inbox(@RequestParam String user_Id,@RequestParam int sort){
+        return inboxController.getInbox(user_Id, sort);
 
     }
+
+    @RequestMapping(value = "/outbox", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> outbox(@RequestParam String user_id,@RequestParam int sort){
+        return outboxController.getOutbox(user_id, sort);
+
 
     public static void main(String[] args) {
         SpringApplication.run(BoilerScoutApplication.class, args);
