@@ -78,7 +78,7 @@ class UpdatePassword extends Component {
       if (response.ok) {
         _this.setState({ redirect: true })
       } else {
-        alert("Error, old password is not correct!")
+        alert("Error, old password is not correct or email doesn't exist!")
       } 
     })
 
