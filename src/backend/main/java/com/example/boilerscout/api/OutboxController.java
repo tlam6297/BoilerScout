@@ -22,7 +22,7 @@ public class OutboxController extends ValidationUtility {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Map<String, Object> getOutbox (@RequestParam String user_Id, @RequestParam int sort, @RequestParam String token) {
+    public Map<String, Object> getOutbox (@RequestParam String user_Id, @RequestParam String sort, @RequestParam String token) {
 
         Map<String, Object> response = new HashMap<String, Object>();
 
@@ -37,12 +37,11 @@ public class OutboxController extends ValidationUtility {
         } else {
 
             try {
+                List<Map<String, Object>> listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,Mes.email,Mes.dateString FROM Mes INNER JOIN profiles ON Mes.sender=profiles.user_id WHERE sender='"+user_Id+"'ORDER BY datesent ASC");
 
-                List<Map<String, Object>> listOfinbox = jdbcTemplate.queryForList("SELECT message, email, dateString FROM Mes WHERE sender='" + user_Id + "'ORDER BY datesent ASC");
-
-                if (sort == 2) {
-
-                    listOfinbox = jdbcTemplate.queryForList("SELECT message, email, dateString  FROM Mes WHERE sender='" + user_Id + "'ORDER BY datesent DESC ");
+                if (sort.equals("DESC")) {
+                    listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,Mes.email,Mes.dateString FROM Mes INNER JOIN profiles ON Mes.sender=profiles.user_id WHERE sender='"+user_Id+"'ORDER BY datesent DESC");
+             
 
                 }
 
