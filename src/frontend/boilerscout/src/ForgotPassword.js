@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { BrowserRouter as Router, Link, Redirect} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
+import Login from "./Login"
+import PasswordSent from './PasswordSent'
 import "./ForgotPassword.css"
+import Logo from './Logo'
 
 class ForgotPassword extends Component {
   constructor(props) {
@@ -17,8 +20,7 @@ class ForgotPassword extends Component {
     const email = this.state.email.toLowerCase();
     const regex = /^\S+@purdue.edu$/;
     const validEmail = regex.test(email);
-
-    console.log("Good email?: " + validEmail);
+    
     return (validEmail);
   }
 
@@ -30,39 +32,60 @@ class ForgotPassword extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ redirect: true })
+    const _this = this;
 
-    console.log("Button Clicked");
+    fetch('http://localhost:8080/send/forgot-pass', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json;charset=UTF-8',
+          'Content-Type':'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify ({
+          'email': this.state.email,
+        })
+      })
+      .then(function(response) {
+        if (response.ok) {
+          
+          _this.setState({ redirect: true })
+        } else {
+          alert("Email does not exist!");
+        }
+      })
   }
 
   render() {
     return (
-      <Router>
-        <div className="ForgotPassword">
-          <form onSubmit={this.handleSubmit}>
+      <div className="ForgotPassword">
+        <div className="logo">
+          <Logo />
+        </div>
+        <form onSubmit={this.handleSubmit}>
+          <div className="Form" class="Form">
             <FormGroup controlId="email" bsSize="large">
               <ControlLabel>Email:</ControlLabel>
               <FormControl
+                className="FormInput"
                 autoFocus
                 type="email"
                 value={this.state.email}
                 onChange={this.handleChange}
               />
             </FormGroup>
+          </div>
             <Button
               block
               bsSize="small"
               disabled={!this.validateForm()}
               type="submit">
-              Submit        
+              SUBMIT        
             </Button>
-          </form>
-          
-          {this.state.redirect && (
-            <Redirect to={'/password-reset-sent'}/>   
-          )}
-        </div>
-      </Router>
+        </form>
+        <Link to="/login">Return to Login</Link>
+        {this.state.redirect && (
+          <Redirect to={'/password-reset-sent'}/>   
+        )}
+      </div>
     );
   }
 }
