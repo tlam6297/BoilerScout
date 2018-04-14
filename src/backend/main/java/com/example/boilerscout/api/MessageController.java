@@ -50,7 +50,7 @@ public class MessageController extends ValidationUtility {
 
                 java.sql.Timestamp a = new java.sql.Timestamp(System.currentTimeMillis());
 
-                jdbcTemplate.update("INSERT INTO Mes (User_Receiver, message,sender,datesent,dateString) VALUES (?, ?, ?,?,?)", user_,message,sender,a,a.toString());
+                jdbcTemplate.update("INSERT INTO Mes (User_Receiver, message,sender,datesent) VALUES (?, ?, ?,?)", user_,message,sender,a);
 
                 response.put("status", HttpStatus.OK);
 
