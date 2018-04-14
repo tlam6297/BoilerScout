@@ -38,10 +38,10 @@ public class OutboxController extends ValidationUtility {
 
             try {
 
-                List<Map<String, Object>> listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,users.email,Mes.dateString FROM Mes INNER JOIN profiles ON Mes.User_Receiver=profiles.user_id INNER JOIN users ON users.user_id=Mes.User_Receiver WHERE sender='"+user_Id+"'ORDER BY datesent ASC");
+                List<Map<String, Object>> listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,users.email,Mes.datesent FROM Mes INNER JOIN profiles ON Mes.User_Receiver=profiles.user_id INNER JOIN users ON users.user_id=Mes.User_Receiver WHERE sender='"+user_Id+"'ORDER BY datesent ASC");
 
                 if (sort.equals("DESC")) {
-                    listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,users.email,Mes.dateString FROM Mes INNER JOIN profiles ON Mes.User_Receiver=profiles.user_id INNER JOIN users ON users.user_id=Mes.User_Receiver WHERE sender='"+user_Id+"'ORDER BY datesent DESC");
+                    listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,users.email,Mes.datesent FROM Mes INNER JOIN profiles ON Mes.User_Receiver=profiles.user_id INNER JOIN users ON users.user_id=Mes.User_Receiver WHERE sender='"+user_Id+"'ORDER BY datesent DESC");
 
                 }
 
