@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.*;
 
 @Service
-public class InboxController extends ValidationUtility {
+public class InboxController2 extends ValidationUtility {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Map<String, Object> getInbox (@RequestParam String user_Id, @RequestParam int sort,@RequestParam String token) {
+    public Map<String, Object> getInbox (@RequestParam String user_Id, @RequestParam String sort,@RequestParam String token) {
 
         Map<String, Object> response = new HashMap<String, Object>();
 
@@ -35,13 +35,12 @@ public class InboxController extends ValidationUtility {
 
         } else {
             try {
+                List<Map<String, Object>>   listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,Mes.emailsender,Mes.dateString FROM Mes INNER JOIN profiles ON Mes.User_Receiver=profiles.user_id WHERE User_Receiver='"+user_Id+"'ORDER BY datesent ASC");
+                
 
-                List<Map<String, Object>> listOfinbox = jdbcTemplate.queryForList("SELECT message, emailsender, dateString  FROM Mes  WHERE User_Receiver='" + user_Id + "'ORDER BY datesent ASC");
-
-                if (sort == 2) {
-
-                    listOfinbox = jdbcTemplate.queryForList("SELECT message, emailsender, dateString  FROM Mes WHERE User_Receiver='" + user_Id + "'ORDER BY datesent DESC");
-
+                if (sort.equals("DESC")) {
+                    listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,Mes.emailsender,Mes.dateString FROM Mes INNER JOIN profiles ON Mes.User_Receiver=profiles.user_id WHERE User_Receiver='"+user_Id+"'ORDER BY datesent DESC");
+          
                 }
 
                 response.put("listOfinbox", listOfinbox);
