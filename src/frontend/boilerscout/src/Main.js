@@ -21,6 +21,7 @@ import Inbox from './Inbox'
 import PassUp from './PasswordUpdated'
 
 import Outbox from './Outbox'
+import ValidateReset from './ValidateReset'
 
 class Main extends Component  {
 constructor(props) {
@@ -57,6 +58,7 @@ render () {
         <Route path="/inbox" component={Inbox} />
         <Route path="/outbox" component={Outbox} />
         <Route path="/password-updated" component={PassUp} />
+        <Route path="/validate-reset" component={ValidateReset}/>
       </Switch>
     </div>
   )

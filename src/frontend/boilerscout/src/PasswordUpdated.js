@@ -6,7 +6,7 @@ class PasswordUpdated extends Component {
     return (
       <div className="PasswordUpdated" class="Form">                
         <h1>Password Updated!</h1>
-        <Link to="/settings">Back to Settings</Link>
+        <Link to="/login">Back to Login</Link>
       </div>
     );
   }
