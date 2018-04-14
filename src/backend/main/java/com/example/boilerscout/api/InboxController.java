@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.*;
 
 @Service
-public class InboxController2 extends ValidationUtility {
+public class InboxController extends ValidationUtility {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
