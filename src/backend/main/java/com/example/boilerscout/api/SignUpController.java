@@ -27,25 +27,19 @@ public class SignUpController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Map<String, Object> test(@RequestBody Map<String, String> body) {
-        Map<String, Object> response = new HashMap<String, Object>();
-        String token = body.get("token");
-        Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary("TerryLam"))
-                .parseClaimsJws(token).getBody();
-        response.put("user_id", claims.get("userId"));
-        response.put("expiration", claims.getExpiration());
-        response.put("subject", claims.getSubject());
-        return response;
-    }
+    //TODO code documentation
 
-    public Map<String, Object> signUp(@RequestBody Map<String, String> body) {
+
+    public Map<String, Object> signUp(@RequestBody Map<String, Object> body) {
 
         Map<String, Object> response = new HashMap<String, Object>();
         try {
             String newUserId = UUID.randomUUID().toString();
-            String email = body.get("email");
-            String password = body.get("password");
+            String email = body.get("email").toString();
+            String password = body.get("password").toString();
+            String fullName = body.get("fullName").toString();
+            String major = body.get("major").toString();
+            Integer gradYear = (Integer) body.get("grad_year");
 
             //Verify that no prior email exists
             List<Map<String, Object>> existingEmails = jdbcTemplate.queryForList("SELECT * FROM users WHERE email='" + email + "'");
@@ -60,9 +54,14 @@ public class SignUpController {
             //Insert a new user into database;
             jdbcTemplate.update("INSERT INTO users (user_id, password, email) VALUES (?, ?, ?)",
                     newUserId, hashedPassword, email);
+
+
+            //Create a new default profile for the user
+            jdbcTemplate.update("INSERT INTO profiles (user_id, full_name, major, grad_year) VALUES (?, ?, ?, ?)",
+                    newUserId, fullName, major, gradYear);
+
             response.put("status", HttpStatus.OK);
             return response;
-
         } catch (DataAccessException ex) {
             log.info("Exception Message" + ex.getMessage());
             response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
