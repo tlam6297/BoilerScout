@@ -35,12 +35,11 @@ public class InboxController extends ValidationUtility {
 
         } else {
             try {
-                List<Map<String, Object>>   listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,Mes.emailsender,Mes.dateString FROM Mes INNER JOIN profiles ON Mes.User_Receiver=profiles.user_id WHERE User_Receiver='"+user_Id+"'ORDER BY datesent ASC");
-                
+                List<Map<String, Object>> listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,users.email,Mes.dateString FROM Mes INNER JOIN profiles ON Mes.sender=profiles.user_id INNER JOIN users ON users.user_id=Mes.sender WHERE User_Receiver='"+user_Id+"'ORDER BY datesent ASC");
 
                 if (sort.equals("DESC")) {
-                    listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,Mes.emailsender,Mes.dateString FROM Mes INNER JOIN profiles ON Mes.User_Receiver=profiles.user_id WHERE User_Receiver='"+user_Id+"'ORDER BY datesent DESC");
-          
+                    listOfinbox = jdbcTemplate.queryForList("SELECT Mes.message,profiles.full_name,users.email,Mes.dateString FROM Mes INNER JOIN profiles ON Mes.sender=profiles.user_id INNER JOIN users ON users.user_id=Mes.sender WHERE User_Receiver='"+user_Id+"'ORDER BY datesent DESC ");
+
                 }
 
                 response.put("listOfinbox", listOfinbox);
