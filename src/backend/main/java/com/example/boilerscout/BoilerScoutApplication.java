@@ -41,6 +41,17 @@ public class BoilerScoutApplication {
 
     @Autowired
     private VerificationController verificationController;
+    
+    @Autowired
+    private MessageController messageController;
+
+    @Autowired
+    private InboxController inboxController;
+
+    @Autowired
+    private OutboxController outboxController;
+
+
 //
 //    @RequestMapping(value = "/test")
 //    public Map<String, Object> t(@RequestBody Map<String, String> body) {
@@ -157,6 +168,27 @@ public class BoilerScoutApplication {
     @ResponseBody
     public Map<String, Object> sendPassword(@Valid @RequestBody Map<String, String> body) {
         return emailServiceController.sendNewPassword(body);
+
+    }
+    
+        @RequestMapping(value = "/message", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> message(@Valid @RequestBody Map<String, String> body) {
+        return messageController.getMessage(body);
+
+    }
+
+    @RequestMapping(value = "/inbox", method = RequestMethod.GET)
+    @ResponseBody
+        public Map<String, Object> inbox(@RequestParam String user_Id,@RequestParam String sort,@RequestParam String token){
+        return inboxController.getInbox(user_Id, sort,token);
+
+    }
+
+    @RequestMapping(value = "/outbox", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> outbox(@RequestParam String user_id,@RequestParam String sort,@RequestParam String token){
+        return outboxController.getOutbox(user_id, sort,token);
 
     }
 
