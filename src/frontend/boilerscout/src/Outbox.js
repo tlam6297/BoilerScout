@@ -52,7 +52,7 @@ class Outbox extends Component {
     axios.get(url)
     .then(res => {
       this.setState({
-        threads: res.data.listOfinbox,
+        threads: res.data.userOutbox,
       })      
     });
   }

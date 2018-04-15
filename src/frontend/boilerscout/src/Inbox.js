@@ -54,7 +54,7 @@ class Inbox extends Component {
     .then(res => {
       console.log(res)
       this.setState({
-        threads: res.data.listOfinbox,
+        threads: res.data.userInbox,
       })      
     })
     .catch(er => {
