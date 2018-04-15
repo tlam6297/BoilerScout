@@ -23,7 +23,7 @@ public class BoilerScoutApplication {
     private SignUpController signUpController;
 
     @Autowired
-    private LoginController loginController;
+    private AuthenticationController authenticationController;
 
     @Autowired
     private ProfileController profileController;
@@ -32,7 +32,6 @@ public class BoilerScoutApplication {
     private SearchController searchController;
 
     @Autowired
-
     private ForumController forumController;
 
 
@@ -41,11 +40,6 @@ public class BoilerScoutApplication {
 
     @Autowired
     private VerificationController verificationController;
-//
-//    @RequestMapping(value = "/test")
-//    public Map<String, Object> t(@RequestBody Map<String, String> body) {
-//        return signUpController.test(body);
-//    }
 
 
     @CrossOrigin
@@ -59,9 +53,15 @@ public class BoilerScoutApplication {
     @CrossOrigin
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> login(@Valid @RequestBody Map<String, String> body) {
-        return loginController.login(body);
+    public Map<String, Object> login(@Valid @RequestBody Map<String, Object> body) {
+        return authenticationController.login(body);
+    }
 
+    @CrossOrigin
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> logout(@Valid @RequestBody Map<String, Object> body) {
+        return authenticationController.logout(body);
     }
 
     @CrossOrigin
