@@ -5,7 +5,6 @@ import { FormGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios'
 import Nav from './TopNavBar'
 import './Forum.css'
-import CreateThread from './CreateAThread.js'
 
 class Forum extends Component {
   constructor(props) {
@@ -60,10 +59,10 @@ class Forum extends Component {
         }) 
       } else {
         let title1 = "Complaining Forum";
-        //title1 = this.getLocalStorage("forum_title");
+        title1 = this.getLocalStorage("forum_title");
 
         let desp = "Let's all meet up and complain about stuff";
-        //desp = this.getLocalStorage("forum_description");
+        desp = this.getLocalStorage("forum_description");
 
         this.setState({
           title: title1,
@@ -123,7 +122,7 @@ class Forum extends Component {
             <ul>
               {searchResults.map((thread, index) =>
                 <li id={index}>
-                  <Link to={{pathname: '/thread', search: '?id=' + thread.thread_id,}} className="link">
+                  <Link to={{pathname: '/view-thread', search: '?id=' + thread.thread_id,}} className="link">
                     <div className="thread">
                       <div className="thread-title">
                         <h3>{thread.thread_title}</h3>

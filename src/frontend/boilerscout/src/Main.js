@@ -19,6 +19,7 @@ import ProfileCreated from './ProfileCreated'
 import Community from './Community'
 import CreateAThread from './CreateAThread'
 import Forum from './Forum'
+import Thread from './Thread'
 
 class Main extends Component  {
 constructor(props) {

@@ -9,7 +9,6 @@ class PostReply extends Component {
    this.handleSubmit = this.handleSubmit.bind(this);
    this.removeWhiteSpaces = this.removeWhiteSpaces.bind(this);
    this.handleChange = this.handleChange.bind(this);
-   this.toggle = this.toggle.bind(this);
    this.getAccessToken = this.getAccessToken.bind(this);
       this.getID = this.getID.bind(this);
 
@@ -144,11 +143,6 @@ class PostReply extends Component {
    console.log(this.state);
  }
 
- toggle = () => {
-     this.setState({
-         toggle: this.state.toggle,
-     });
- }
 
  render() {    
    return (

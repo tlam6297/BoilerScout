@@ -4,65 +4,63 @@ import './EditProfile.css'
 import { Button } from "react-bootstrap";
 import './CreateAThread.css'
 import NavBar from './TopNavBar'
+import axios from 'axios'
+import PostReply from './PostReply'
 
 class Thread extends Component {
-    constructor() {
-      super()
-      this.handleSubmit = this.handleSubmit.bind(this);
+    constructor(props) {
+      super(props);
       this.handleChange = this.handleChange.bind(this);
+      this.renderComments = this.renderComments.bind(this);
       this.getAccessToken = this.getAccessToken.bind(this);
-         this.getID = this.getID.bind(this);
-   
+      this.getID = this.getID.bind(this);
          this.state = {
           threadTitle: "",
           threadBody: "",
-          threadId: "",
+          thread: {},
+          comments: [],
+          threadId: props.location.search.substring(4),
           token: "",
-          userId: "",
           postBody: "",
+          replytoggle: false,
       }
+
+      console.log(this.state.threadId);
     }
     
     // Return user id if signed in, null if not
     signedIn = () => {
       return this.state.signedIn
     }
-   
-    // handle auth, set userid
-    handleAuth = (user) => {
-      localStorage.setItem('userid', user.uid)
-   
-      this.setState( 
-        {uid: user.uid}
-      )
-    }
 
     componentWillMount = () => {
         const user_id = localStorage.getItem("id");
         const token = localStorage.getItem("token");
-        const threadId = localStorage.getItem("thread_id");
-
-        this.setState({
-            token: token,
-            threadId: threadId,
-            userId: user_id,
-        })
-        const url = "http://localhost:8080/view-thread?userId=" + user_id + "&token=" + token + "&threadId=" + threadId;
-
-        axios.get(this.state.url)
+        const thread_id = this.state.threadId;
+        console.log("userid:" + user_id);
+        console.log("token:" + token);
+        console.log("threadid:" + thread_id);
+        const url = "http://localhost:8080/community/view-thread?userId=" + user_id + "&token=" + token + "&threadId=" + thread_id;
+        axios.get(url)
         .then(res => {
             // console.log(res.data.query);
             if (res.data.status == "OK") {
                 this.setState({
-                results: res.data.query,
-                });        
+                comments: res.data.comments,
+                thread: res.data.thread[0],
+                });  
+                console.log(this.state.comments);
             } else {
                 alert("Invalid Token- Please login again");
                 this.setState({
                 redirect: true,
                 })
             }      
-        });
+        })
+        .catch(error => {
+          console.log(error);
+        }
+      );
     }
    
    
@@ -70,46 +68,7 @@ class Thread extends Component {
       return localStorage.getItem(key);
     }
    
-    handleSubmit = (event) => {
-      event.preventDefault();
-      this.setState({ redirect: true })
-      const _this = this;
-      const id = _this.getLocalStorage("id");
-      let token = _this.getLocalStorage("token");
-      let forum_id = this.getLocalStorage("forum_id");
-      let title = document.getElementById('threadTitle').textContent;
-
-
-      var payload = JSON.stringify({
-        "userId": id,
-        "token": token,
-        "forumId": forum_id,
-        "threadId": this.state.threadTitle,
-        "postBody": this.state.postBody,
-      });
-      
-      fetch('http://localhost:8080/post-reply', {
-       method: 'POST',
-       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json;charset=UTF-8',
-         'transfer-encoding': 'chunked',
-       },
-       body: payload,
-     })
-     .then(function(response) {
-       if (response.ok) {
-         // redirect to profile?
-         //_this.setState({ redirect: true })
-         response.json().then(json => {
-           console.log(json);
-         });
    
-       } else {
-         alert("Error in updating profile");
-       }     
-     })
-      }
    
    
       handleChange = (event) => {
@@ -143,23 +102,71 @@ class Thread extends Component {
     handleUnauth = () => {
       localStorage.removeItem('uid')
     }
+
+    toggle = () => {
+      this.setState({
+          replytoggle: !this.state.replytoggle,
+      });
+  }
+ 
+
+    renderComments = () => {
+
+     return ( <div className="comments">
+      <ul>
+        <div className='li'>
+          {this.state.comments.map((result, index) =>
+              <li key={index}>
+                <div className='result entry'>
+                <Link to={
+                `/profile?user_id=` + result.user_id + `&name=` + result.full_name + `&bio=` + result.bio + `&major=` + result.major + `&year=` + result.grad_year
+                  } className="link">
+                  <div className="first entry">
+                    {result.full_name}
+                  </div>
+                  </Link>
+                  <div className="body entry">
+                    {result.post_body}
+                  </div>
+                  <div className="date entry">
+                    {result.post_date}
+                  </div>
+                </div>
+              </li>
+          )}
+        </div>
+      </ul>
+    </div>
+     )
+    }
    
     render() {
       return (
-        <div className="Thread">
+        <div className="Container">
         <NavBar/>
-          <div className="Container">
+          <div className="Thread">
           <p/>
                 <div 
                     id="threadTitle"> 
-                    {this.state.threadTitle}
+                    {this.state.thread.thread_title}
                 </div>
                 <p/>
                 <div 
                     id="threadBody"> 
-                    {this.state.threadBody}
+                    {this.state.thread.thread_body}
                 </div>
                 <p/>
+          </div>
+          <div className="postReply">
+          <button
+            type="button"
+            onClick={this.toggle}>
+            Post Reply
+          </button>
+          {this.state.replytoggle && <PostReply/>}
+          </div>
+          <div className="Comments">
+            {this.renderComments()}
           </div>
         </div>
       )
