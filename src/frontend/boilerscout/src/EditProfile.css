@@ -1,21 +1,28 @@
 .bio * {
   background-color: white;
-}
-
-.courses * {
+ }
+ 
+ .courses * {
   background-color: white;
-}
-
-.skills * {
+ }
+ 
+ .skills * {
+  background-color: rgb(230, 82, 82);
+ }
+ 
+ .graduation * {
   background-color: white;
-}
-
-.graduation * {
-  background-color: white;
-}
-
-#Bio {
+ }
+ 
+ #Bio {
   height: 100px;
   width: 200px;
-}
-
+ }
+ 
+ #success {
+  color: green;
+ }
+ 
+ 
+ 
+ 

@@ -1,0 +1,22 @@
+#threadTitle {
+  color: white;
+  font-size: 2rem;
+}
+
+.Container {
+  text-align: center;
+}
+
+#threadBody {
+  color: black;
+  font-size: 1rem;
+  background-color: white;
+  width: 25em;
+  height: 8rem;
+  display: inline-block;
+}
+
+h1 {
+  color: #cc9900,
+}
+
