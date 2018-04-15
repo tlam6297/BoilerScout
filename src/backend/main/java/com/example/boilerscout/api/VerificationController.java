@@ -49,15 +49,15 @@ public class VerificationController extends EmailServiceController{
                     //MATCH, verify user
                     if(verificationStatus.get(0).get("email_verified").equals(verificationCode)){
                         jdbcTemplate.update("UPDATE users SET email_verified=" + 1 + " WHERE user_id='" + userId + "'");
-                        response.put("Status","Verified");
-                        response.put("Exit","1");
+                        response.put("Response","Verified");
+                        response.put("Status","200");
                         return response;
                     } else {
                         //NO MATCH, inform this verification email isnt valid
                         String message = "This verification email has either expired, or is not valid.";
                         message = message + "  Please check your inbox for a more recent one, or request a new one.";
-                        response.put("Status",message);
-                        response.put("Exit", "0");
+                        response.put("Response",message);
+                        response.put("Status", "400");
                         response.put("email_verified",(verificationStatus.get(0).get("email_verified")));
                         response.put("test",compare);
                         response.put("verification code", verificationCode);
@@ -68,13 +68,14 @@ public class VerificationController extends EmailServiceController{
                     //USER ALREADY VERIFIED
                 } else {
                     //response.put("St",verificationStatus.get(0));
-                    response.put("Status","Email previously verified.");
-                    response.put("Exit","0");
+                    response.put("Response","Email previously verified.");
+                    response.put("Status","400");
                     return response;
                 }
             }else {
                 //Should never reach here, as all users should have a verified field
-                response.put("Status", "Critical error, email or id do not exist");
+                response.put("Response", "Critical error, email or id do not exist");
+                response.put("Status","400");
                 return response;
             }
         } catch (DataAccessException ex) {
