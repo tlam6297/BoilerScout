@@ -49,7 +49,7 @@ public class LoginController {
 
             //Check if email is verified
             Integer verifiedEmail = jdbcTemplate.queryForObject("SELECT email_verified FROM users WHERE email='" + email + "'", Integer.class);
-            if (verifiedEmail == 0) {
+            if (verifiedEmail != 1) {
                 throw new RuntimeException("[BadRequest] - The associated email is not verified!");
             }
 
