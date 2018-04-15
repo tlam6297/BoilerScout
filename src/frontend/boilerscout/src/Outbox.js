@@ -47,7 +47,7 @@ class Outbox extends Component {
     const id = this.getLocalStorage("id");
     let token = this.getLocalStorage("token");
 
-    const url = "http://localhost:8080/outbox?" + "user_id=" + id + "&sort=" + this.state.sort + "&token=" + token;
+    const url = "http://localhost:8080/outbox?" + "userId=" + id + "&sort=" + this.state.sort + "&token=" + token;
     console.log(url)
     axios.get(url)
     .then(res => {

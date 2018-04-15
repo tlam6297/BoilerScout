@@ -48,7 +48,7 @@ class Inbox extends Component {
     const id = this.getLocalStorage("id");
     let token = this.getLocalStorage("token");
 
-    const url = "http://localhost:8080/inbox?" + "user_Id=" + id + "&sort=" + this.state.order + "&token=" + token;
+    const url = "http://localhost:8080/inbox?" + "userId=" + id + "&sort=" + this.state.order + "&token=" + token;
     console.log(url)
     axios.get(url)
     .then(res => {
