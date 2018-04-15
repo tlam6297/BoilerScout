@@ -167,14 +167,16 @@ public class BoilerScoutApplication {
         return emailServiceController.sendNewPasswordLink(body);
 
     }
-    
-        @RequestMapping(value = "/send-message", method = RequestMethod.POST)
+
+    @CrossOrigin
+    @RequestMapping(value = "/send-message", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> message(@Valid @RequestBody Map<String, String> body) {
         return messageController.sendMessage(body);
 
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/inbox", method = RequestMethod.GET)
     @ResponseBody
         public Map<String, Object> inbox(@RequestParam String userId, @RequestParam String sort, @RequestParam String token){
@@ -182,6 +184,7 @@ public class BoilerScoutApplication {
 
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/outbox", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> outbox(@RequestParam String userId, @RequestParam String sort, @RequestParam String token){
