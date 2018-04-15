@@ -41,6 +41,15 @@ public class BoilerScoutApplication {
     @Autowired
     private VerificationController verificationController;
 
+    
+    @Autowired
+    private SettingsController settingsController;
+//
+//    @RequestMapping(value = "/test")
+//    public Map<String, Object> t(@RequestBody Map<String, String> body) {
+//        return signUpController.test(body);
+//    }
+
 
     @CrossOrigin
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
@@ -155,12 +164,35 @@ public class BoilerScoutApplication {
 
     }
 
-    @CrossOrigin
+     @CrossOrigin
     @RequestMapping(value = "/send/forgot-pass", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> sendPassword(@Valid @RequestBody Map<String, String> body) {
-        return emailServiceController.sendNewPassword(body);
+    public Map<String, Object> sendPassword(@Valid @RequestBody Map<String, Object> body) {
+        return emailServiceController.sendNewPasswordLink(body);
 
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/validate-reset", params = {"query"}, method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> newPassword(@RequestParam String query, @RequestParam String id){
+        return settingsController.resetValidation(query, id);
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/reset-pass", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> resetPassword(@Valid @RequestBody Map<String, Object> body) {
+        return settingsController.resetPassword(body);
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/update-password", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updatePassword(@Valid @RequestBody Map<String, Object> body) {
+        return settingsController.updatePassword(body);
     }
 
 
