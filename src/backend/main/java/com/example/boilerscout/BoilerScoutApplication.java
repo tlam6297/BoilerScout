@@ -23,7 +23,7 @@ public class BoilerScoutApplication {
     private SignUpController signUpController;
 
     @Autowired
-    private LoginController loginController;
+    private AuthenticationController authenticationController;
 
     @Autowired
     private ProfileController profileController;
@@ -32,7 +32,6 @@ public class BoilerScoutApplication {
     private SearchController searchController;
 
     @Autowired
-
     private ForumController forumController;
 
 
@@ -41,12 +40,12 @@ public class BoilerScoutApplication {
 
     @Autowired
     private VerificationController verificationController;
-//
-//    @RequestMapping(value = "/test")
-//    public Map<String, Object> t(@RequestBody Map<String, String> body) {
-//        return signUpController.test(body);
-//    }
 
+    @Autowired
+    private MessageController messageController;
+    
+    @Autowired
+    private SettingsController settingsController;
 
     @CrossOrigin
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
@@ -59,9 +58,15 @@ public class BoilerScoutApplication {
     @CrossOrigin
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> login(@Valid @RequestBody Map<String, String> body) {
-        return loginController.login(body);
+    public Map<String, Object> login(@Valid @RequestBody Map<String, Object> body) {
+        return authenticationController.login(body);
+    }
 
+    @CrossOrigin
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> logout(@Valid @RequestBody Map<String, Object> body) {
+        return authenticationController.logout(body);
     }
 
     @CrossOrigin
@@ -81,10 +86,13 @@ public class BoilerScoutApplication {
     @CrossOrigin
     @RequestMapping(value = "/scout", method = RequestMethod.GET)
     public Map<String, Object> queryForUsers(@RequestParam String userId,
-                                      @RequestParam String token,
-                                      @RequestParam String type,
-                                      @RequestParam String query) {
-        return searchController.search(userId, token, type, query);
+                                             @RequestParam String token,
+                                             @RequestParam String type,
+                                             @RequestParam String query,
+                                             @RequestParam(value = "graduation",required = false) String graduation,
+                                             @RequestParam(value = "major", required = false) String major
+    ) {
+        return searchController.search(userId, token, type, query, graduation, major);
     }
 
 
@@ -152,12 +160,59 @@ public class BoilerScoutApplication {
 
     }
 
-    @CrossOrigin
+     @CrossOrigin
     @RequestMapping(value = "/send/forgot-pass", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> sendPassword(@Valid @RequestBody Map<String, String> body) {
-        return emailServiceController.sendNewPassword(body);
+    public Map<String, Object> sendPassword(@Valid @RequestBody Map<String, Object> body) {
+        return emailServiceController.sendNewPasswordLink(body);
 
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/send-message", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> message(@Valid @RequestBody Map<String, String> body) {
+        return messageController.sendMessage(body);
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/inbox", method = RequestMethod.GET)
+    @ResponseBody
+        public Map<String, Object> inbox(@RequestParam String userId, @RequestParam String sort, @RequestParam String token){
+        return messageController.getInbox(userId, sort,token);
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/outbox", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> outbox(@RequestParam String userId, @RequestParam String sort, @RequestParam String token){
+        return messageController.getOutbox(userId, sort,token);
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/validate-reset", params = {"query"}, method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> newPassword(@RequestParam String query, @RequestParam String id){
+        return settingsController.resetValidation(query, id);
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/reset-pass", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> resetPassword(@Valid @RequestBody Map<String, Object> body) {
+        return settingsController.resetPassword(body);
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/update-password", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updatePassword(@Valid @RequestBody Map<String, Object> body) {
+        return settingsController.updatePassword(body);
     }
 
 
