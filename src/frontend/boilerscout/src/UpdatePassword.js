@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "./ForgotPassword.css"
+import "./UpdatePassword.css"
+import Nav from './TopNavBar'
 
 class UpdatePassword extends Component {
   constructor(props) {
     super(props)
 
     this.state= {
-      email: "",
       oldPassword: "",
       newPassword1: "",
       newPassword2: "",
@@ -78,7 +78,7 @@ class UpdatePassword extends Component {
       if (response.ok) {
         _this.setState({ redirect: true })
       } else {
-        alert("Error, old password is not correct or email doesn't exist!")
+        alert("Error, old password is not correct")
       } 
     })
 
@@ -88,61 +88,54 @@ class UpdatePassword extends Component {
 
   render() {
     return(
-      <div className="UpdatePassword">
-      <form onSubmit={this.handleSubmit}>
-        <div className="Form" >          
-            <FormGroup controlId="email" bsSize="large">
-              <ControlLabel>Email:</ControlLabel>
-              <FormControl
-                className="FormInput"
-                autoFocus
-                type="email"
-                value={this.state.email}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-            <FormGroup controlId="oldPassword" bsSize="large">
-              <ControlLabel>Enter old password:</ControlLabel>
-              <FormControl
-                className="FormInput Password"
-                autoFocus
-                type="password"
-                value={this.state.oldPassword}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-            <FormGroup controlId="newPassword1" bsSize="large">
-              <ControlLabel>Enter new password:</ControlLabel>
-              <FormControl
-                className="FormInput Password"
-                autoFocus
-                type="password"
-                value={this.state.newPassword1}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-            <FormGroup controlId="newPassword2" bsSize="large">
-              <ControlLabel>Enter new password again:</ControlLabel>
-              <FormControl
-                className="FormInput Password"
-                autoFocus
-                type="password"
-                value={this.state.newPassword2}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-            <Button
-              block
-              bsSize="small"
-              disabled={!this.validateForm()}
-              type="submit">
-              SUBMIT        
-            </Button>
+      <div>
+        <Nav />
+        <div className="UpdatePassword">      
+        <form onSubmit={this.handleSubmit}>
+          <div className="Form" >
+              <FormGroup controlId="oldPassword" bsSize="large">
+                <ControlLabel>Enter old password:</ControlLabel>
+                <FormControl
+                  className="FormInput Password"
+                  autoFocus
+                  type="password"
+                  value={this.state.oldPassword}
+                  onChange={this.handleChange}
+                />
+              </FormGroup>
+              <FormGroup controlId="newPassword1" bsSize="large">
+                <ControlLabel>Enter new password:</ControlLabel>
+                <FormControl
+                  className="FormInput Password"
+                  autoFocus
+                  type="password"
+                  value={this.state.newPassword1}
+                  onChange={this.handleChange}
+                />
+              </FormGroup>
+              <FormGroup controlId="newPassword2" bsSize="large">
+                <ControlLabel>Enter new password again:</ControlLabel>
+                <FormControl
+                  className="FormInput Password"
+                  autoFocus
+                  type="password"
+                  value={this.state.newPassword2}
+                  onChange={this.handleChange}
+                />
+              </FormGroup>
+              <Button
+                block
+                bsSize="small"
+                disabled={!this.validateForm()}
+                type="submit">
+                SUBMIT        
+              </Button>
+          </div>
+            </form>
+            {this.state.redirect && (
+              <Redirect to={'/password-updated'}/>   
+            )}
         </div>
-          </form>
-          {this.state.redirect && (
-            <Redirect to={'/password-updated'}/>   
-          )}
       </div>
     )
   }
