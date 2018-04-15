@@ -43,13 +43,6 @@ public class BoilerScoutApplication {
 
     @Autowired
     private MessageController messageController;
-
-    @Autowired
-    private InboxController inboxController;
-
-    @Autowired
-    private OutboxController outboxController;
-
     
     @Autowired
     private SettingsController settingsController;
@@ -175,24 +168,24 @@ public class BoilerScoutApplication {
 
     }
     
-        @RequestMapping(value = "/message", method = RequestMethod.POST)
+        @RequestMapping(value = "/send-message", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> message(@Valid @RequestBody Map<String, String> body) {
-        return messageController.getMessage(body);
+        return messageController.sendMessage(body);
 
     }
 
     @RequestMapping(value = "/inbox", method = RequestMethod.GET)
     @ResponseBody
-        public Map<String, Object> inbox(@RequestParam String user_Id,@RequestParam String sort,@RequestParam String token){
-        return inboxController.getInbox(user_Id, sort,token);
+        public Map<String, Object> inbox(@RequestParam String userId, @RequestParam String sort, @RequestParam String token){
+        return messageController.getInbox(userId, sort,token);
 
     }
 
     @RequestMapping(value = "/outbox", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> outbox(@RequestParam String user_id,@RequestParam String sort,@RequestParam String token){
-        return outboxController.getOutbox(user_id, sort,token);
+    public Map<String, Object> outbox(@RequestParam String userId, @RequestParam String sort, @RequestParam String token){
+        return messageController.getOutbox(userId, sort,token);
 
     }
 
