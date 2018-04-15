@@ -23,7 +23,7 @@ import java.util.Map;
  */
 
 @Service
-public class LoginController {
+public class AuthenticationController extends ValidationUtility {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     static final long EXPIRATIONTIME = 864_000_000; // 10 days
     static final String SECRET = "TerryLam";
@@ -33,18 +33,24 @@ public class LoginController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Map<String, Object> login(@RequestBody Map<String, String> body) {
+    public Map<String, Object> login(@RequestBody Map<String, Object> body) {
 
         Map<String, Object> response = new HashMap<String, Object>();
         try {
-            String email = body.get("email");
-            String password = body.get("password");
+            String email = body.get("email").toString();
+            String password = body.get("password").toString();
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
             //Check if email exists
             Integer existingEmail = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM users WHERE email='" + email + "'", Integer.class);
             if (existingEmail <= 0) {
                 throw new RuntimeException("[BadRequest] - No user associated with this email address!");
+            }
+
+            //Check if email is verified
+            Integer verifiedEmail = jdbcTemplate.queryForObject("SELECT email_verified FROM users WHERE email='" + email + "'", Integer.class);
+            if (verifiedEmail != 1) {
+                throw new RuntimeException("[BadRequest] - The associated email is not verified!");
             }
 
             //Check if password matches
@@ -67,11 +73,29 @@ public class LoginController {
             //Insert the token into the database
             jdbcTemplate.update("UPDATE users SET authentication_token='" + JWT + "'" + " WHERE email ='" + email + "'");
 
-            //TODO add authorization to endpoints
-
-            response.put("user_id", user_id);
+            response.put("userId", user_id);
             response.put("token", JWT);
 
+        } catch (DataAccessException ex) {
+            log.info("Exception Message" + ex.getMessage());
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException("[InternalServerError] - Error accessing data.");
+        }
+        return response;
+    }
+
+    public Map<String, Object> logout(@RequestBody Map<String,Object> body) {
+        Map<String, Object> response = new HashMap<String, Object>();
+        try {
+            String userId = body.get("userId").toString();
+            String token = body.get("token").toString();
+            if (!isValidToken(token, userId) || isExpiredToken(token)) {
+                response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
+                return response;
+            } else {
+                jdbcTemplate.update("UPDATE users SET authentication_token = NULL WHERE user_id='" + userId + "'");
+                response.put("status", HttpStatus.OK);
+            }
         } catch (DataAccessException ex) {
             log.info("Exception Message" + ex.getMessage());
             response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);

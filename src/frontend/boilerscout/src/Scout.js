@@ -50,6 +50,13 @@ class Scout extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    if (this.state.searchinput == '') {
+      this.setState({
+        results: [],
+      })
+      return;
+    }
     
     const id = this.getLocalStorage("id");
     let token = this.getLocalStorage("token");
@@ -58,6 +65,8 @@ class Scout extends Component {
     //token = "3ffadfadf"
 
     this.state.url = "http://localhost:8080/scout?" + "userId=" + id + "&token=" + token + "&type=" + this.state.type + "&query=" + this.state.searchinput
+
+
     
     if (this.state.advanced == true) {
       const oldURL = this.state.url;

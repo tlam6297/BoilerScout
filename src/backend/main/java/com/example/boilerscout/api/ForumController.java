@@ -22,6 +22,7 @@ import java.util.*;
 public class ForumController extends ValidationUtility {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -107,7 +108,7 @@ public class ForumController extends ValidationUtility {
             return response;
         } else {
             try {
-                String query = "SELECT t.*, p.full_name FROM threads t INNER JOIN profiles p ON t.user_id = p.user_id WHERE forum_id='" + forumId + "'";
+                String query = "SELECT t.*, p.full_name FROM threads t INNER JOIN profiles p ON t.user_id = p.user_id WHERE forum_id='" + forumId + "' ORDER BY t.thread_date DESC";
                 List<Map<String, Object>> listOfThreads = jdbcTemplate.queryForList(query);
                 response.put("threads", listOfThreads);
             } catch (DataAccessException ex) {
@@ -122,9 +123,8 @@ public class ForumController extends ValidationUtility {
 
 
     public Map<String, Object> startThread(@RequestBody Map<String, Object> body) {
-
-        Map<String, Object> response = new HashMap<String, Object>();
         Date d = new Date();
+        Map<String, Object> response = new HashMap<String, Object>();
         Timestamp threadDate = new Timestamp(d.getTime());
 
         String userId = body.get("userId").toString();
@@ -157,11 +157,62 @@ public class ForumController extends ValidationUtility {
 
     }
 
-    public Map<String, Object> postReply(@RequestBody Map<String, Object> body) {
+    public Map<String, Object> viewThread(@RequestParam String userId,
+                                          @RequestParam String token,
+                                          @RequestParam String threadId) {
         Map<String, Object> response = new HashMap<String, Object>();
+        if (!isValidToken(token, userId) || isExpiredToken(token)) {
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
+            return response;
+        } else {
+            try {
+                String queryForThread = "SELECT t.*, p.full_name FROM threads t INNER JOIN profiles p ON t.user_id = p.user_id WHERE t.thread_id='" + threadId + "'";
+                String queryForComments = "SELECT tp.*, p.full_name FROM thread_posts tp INNER JOIN profiles p ON tp.user_id = p.user_id WHERE tp.thread_id='" + threadId + "' ORDER BY tp.post_date ASC";
+                List<Map<String, Object>> parentThread = jdbcTemplate.queryForList(queryForThread);
+                List<Map<String, Object>> threadComments = jdbcTemplate.queryForList(queryForComments);
+                response.put("thread", parentThread);
+                response.put("comments", threadComments);
 
+            } catch (DataAccessException ex) {
+                log.info("Exception Message" + ex.getMessage());
+                response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new RuntimeException("[InternalServerError] - Error accessing data.");
+            }
+        }
+        response.put("userId", userId);
+        response.put("token", token);
         return response;
 
+    }
+
+    public Map<String, Object> postReply(@RequestBody Map<String, Object> body) {
+        Map<String, Object> response = new HashMap<String, Object>();
+        String userId = body.get("userId").toString();
+        String token = body.get("token").toString();
+        String postId = UUID.randomUUID().toString();
+        String threadId = body.get("threadId").toString();
+        String postBody = body.get("postBody").toString();
+        Date d = new Date();
+        Timestamp postDate = new Timestamp(d.getTime());
+
+
+        if (!isValidToken(token, userId) || isExpiredToken(token)) {
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR + " - This token is not valid!");
+            return response;
+        } else {
+            try {
+                String query = "INSERT INTO thread_posts (post_id, user_id, thread_id, post_body, post_date) VALUES (?, ?, ?, ?, ?)";
+                jdbcTemplate.update(query, postId, userId, threadId, postBody, postDate);
+            } catch (DataAccessException ex) {
+                log.info("Exception Message" + ex.getMessage());
+                response.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new RuntimeException("[InternalServerError] - Error accessing data.");
+            }
+            response.put("userId", userId);
+            response.put("token", token);
+            response.put("status", HttpStatus.OK);
+            return response;
+        }
     }
 
 }

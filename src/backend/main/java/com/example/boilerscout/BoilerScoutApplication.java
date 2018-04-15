@@ -23,7 +23,7 @@ public class BoilerScoutApplication {
     private SignUpController signUpController;
 
     @Autowired
-    private LoginController loginController;
+    private AuthenticationController authenticationController;
 
     @Autowired
     private ProfileController profileController;
@@ -32,7 +32,6 @@ public class BoilerScoutApplication {
     private SearchController searchController;
 
     @Autowired
-
     private ForumController forumController;
 
 
@@ -41,6 +40,7 @@ public class BoilerScoutApplication {
 
     @Autowired
     private VerificationController verificationController;
+
     
     @Autowired
     private SettingsController settingsController;
@@ -62,9 +62,15 @@ public class BoilerScoutApplication {
     @CrossOrigin
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> login(@Valid @RequestBody Map<String, String> body) {
-        return loginController.login(body);
+    public Map<String, Object> login(@Valid @RequestBody Map<String, Object> body) {
+        return authenticationController.login(body);
+    }
 
+    @CrossOrigin
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> logout(@Valid @RequestBody Map<String, Object> body) {
+        return authenticationController.logout(body);
     }
 
     @CrossOrigin
@@ -84,10 +90,13 @@ public class BoilerScoutApplication {
     @CrossOrigin
     @RequestMapping(value = "/scout", method = RequestMethod.GET)
     public Map<String, Object> queryForUsers(@RequestParam String userId,
-                                      @RequestParam String token,
-                                      @RequestParam String type,
-                                      @RequestParam String query) {
-        return searchController.search(userId, token, type, query);
+                                             @RequestParam String token,
+                                             @RequestParam String type,
+                                             @RequestParam String query,
+                                             @RequestParam(value = "graduation",required = false) String graduation,
+                                             @RequestParam(value = "major", required = false) String major
+    ) {
+        return searchController.search(userId, token, type, query, graduation, major);
     }
 
 
@@ -106,6 +115,22 @@ public class BoilerScoutApplication {
                                                @RequestParam String token,
                                                @RequestParam String forumId) {
         return forumController.getThreads(userId, token, forumId);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/community/view-thread", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> viewThread(@RequestParam String userId,
+                                               @RequestParam String token,
+                                               @RequestParam String threadId) {
+        return forumController.viewThread(userId, token, threadId);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/community/post-reply", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> postReply(@Valid @RequestBody Map<String, Object> body) {
+        return forumController.postReply(body);
     }
 
 
