@@ -13,15 +13,9 @@ class Inbox extends Component {
     super(props);
 
     this.state = {
-      name: "Jacob",
+      name: "        ",
       open: false,
-      threads: [{
-        "message_id": "fasdf3hff",
-        "message_body": "Hey i was just wondering if...",
-        "full_name": "Selin Olive",
-        "email": "dfs2purdu.edu",
-        "message_date": "May 2, 2018",
-      }],
+      threads: [],
       title: "",
       author: "",
       body: "",
@@ -29,6 +23,7 @@ class Inbox extends Component {
       input: "",
       email: "",
       name: "",
+      order: "DESC",
       buttonText: "Descending",
     };
 
@@ -45,21 +40,24 @@ class Inbox extends Component {
   }
 
   componentWillMount = () => {
-    this.getInitialMessages();
     this.setName();
+    this.getInitialMessages();    
   }
 
   getInitialMessages = () => {
     const id = this.getLocalStorage("id");
     let token = this.getLocalStorage("token");
 
-    const url = "http://localhost:8080/inbox?" + "userId=" + id + "&token=" + token;
-
+    const url = "http://localhost:8080/inbox?" + "user_Id=" + id + "&sort=" + this.state.order + "&token=" + token;
+    console.log(url)
     axios.get(url)
     .then(res => {
+      console.log(res)
       this.setState({
-        threads: res.data.inbox,
+        threads: res.data.listOfinbox,
       })      
+    })
+    .catch(er => {
     });
   }
 
@@ -71,7 +69,6 @@ class Inbox extends Component {
 
     axios.get(url)
     .then(res => {
-        console.log(res.data);
         if (res.status == 200) {
             this.setState({
                 name: res.data.Name,
@@ -164,9 +161,9 @@ class Inbox extends Component {
       let searchResultsName = this.state.threads.filter((thread) => {
         return thread.full_name.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
       });
-  
+
       let searchResultsBody = this.state.threads.filter((thread) => {
-        return thread.message_body.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
+        return thread.message.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
       });
   
       const searchResults = searchResultsName.concat(searchResultsBody);
@@ -180,12 +177,38 @@ class Inbox extends Component {
     }
   }
 
+  compare = (a, b) => {
+    if (a.message < b.message) { return -1; }
+    if (a.message > b.message) { return 1; }
+    return 0;
+  }
+
+  compareASC = (a, b) => {
+    if (a.message > b.message) { return -1; }
+    if (a.message < b.message) { return 1; }
+    return 0;
+  }
+
   handleSort = (e) => {
     e.preventDefault();
+
+    const threads = this.state.threads;
+
     if (this.state.buttonText == "Descending") {
-      this.setState({ buttonText: "Ascending" });
+      
+      threads.sort(this.compare);
+      this.setState({
+        buttonText: "Ascending",
+        order: "ASC",
+        threads: threads,
+      });
     } else {
-      this.setState({ buttonText: "Descending" })
+      threads.sort(this.compareASC);
+      this.setState({
+        buttonText: "Descending",
+        order: "DESC",
+        threads: threads,
+      })
     }
   }
 
@@ -233,33 +256,36 @@ class Inbox extends Component {
     }
 
     return (
+      <div>
       <ul>
         {searchResults.map((thread, index) =>
-          <li id={index}>
+          <li key={thread.id}>
             <div onClick={() => {
                 this.setState({
                   open: true,
                   author: thread.full_name,
-                  body: thread.message_body,
+                  body: thread.message,
                   email: thread.email,
                 });
               }}>
               <div className="thread">
                 <div className="thread-preview">
-                  <h3>{this.getPreview(thread.message_body)}</h3>
+                  <h3>{this.getPreview(thread.message)}</h3>
                 </div>
                 <div className="thread-author">
                   <h6>{thread.full_name}</h6>
                 </div>
                 <div className="time">
-                  <h6>{thread.message_date}</h6>
+                  <h6>{thread.datesent}</h6>
                 </div>
               </div>
             </ div>
           </li>
         )}
-        {this.renderModal()}
+        
       </ul>
+      {this.renderModal()}
+      </div>
     )
   }
 
