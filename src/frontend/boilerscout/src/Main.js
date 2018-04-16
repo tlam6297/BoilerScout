@@ -1,6 +1,7 @@
 import React from 'react'
 import { Component } from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect, Switch} from 'react-router-dom'
+import {spring, AnimatedSwitch } from 'react-router-transition';
 import './Main.css'
 import Login from './Login'
 import SignUp from './SignUp'
@@ -24,9 +25,25 @@ import Thread from './Thread'
 class Main extends Component  {
 constructor(props) {
   super(props)
-
+  this.bounce = this.bounce.bind(this);
   this.handleClick = this.handleClick.bind(this);
+  this.mapStyles = this.mapStyles.bind(this);
+
   this.state = {
+    bounceTransition: {
+      atEnter: {
+        opacity: 0.2,
+        scale: 0.8,
+      },
+      atLeave: {
+        opacity: this.bounce(0),
+        scale: this.bounce(0.9),
+      },
+      atActive: {
+        opacity: this.bounce(1),
+        scale: this.bounce(1),
+      },
+    }
   }
 }
 
@@ -34,13 +51,39 @@ handleClick = (e) => {
   e.preventDefault();
 }
 
+mapStyles = (styles) => {
+  return {
+    opacity: styles.opacity,
+    transform: `scale(${styles.scale})`,
+  };
+}
+
+// wrap the `spring` helper to use a bouncy config
+ bounce = (val) => {
+  return spring(val, {
+    stiffness: 100,
+    damping:20,
+  });
+}
+
+// child matches will...
+
+
 render () {
   return (
     <div className="Home">          
-      <Switch>
+       <AnimatedSwitch
+    atEnter={this.state.bounceTransition.atEnter}
+    atLeave={this.state.bounceTransition.atLeave}
+    atActive={this.state.bounceTransition.atActive}
+    mapStyles={this.mapStyles}
+    className="route-wrapper"
+  >
         <Route exact path="/" component={Buttons} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/login" component={Login} />
+        </AnimatedSwitch>
+        <Switch>
         <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/password-reset-sent" component={PasswordSent} />
         <Route path="/confirmation-resent" component={ConfirmationSent} />
