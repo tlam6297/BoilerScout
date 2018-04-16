@@ -1,7 +1,5 @@
 package com.example.boilerscout.api;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
-import javax.xml.bind.DatatypeConverter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by terrylam on 2/10/18.
