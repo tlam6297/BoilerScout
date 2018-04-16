@@ -10,15 +10,6 @@ class Buttons extends Component {
   render() {
     return (
       <div className="Buttons">
-        <div className="Logo">
-          <Link to="/">
-            <img
-                src={logo} 
-                className="Home-logo" 
-                alt="logo"                
-            />
-          </Link>
-        </div>
         <div className="SignUpButton">
           <Route render={({ history }) => (
             <button

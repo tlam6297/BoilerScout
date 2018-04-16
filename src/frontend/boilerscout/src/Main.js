@@ -21,6 +21,7 @@ import Forum from './Forum'
 import Community from './Community'
 import CreateAThread from './CreateAThread'
 import Thread from './Thread'
+import Home from './Home'
 
 class Main extends Component  {
 constructor(props) {
@@ -71,19 +72,11 @@ mapStyles = (styles) => {
 
 render () {
   return (
-    <div className="Home">          
-       <AnimatedSwitch
-    atEnter={this.state.bounceTransition.atEnter}
-    atLeave={this.state.bounceTransition.atLeave}
-    atActive={this.state.bounceTransition.atActive}
-    mapStyles={this.mapStyles}
-    className="route-wrapper"
-  >
-        <Route exact path="/" component={Buttons} />
-        <Route path="/sign-up" component={SignUp} />
-        <Route path="/login" component={Login} />
-        </AnimatedSwitch>
-        <Switch>
+    <div className="Home">   
+      <Switch>       
+        <Route path="/" component={Home} />
+        <Route path="/sign-up" component={Home} />
+        <Route path="/login" component={Home} />
         <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/password-reset-sent" component={PasswordSent} />
         <Route path="/confirmation-resent" component={ConfirmationSent} />

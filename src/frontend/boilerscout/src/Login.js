@@ -115,9 +115,6 @@ class Login extends Component {
     return (
       <div className="Login">
         {this.renderRedirect()}
-        <div className="logo">
-          <Logo />
-        </div>
         <form onSubmit={this.handleSubmit}>
           <div className="Form">
             <FormGroup controlId="email" bsSize="large">

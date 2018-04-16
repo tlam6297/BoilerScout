@@ -137,7 +137,6 @@ class SignUp extends Component {
   render () {
     return (
       <div className="SignUp">
-        <Logo />
         <form onSubmit={this.handleSubmit}>
           <div className="Form">
           <FormGroup controlId="fullname" bsSize="large">
