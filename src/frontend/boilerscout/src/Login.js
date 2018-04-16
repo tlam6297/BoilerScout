@@ -101,7 +101,7 @@ class Login extends Component {
           console.log(json);
           // Save to local storage
           _this.saveToLocalStorage("token", json.token);
-          _this.saveToLocalStorage("id", json.user_id);
+          _this.saveToLocalStorage("id", json.userId);
         });
 
       } else {
