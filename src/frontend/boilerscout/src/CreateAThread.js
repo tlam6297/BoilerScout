@@ -46,20 +46,20 @@ class CreateAThread extends Component {
      let forum_id = this.getLocalStorage("forum_id");
      let title = document.getElementById('threadTitle').textContent;
      let body = document.getElementById('threadBody').textContent;
-     console.log(title);
-     this.setState ({
-         threadTitle: title,
-     });
+
+     console.log("title:" + title + ", body:" + body);
 
      var payload = JSON.stringify({
        "userId": id,
        "token": token,
        "forumId": forum_id,
-       "threadTitle": this.state.threadTitle,
-       "threadBody": this.state.threadBody,
+       "threadTitle": title,
+       "threadBody": body,
      });
+
+     console.log(payload);
     
-     fetch('http://localhost:8080/communitys/start-thread', {
+     fetch('http://localhost:8080/community/start-thread', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
