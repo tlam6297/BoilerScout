@@ -37,7 +37,7 @@ constructor(props) {
       },
       atLeave: {
         opacity: this.bounce(0),
-        scale: this.bounce(0.9),
+        scale: this.bounce(0.8),
       },
       atActive: {
         opacity: this.bounce(1),
