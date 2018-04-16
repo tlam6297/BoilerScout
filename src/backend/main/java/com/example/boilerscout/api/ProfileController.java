@@ -171,6 +171,7 @@ public Map<String, Object> getProfile(@RequestParam String userId, @RequestParam
                         response.put("Courses",courses);
                     }
                 }
+                response.put("status", HttpStatus.OK);
                 return response;
 //user lacks either a bio, courses, or skill, so we need to find out which.
             } else {
@@ -222,7 +223,7 @@ public Map<String, Object> getProfile(@RequestParam String userId, @RequestParam
                 tempInfo = jdbcTemplate.queryForList("SELECT email from users where user_id =  '" + query +"'");
 
                 response.put("Email",tempInfo.get(0).get("email"));
-
+                response.put("status", HttpStatus.OK);
                 return response;
             }
 

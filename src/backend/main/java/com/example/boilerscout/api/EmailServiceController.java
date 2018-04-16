@@ -59,14 +59,22 @@ public class EmailServiceController extends ValidationUtility {
         try {
             //got email
             String userId = jdbcTemplate.queryForObject("SELECT user_id FROM users WHERE email='" + email + "'", String.class);
+            int currentStatus =  jdbcTemplate.queryForObject("SELECT email_verified FROM users WHERE email='" + email + "'", int.class);
+            if(currentStatus==1){
+                response.put("userId",userId);
+                response.put("Message","Already verified.");
+                response.put("status",HttpStatus.BAD_REQUEST);
+                return response;
+            }
             String to = email;
             //generate new verification code
             int verificationCode = ThreadLocalRandom.current().nextInt(100000, 1999999999);
+
             jdbcTemplate.update("UPDATE users SET email_verified=" + verificationCode + " WHERE user_id='" + userId + "'");
             String subject ="BoilerScout. Account verification.";
             String text = "Hi,\nYou are now one step closer to your BoilerScout account.\n\nPlease verifiy your account with the following link:\n\n\tlocalhost:8080/verify?id=";
             sendSimpleMessage(to,subject,text + userId + "&query=" + verificationCode);
-            response.put("ok","ok");
+            response.put("status",HttpStatus.OK);
             response.put("userId",userId);
             return response;
 
@@ -104,7 +112,7 @@ public class EmailServiceController extends ValidationUtility {
             text = text + "&id=" + userId;  //append id, these are both for sec checks
             sendSimpleMessage(to,subject,text);
             
-            response.put("ok","ok");
+            response.put("status",HttpStatus.OK);
             response.put("userId",userId);
             return response;
 
