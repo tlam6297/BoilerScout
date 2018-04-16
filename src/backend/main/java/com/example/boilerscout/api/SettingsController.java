@@ -93,7 +93,7 @@ public class SettingsController extends ValidationUtility {
         String hashId = encoder.encode(userId);
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("userId",userId);
-        response.put("status","valid");
+        response.put("status", HttpStatus.OK);
         response.put("hashedEmail",hashedEmail);
         response.put("hashedId",hashId);
 
@@ -137,7 +137,7 @@ public class SettingsController extends ValidationUtility {
                 newPass = '"'+newPass+'"';
                 jdbcTemplate.update("UPDATE users SET password=" + newPass + " WHERE user_id='" + userId + "'");
 
-                response.put("status","Successful Reset");
+                response.put("status",HttpStatus.OK);
                 response.put("userId",userId);
 
 
