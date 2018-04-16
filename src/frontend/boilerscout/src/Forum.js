@@ -109,7 +109,7 @@ class Forum extends Component {
                   {this.state.description}
                 </div>
               </div>
-              <button onClick={this.onOpenModal}>Open modal</button>
+              <button onClick={this.onOpenModal}>Create Thread</button>
           <Modal open={this.state.open} onClose={this.onCloseModal} little>
             <CreateAThread/>
           </Modal>
