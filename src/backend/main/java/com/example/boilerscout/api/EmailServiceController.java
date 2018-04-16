@@ -63,7 +63,7 @@ public class EmailServiceController extends ValidationUtility {
             if(currentStatus==1){
                 response.put("userId",userId);
                 response.put("Message","Already verified.");
-                response.put("Status","400");
+                response.put("status",HttpStatus.BAD_REQUEST);
                 return response;
             }
             String to = email;
@@ -74,7 +74,7 @@ public class EmailServiceController extends ValidationUtility {
             String subject ="BoilerScout. Account verification.";
             String text = "Hi,\nYou are now one step closer to your BoilerScout account.\n\nPlease verifiy your account with the following link:\n\n\tlocalhost:8080/verify?id=";
             sendSimpleMessage(to,subject,text + userId + "&query=" + verificationCode);
-            response.put("Status","200");
+            response.put("status",HttpStatus.OK);
             response.put("userId",userId);
             return response;
 
@@ -112,7 +112,7 @@ public class EmailServiceController extends ValidationUtility {
             text = text + "&id=" + userId;  //append id, these are both for sec checks
             sendSimpleMessage(to,subject,text);
             
-            response.put("Status","200");
+            response.put("status",HttpStatus.OK);
             response.put("userId",userId);
             return response;
 
