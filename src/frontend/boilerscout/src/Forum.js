@@ -5,7 +5,9 @@ import { FormGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios'
 import Nav from './TopNavBar'
 import './Forum.css'
-
+import ReactDOM from 'react-dom';
+import Modal from "react-responsive-modal";
+import CreateAThread from './CreateAThread';
 class Forum extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +19,7 @@ class Forum extends Component {
       found: false,
       displayTitle: true,
       threads: [],
+      open:false,
     };
   }
 
@@ -26,6 +29,14 @@ class Forum extends Component {
       [event.target.id]: event.target.value
     });
   }
+
+  onOpenModal = () => {
+    this.setState({ open: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
 
   getLocalStorage = (key) => {
     return localStorage.getItem(key);
@@ -87,62 +98,66 @@ class Forum extends Component {
     });
     
     return (
-      <div>
-        <Nav />
-          <div className="forum">
-            <div className="heading">
-              <div className="title">
-                <h1>{this.state.title}</h1>
+        <div>
+          <Nav />
+            <div className="forum">
+              <div className="heading">
+                <div className="title">
+                  <h1>{this.state.title}</h1>
+                </div>
+                <div className="descp">
+                  {this.state.description}
+                </div>
               </div>
-              <div className="descp">
-                {this.state.description}
-              </div>
-            </div>
-          <div className="search">
-            <form onSubmit={this.handleSubmit} className="form">
-              <FormGroup controlId="input" bsSize="large">
-                <FormControl
-                  className="FormInput"
-                  autoFocus
-                  type="text"
-                  bsSize="large"
-                  placeholder="Search for a thread..."
-                  value={this.state.input}
-                  onChange={this.handleChange}
-                />
-              </FormGroup>
-            </form>
-          </div>          
-          <div className="threads">
-            {this.state.found && (
-              <div className="noResults">
-                <h4>Forum does not exist</h4>
-              </div>
-            )}
-            <ul>
-              {searchResults.map((thread, index) =>
-                <li id={index}>
-                  <Link to={{pathname: '/view-thread', search: '?id=' + thread.thread_id,}} className="link">
-                    <div className="thread">
-                      <div className="thread-title">
-                        <h3>{thread.thread_title}</h3>
-                      </div>
-                      <div className="thread-author">
-                        <h6>{thread.full_name}</h6>
-                      </div>
-                      <div className="time">
-                        <h6>{thread.thread_date}</h6>
-                      </div>
-                    </div>
-                  </Link>
-                </li>
+              <button onClick={this.onOpenModal}>Open modal</button>
+          <Modal open={this.state.open} onClose={this.onCloseModal} little>
+            <CreateAThread/>
+          </Modal>
+            <div className="search">
+              <form onSubmit={this.handleSubmit} className="form">
+                <FormGroup controlId="input" bsSize="large">
+                  <FormControl
+                    className="FormInput"
+                    autoFocus
+                    type="text"
+                    bsSize="large"
+                    placeholder="Search for a thread..."
+                    value={this.state.input}
+                    onChange={this.handleChange}
+                  />
+                </FormGroup>
+              </form>
+            </div>          
+            <div className="threads">
+              {this.state.found && (
+                <div className="noResults">
+                  <h4>Forum does not exist</h4>
+                </div>
               )}
-            </ul>
+              <ul>
+                {searchResults.map((thread, index) =>
+                  <li id={index}>
+                    <Link to={{pathname: '/view-thread', search: '?id=' + thread.thread_id,}} className="link">
+                      <div className="thread">
+                        <div className="thread-title">
+                          <h3>{thread.thread_title}</h3>
+                        </div>
+                        <div className="thread-author">
+                          <h6>{thread.full_name}</h6>
+                        </div>
+                        <div className="time">
+                          <h6>{thread.thread_date}</h6>
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                )}
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
-}
-
-export default Forum;
+  
+  export default Forum;
