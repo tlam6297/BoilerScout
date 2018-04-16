@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import './EditProfile.css'
-import { Button } from "react-bootstrap";
-import './CreateAThread.css'
+import { Button, FormGroup, FormControl, ControlLabel, Radio, Checkbox, DropdownButton, InputGroup, MenuItem, ButtonGroup } from "react-bootstrap";
+import './Thread.css'
 import NavBar from './TopNavBar'
 import axios from 'axios'
 import PostReply from './PostReply'
@@ -14,9 +14,12 @@ class Thread extends Component {
       this.renderComments = this.renderComments.bind(this);
       this.getAccessToken = this.getAccessToken.bind(this);
       this.getID = this.getID.bind(this);
+      this.renderReplyBox = this.renderReplyBox.bind(this);
+
          this.state = {
           threadTitle: "",
           threadBody: "",
+          body: "",
           thread: {},
           comments: [],
           threadId: props.location.search.substring(4),
@@ -25,12 +28,41 @@ class Thread extends Component {
           replytoggle: false,
       }
 
-      console.log(this.state.threadId);
     }
     
     // Return user id if signed in, null if not
     signedIn = () => {
       return this.state.signedIn
+    }
+
+    reloadReplies = () => {
+      const user_id = localStorage.getItem("id");
+        const token = localStorage.getItem("token");
+        const thread_id = this.state.threadId;
+        console.log("userid:" + user_id);
+        console.log("token:" + token);
+        console.log("threadid:" + thread_id);
+        const url = "http://localhost:8080/community/view-thread?userId=" + user_id + "&token=" + token + "&threadId=" + thread_id;
+        axios.get(url)
+        .then(res => {
+            // console.log(res.data.query);
+            if (res.data.status == "OK") {
+                this.setState({
+                comments: res.data.comments,
+                thread: res.data.thread[0],
+                });  
+                console.log(this.state.comments);
+            } else {
+                alert("Invalid Token- Please login again");
+                this.setState({
+                redirect: true,
+                })
+            }      
+        })
+        .catch(error => {
+          console.log(error);
+        }
+      );
     }
 
     componentWillMount = () => {
@@ -62,10 +94,88 @@ class Thread extends Component {
         }
       );
     }
+
+    getThreadId = () => {
+      return this.state.threadId;
+    }
    
    
     getLocalStorage = (key) => {
       return localStorage.getItem(key);
+    }
+
+    handleSubmit = (event) => {
+      event.preventDefault();
+      const _this = this;
+      const id = _this.getLocalStorage("id");
+      let token = _this.getLocalStorage("token");
+      const threadId = _this.getLocalStorage("threadId");
+      var payload = JSON.stringify({
+        "userId": id,
+        "token": token,
+        "threadId": threadId,
+        "postBody": this.state.body,
+      });
+      
+      fetch('http://localhost:8080/community/post-reply', {
+       method: 'POST',
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json;charset=UTF-8',
+         'transfer-encoding': 'chunked',
+       },
+       body: payload,
+     })
+     .then(function(response) {
+       if (response.ok) {
+         //_this.setState({ redirect: true })
+         response.json().then(json => {
+           console.log(json);
+         });
+         
+   
+       } else {
+         alert("Error in posting comment");
+       }     
+     })
+        this.reloadReplies();
+     }
+  
+
+    renderReplyBox = () => {    
+      return (
+        <div className="EditProfile">
+          <div className="Container">
+            <button
+              type="button"
+              onClick={this.toggle}>
+              Post Reply
+          </button>
+          <br/>
+          <form onSubmit={this.handleSubmit}>
+            <div className="Form">
+            <FormGroup controlId="body" bsSize="large">
+                <FormControl
+                  className="FormInput body"
+                  autoFocus
+                  type="text"
+                  value={this.state.body}
+                  onChange={this.handleChange}
+                />
+              </FormGroup>
+                <Button
+                bsSize="small"
+                type="submit">
+                SUBMIT       
+              </Button>
+              <div id="success">
+             
+             </div>
+            </div>
+          </form>
+          </div>
+        </div>
+      )
     }
    
    
@@ -107,6 +217,8 @@ class Thread extends Component {
       this.setState({
           replytoggle: !this.state.replytoggle,
       });
+
+      localStorage.setItem("threadId", this.state.threadId);
   }
  
 
@@ -163,7 +275,7 @@ class Thread extends Component {
             onClick={this.toggle}>
             Post Reply
           </button>
-          {this.state.replytoggle && <PostReply/>}
+          {this.state.replytoggle && this.renderReplyBox()}
           </div>
           <div className="Comments">
             {this.renderComments()}

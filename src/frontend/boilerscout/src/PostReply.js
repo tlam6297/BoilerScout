@@ -4,8 +4,8 @@ import './EditProfile.css'
 import { Button, FormGroup, FormControl, ControlLabel, Radio, Checkbox, DropdownButton, InputGroup, MenuItem, ButtonGroup } from "react-bootstrap";
 import axios from 'axios'
 class PostReply extends Component {
- constructor() {
-   super()
+ constructor(props) {
+   super(props)
    this.handleSubmit = this.handleSubmit.bind(this);
    this.removeWhiteSpaces = this.removeWhiteSpaces.bind(this);
    this.handleChange = this.handleChange.bind(this);
@@ -16,6 +16,7 @@ class PostReply extends Component {
         body: "",
         toggle: false,
    }
+
  }
 
  // Return user id if signed in, null if not
@@ -83,9 +84,7 @@ class PostReply extends Component {
     const _this = this;
     const id = _this.getLocalStorage("id");
     let token = _this.getLocalStorage("token");
-    let forum_id = this.getLocalStorage("forum_id");
-    const threadId = localStorage.getItem("thread_id");
-
+    const threadId = _this.getLocalStorage("threadId");
     var payload = JSON.stringify({
       "userId": id,
       "token": token,
@@ -93,7 +92,7 @@ class PostReply extends Component {
       "postBody": this.state.body,
     });
     
-    fetch('http://localhost:8080/post-reply', {
+    fetch('http://localhost:8080/community/post-reply', {
      method: 'POST',
      headers: {
        'Accept': 'application/json',
@@ -156,7 +155,7 @@ class PostReply extends Component {
        <br/>
        <form onSubmit={this.handleSubmit}>
          <div className="Form">
-         <FormGroup controlId="Body" bsSize="large">
+         <FormGroup controlId="body" bsSize="large">
              <FormControl
                className="FormInput body"
                autoFocus
