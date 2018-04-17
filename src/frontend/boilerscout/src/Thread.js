@@ -42,18 +42,20 @@ class Thread extends Component {
         axios.get(url)
         .then(res => {
             // console.log(res.data.query);
-            if (res.data.status == "OK") {
+            if (res.status == 200) {
                 this.setState({
                 comments: res.data.comments,
                 thread: res.data.thread[0],
                 });  
-                console.log(this.state.comments);
             } else {
                 alert("Invalid Token- Please login again");
                 this.setState({
                 redirect: true,
                 })
-            }      
+            }    
+            
+            console.log(res.data.status);
+
         })
         .catch(error => {
           console.log(error);
@@ -71,12 +73,12 @@ class Thread extends Component {
         axios.get(url)
         .then(res => {
             // console.log(res.data.query);
-            if (res.data.status == "OK") {
+
+            if (res.status == 200) {
                 this.setState({
                 comments: res.data.comments,
                 thread: res.data.thread[0],
                 });  
-                console.log(this.state.comments);
             } else {
                 alert("Invalid Token- Please login again");
                 this.setState({
@@ -120,7 +122,7 @@ class Thread extends Component {
        body: payload,
      })
      .then(function(response) {
-       if (response.ok) {
+       if (response.status == 200) {
          //_this.setState({ redirect: true })
          response.json().then(json => {
            console.log(json);

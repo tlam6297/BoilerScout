@@ -83,6 +83,8 @@ class Forum extends Component {
       this.setState({
         threads: res.data.threads,
       });      
+
+      console.log(res.data.threads);
     });  
   }
 
