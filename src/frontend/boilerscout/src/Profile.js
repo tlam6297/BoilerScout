@@ -79,6 +79,10 @@ class Profile extends Component {
 				})
 				.then(function(response) {
 					if (response.ok) {
+						_this.setState({
+							open: false,
+							reply: "",
+						})
 						alert("Message Sent");
 					} else {
 						alert("Message not sent");
@@ -87,6 +91,7 @@ class Profile extends Component {
 		}
 
 		validateForm = () => {
+			console.log("Lenght of reply: " + this.state.reply.length)
 			return (this.state.reply.length > 0);
 		}
 
