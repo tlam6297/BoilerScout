@@ -18,6 +18,7 @@ import Profile from './Profile'
 import ProfileCreated from './ProfileCreated'
 import Forum from './Forum'
 import Inbox from './Inbox'
+import Logout from './Logout'
 
 import Outbox from './Outbox'
 
@@ -55,6 +56,7 @@ render () {
         <Route path="/forum" component={Forum} />
         <Route path="/inbox" component={Inbox} />
         <Route path="/outbox" component={Outbox} />
+        <Route path="/logout" component={Logout} />
       </Switch>
     </div>
   )
