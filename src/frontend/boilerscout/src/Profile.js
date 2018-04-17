@@ -65,6 +65,8 @@ class Profile extends Component {
 				"recipientEmail": this.state.Email,
 				"messageBody": this.state.reply,
 			})
+
+			console.log(payload)
 	
 			//send POST
 			fetch('http://localhost:8080/send-message', {
@@ -120,6 +122,11 @@ class Profile extends Component {
 			)
 		}
 	
+		handleChangeInput = (event) => {
+			this.setState({
+				reply: event.target.value
+			});
+		}
 
    getID = () => {
        // The type of token might be JSON
