@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Redirect } from 'react-router'
 import './EditProfile.css'
 import { Button, FormGroup, FormControl, ControlLabel, Radio, Checkbox, DropdownButton, InputGroup, MenuItem, ButtonGroup } from "react-bootstrap";
 import axios from 'axios'
@@ -112,7 +113,11 @@ removeWhiteSpaces = (array) => {
  return array;
 }
 
-
+handleSubmitPassword = (e) => {
+  e.preventDefault();
+  //console.log("lol");
+  <Redirect to="/update-password"/>
+}
 
 handleSubmit = (event) => {
   event.preventDefault();
@@ -394,12 +399,12 @@ render() {
   return (
     <div className="EditProfile">
       <div className="Container">
-        <button
-          type="button">
-          Edit Information
-      </button>
+        <h1>Settings</h1>
       <br/>
       <h4>Hello, {this.state.Name}!</h4>
+      <Link to="/update-password">
+          <p>Change Password</p>
+        </Link>
       <form onSubmit={this.handleSubmit}>
         <div className="Form">
         <FormGroup controlId="Name" bsSize="large">
