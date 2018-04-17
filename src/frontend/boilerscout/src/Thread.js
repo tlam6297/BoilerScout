@@ -132,11 +132,7 @@ class Thread extends Component {
       return (
         <div className="EditProfile">
           <div className="Container">
-            <button
-              type="button"
-              onClick={this.toggle}>
-              Post Reply
-          </button>
+           
           <br/>
           <form onSubmit={this.handleSubmit}>
             <div className="Form">
