@@ -188,6 +188,15 @@ class Profile extends Component {
                            <h1>{this.state.Name}</h1>
                            <div
                                id="labels">
+															 		<ControlLabel
+                                       id="label">
+                                       Email: &nbsp;
+                                   </ControlLabel>
+                                   <p
+                                       id="info">
+                                       {this.state.Email}
+                                   </p>
+																	 <p></p>
                                    <ControlLabel
                                        id="label">
                                        Major: &nbsp;
@@ -205,6 +214,7 @@ class Profile extends Component {
                                        id="info">
                                        {this.state.Graduation}
                                    </p>
+																	 <p></p>
                            </div>
                            <div className="send"
 													 			onClick={() => {
