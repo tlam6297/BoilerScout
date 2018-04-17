@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
@@ -20,7 +21,7 @@ import java.util.Date;
  * This is a utility class written to validate different aspects of a user and their JWTs
  */
 
-
+@Service
 public class ValidationUtility {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     //TODO code documentation

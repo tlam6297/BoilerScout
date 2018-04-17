@@ -23,6 +23,9 @@ public class BoilerScoutApplication {
     private SignUpController signUpController;
 
     @Autowired
+    private ValidationUtility validationUtility;
+
+    @Autowired
     private AuthenticationController authenticationController;
 
     @Autowired
@@ -67,6 +70,13 @@ public class BoilerScoutApplication {
     @ResponseBody
     public Map<String, Object> logout(@Valid @RequestBody Map<String, Object> body) {
         return authenticationController.logout(body);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/verify-authentication", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean checkAuthentication(@RequestParam String userId, @RequestParam String token) {
+        return validationUtility.isValidToken(token, userId);
     }
 
     @CrossOrigin
