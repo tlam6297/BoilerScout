@@ -36,7 +36,7 @@ class Inbox extends Component {
   }
 
   componentDidUpdate () {
-   // console.log(this.state);
+    console.log(this.state);
   }
 
   componentWillMount = () => {
@@ -259,7 +259,7 @@ class Inbox extends Component {
       <div>
       <ul>
         {searchResults.map((thread, index) =>
-          <li key={thread.id}>
+          <li key={thread.message_id}>
             <div onClick={() => {
                 this.setState({
                   open: true,
