@@ -27,6 +27,7 @@ import Logout from './Logout'
 import PassUp from './PasswordUpdated'
 import Outbox from './Outbox'
 import ValidateReset from './ValidateReset'
+import axios from 'axios'
 
 class Main extends Component  {
 constructor(props) {
@@ -36,6 +37,7 @@ constructor(props) {
   this.mapStyles = this.mapStyles.bind(this);
 
   this.state = {
+    redirect: false,
     bounceTransition: {
       atEnter: {
         opacity: 0.2,
@@ -72,8 +74,33 @@ mapStyles = (styles) => {
   });
 }
 
-// child matches will...
+componentWillMount = () => {
+  console.log("Checking if valid token...")
+  axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
 
+  .then(res => {
+    if (res.data == false) {
+      console.log("Not valid token")
+      this.setState({
+        redirect: true,
+      })
+    } else {
+      console.log("Valid Token")
+      this.setState({
+        redirect: false,
+      })
+    }
+  })
+}
+
+rednerRedirect = () => {
+  if (this.state.redirect) {
+    this.setState({
+      redirect: false,
+    })
+    return (<Redirect to="/" />)
+  }
+}
 
 render () {
   return (
@@ -108,7 +135,9 @@ render () {
         <Route path="/logout" component={Logout} />
         <Route path="/password-updated" component={PassUp} />
         <Route path="/validate-reset" component={ValidateReset}/>
-      </AnimatedSwitch>  
+      </AnimatedSwitch> 
+      
+      {this.rednerRedirect()}
     </div>
   )
 }
