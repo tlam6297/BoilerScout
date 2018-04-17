@@ -3,13 +3,13 @@ import { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 import Login from './Login';
 import SignUp from './SignUp';
-import logo from './logo.svg'
-
+import Logo from './Logo';
 class Buttons extends Component {
 
   render() {
     return (
       <div className="Buttons">
+      <Logo/>
         <div className="SignUpButton">
           <Route render={({ history }) => (
             <button

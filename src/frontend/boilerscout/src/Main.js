@@ -73,16 +73,22 @@ mapStyles = (styles) => {
 render () {
   return (
     <div className="Home">   
-      <Switch>       
-        <Route path="/" component={Home} />
-        <Route path="/sign-up" component={Home} />
-        <Route path="/login" component={Home} />
+      <AnimatedSwitch
+        atEnter={this.state.bounceTransition.atEnter}
+        atLeave={this.state.bounceTransition.atLeave}
+        atActive={this.state.bounceTransition.atActive}
+        mapStyles={this.mapStyles}
+        className="route-wrapper"
+      >
+        <Route exact path="/" component={Buttons} />
+        <Route path="/sign-up" component={SignUp} />
+        <Route path="/login" component={Login} />
+        <Route path="/scout" component={Scout} />  
         <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/password-reset-sent" component={PasswordSent} />
         <Route path="/confirmation-resent" component={ConfirmationSent} />
         <Route path="/advanced-filters" component={AdvancedFilters} />
         <Route path="/update-password" component={UpdatePassword} />
-        <Route path="/scout" component={Scout} />
         <Route path="/resend-confirmation" component={ResendConfirmation} />
         <Route path="/update-password" component={UpdatePassword} />
         <Route path="/settings" component={Settings}/>
@@ -92,8 +98,8 @@ render () {
         <Route path="/community" component={Community}/>
        <Route path="/create-thread" component={CreateAThread}/>
        <Route path="/view-thread" component={Thread}/>
-      </Switch>
-    </div>
+       </AnimatedSwitch>  
+           </div>
   )
 }
 }

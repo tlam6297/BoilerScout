@@ -61,7 +61,7 @@ class SignUp extends Component {
       [event.target.id]: event.target.value
     });
 
-    console.log(event.target.value);
+    console.log(this.state);
   }
 
   handleSubmit = (event) => {
@@ -137,6 +137,7 @@ class SignUp extends Component {
   render () {
     return (
       <div className="SignUp">
+      <Logo/>
         <form onSubmit={this.handleSubmit}>
           <div className="Form">
           <FormGroup controlId="fullname" bsSize="large">
@@ -146,16 +147,6 @@ class SignUp extends Component {
                 autoFocus
                 type="text"
                 value={this.state.fullname}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-            <FormGroup controlId="major" bsSize="large">
-              <ControlLabel>Major:</ControlLabel>
-              <FormControl
-                className="FormInput"
-                autoFocus
-                type="text"
-                value={this.state.major}
                 onChange={this.handleChange}
               />
             </FormGroup>
@@ -172,6 +163,7 @@ class SignUp extends Component {
                 <option value="2022">2022</option>
               </select>
             </FormGroup>
+            <FormGroup controlId="grad" bsSize="large">
             <ControlLabel>Major:</ControlLabel>
                 <select
                   className="FormInput major"
@@ -182,6 +174,7 @@ class SignUp extends Component {
                   <option value={result}>{result}</option>
                   )}
                 </select>
+                </FormGroup>
             <FormGroup controlId="email" bsSize="large">
               <ControlLabel>Email:</ControlLabel>
               <FormControl
