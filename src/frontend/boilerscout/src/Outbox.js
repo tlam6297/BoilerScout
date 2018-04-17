@@ -125,7 +125,7 @@ class Outbox extends Component {
       });
   
       let searchResultsBody = this.state.threads.filter((thread) => {
-        return thread.message.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
+        return thread.message_body.toLowerCase().indexOf(this.state.input.toLowerCase()) != -1;
       });
   
       const searchResults = searchResultsName.concat(searchResultsBody);
@@ -216,19 +216,19 @@ class Outbox extends Component {
                 this.setState({
                   open: true,
                   author: thread.full_name,
-                  body: thread.message,
+                  body: thread.message_body,
                   email: thread.email,
                 });
               }}>
               <div className="thread">
                 <div className="thread-preview">
-                  <h3>{this.getPreview(thread.message)}</h3>
+                  <h3>{this.getPreview(thread.message_body)}</h3>
                 </div>
                 <div className="thread-author">
                   <h6>{thread.full_name}</h6>
                 </div>
                 <div className="time">
-                  <h6>{thread.datesent}</h6>
+                  <h6>{thread.message_date}</h6>
                 </div>
               </div>
             </ div>
