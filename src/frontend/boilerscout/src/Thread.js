@@ -35,23 +35,19 @@ class Thread extends Component {
       const user_id = localStorage.getItem("id");
         const token = localStorage.getItem("token");
         const thread_id = this.state.threadId;
-        console.log("userid:" + user_id);
-        console.log("token:" + token);
-        console.log("threadid:" + thread_id);
         const url = "http://localhost:8080/community/view-thread?userId=" + user_id + "&token=" + token + "&threadId=" + thread_id;
         axios.get(url)
         .then(res => {
-            // console.log(res.data.query);
-            if (res.data.status == "OK") {
+            console.log(res)
+            if (res.status == 200) {
                 this.setState({
                 comments: res.data.comments,
                 thread: res.data.thread[0],
                 });  
-                console.log(this.state.comments);
             } else {
                 alert("Invalid Token- Please login again");
                 this.setState({
-                redirect: true,
+                  redirect: true,
                 })
             }      
         })
@@ -60,32 +56,30 @@ class Thread extends Component {
         }
       );
     }
+
     componentWillMount = () => {
         const user_id = localStorage.getItem("id");
         const token = localStorage.getItem("token");
         const thread_id = this.state.threadId;
-        console.log("userid:" + user_id);
-        console.log("token:" + token);
-        console.log("threadid:" + thread_id);
         const url = "http://localhost:8080/community/view-thread?userId=" + user_id + "&token=" + token + "&threadId=" + thread_id;
         axios.get(url)
         .then(res => {
-            // console.log(res.data.query);
-            if (res.data.status == "OK") {
+          console.log(res.status)
+            if (res.status == 200) {
                 this.setState({
                 comments: res.data.comments,
                 thread: res.data.thread[0],
-                });  
-                console.log(this.state.comments);
+                }); 
             } else {
-                alert("Invalid Token- Please login again");
+                alert("error compone will mount");
                 this.setState({
                 redirect: true,
                 })
             }      
         })
         .catch(error => {
-          console.log(error);
+          //console.log(error);
+          console.log("Error when loading data whe will mount")
         }
       );
     }
@@ -197,7 +191,7 @@ class Thread extends Component {
           return id;
       }
     componentDidUpdate = () => {
-      console.log(this.state);
+      //console.log(this.state);
     }
     // handle unauth, remove userid
     handleUnauth = () => {

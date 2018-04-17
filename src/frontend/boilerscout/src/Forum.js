@@ -110,9 +110,9 @@ class Forum extends Component {
                 </div>
               </div>
               <button onClick={this.onOpenModal}>Create Thread</button>
-          <Modal open={this.state.open} onClose={this.onCloseModal} little>
-            <CreateAThread/>
-          </Modal>
+              <Modal open={this.state.open} onClose={this.onCloseModal} little>
+                <CreateAThread/>
+              </Modal>
             <div className="search">
               <form onSubmit={this.handleSubmit} className="form">
                 <FormGroup controlId="input" bsSize="large">
