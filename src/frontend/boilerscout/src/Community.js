@@ -18,7 +18,7 @@ class Community extends Component {
        }
    }
 
-   componentDidMount= () => {
+   componentWillMount= () => {
        const all_data = this.props.location.search;
        const split = all_data.split("&");
 

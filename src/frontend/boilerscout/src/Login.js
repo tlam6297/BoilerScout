@@ -97,9 +97,8 @@ class Login extends Component {
       if (response.ok) {
         // redirect
         _this.setState({ redirect: true })
-
+        console.log(response.data);
         response.json().then(json => {
-          console.log(json);
           // Save to local storage
           _this.saveToLocalStorage("token", json.token);
           _this.saveToLocalStorage("id", json.userId);

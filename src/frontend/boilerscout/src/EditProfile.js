@@ -12,7 +12,6 @@ constructor() {
   this.handleChange = this.handleChange.bind(this);
   this.getAccessToken = this.getAccessToken.bind(this);
    this.getID = this.getID.bind(this);
-   this.majorDropdown = this.majorDropdown.bind(this);
 
      this.state = {
       Bio: "",
@@ -44,29 +43,7 @@ handleAuth = (user) => {
   this.setState(
     {uid: user.uid}
   )
-}
 
-majorDropdown = () => {
- var majors = [
-   "Accounting","Acting","Actuarial Science","Aeronautical And Astronautical Engineering","Aeronautical Engineering Technology","Aerospace Financial Analysis","African American Studies","Agribusiness (Multiple Concentrations)","Agricultural Communication","Agricultural Economics (Multiple Concentrations)","Agricultural Education","Agricultural Engineering","Agricultural Engineering","Agricultural Systems Management","Agronomy (Multiple Concentrations)","Airline Management And Operations","Airport Management And Operations","American Studies","Animal Sciences (Multiple Concentrations)","Animation","Anthropology","Applied Exercise And Health (Pre)","Applied Meteorology And Climatology","Art History","Asian Studies","Athletic Training (Pre)","Atmospheric Science/Meteorology","Audio Engineering Technology","Automation And Systems Integration Engineering Technology","Aviation Management","Biochemistry","Biochemistry (Biology)","Biochemistry (Chemistry)","Biological Engineering - Multiple Concentrations","Biological Engineering - Multiple Concentrations","Biology","Biomedical Engineering","Brain And Behavioral Sciences","Building Information Modeling","Cell, Molecular, And Developmental Biology","Chemical Engineering","Chemistry","Chemistry - American Chemical Society","Chinese Studies","Civil Engineering","Classical Studies","Communication, General (Pre)","Comparative Literature","Computer And Information Technology","Computer Engineering","Computer Science","Construction Engineering","Construction Management Technology","Creative Writing","Crop Science","Cybersecurity","Data Science","Data Visualization","Design And Construction Integration","Developmental And Family Science","Early Childhood Education And Exceptional Needs","Ecology, Evolution, And Environmental Sciences","Economics (School Of Management)","Electrical Engineering","Electrical Engineering Technology","Elementary Education","Engineering / Technology Teacher Education","English","Environmental And Ecological Engineering","Environmental And Natural Resources Engineering","Environmental And Natural Resources Engineering","Environmental Geosciences","Environmental Health Sciences","Environmental Studies (Pre)","Exploratory Studies","Family And Consumer Sciences Education","Farm Management","Film And Theatre Production","Film And Video Studies","Finance","Financial Counseling And Planning","Fisheries And Aquatic Sciences","Flight (Professional Flight Technology)","Foods And Nutrition In Business","Food Science","Forestry","French","Game Development And Design","General Education: Curriculum And Instruction (Non-Licensure)","General Education: Educational Studies (Non-Licensure)","Genetic Biology","Geology And Geophysics","German","Global Studies","Health And Disease","Health Sciences - Preprofessional","History","Horticulture (Multiple Concentrations)","Hospitality And Tourism Management","Human Resource Development","Human Services","Industrial (Consumer Product) Design","Industrial Engineering","Industrial Engineering Technology","Industrial Management","Insect Biology","Integrated Studio Arts","Interdisciplinary Engineering Studies","Interior (Space Planning) Design","Italian Studies","Japanese","Jewish Studies","Kinesiology","Landscape Architecture (Pre)","Law And Society","Learning Sciences In Educational Studies (Non Licensure)","Linguistics","Management (General)","Marketing","Materials Engineering","Mathematics","Mathematics Education","Mechanical Engineering","Mechanical Engineering Technology","Mechatronics Engineering Technology","Medical Laboratory Sciences","Microbiology","Multidisciplinary Engineering","Natural Resources And Environmental Science (Multiple Concentrations)","Network Engineering Technology","Neurobiology And Physiology","Nuclear Engineering","Nursing","Nutrition, Fitness, And Health","Nutrition And Dietetics","Nutrition And Dietetics/Nutrition, Fitness And Health (Dual Major)","Nutrition Science","Occupational Health Science","Organizational Leadership","Pharmacy","Philosophy","Physics","Planetary Sciences","Plant Genetics, Breeding, And Biotechnology","Plant Science","Political Science","Predentistry","Prelaw","Premedicine","Preoccupational Therapy","Prephysical Therapy","Prephysician's Assistant","Pre-Veterinary Medicine","Professional Writing","Psychological Sciences","Public Health","Purdue Polytechnic Institute Statewide Programs","Radiological Health Sciences - Health Physics","Radiological Health Sciences - Pre-Medical Physics","Religious Studies","Retail Management","Robotics Engineering Technology","Russian","Sales And Marketing","Science Education (Biology, Chemistry, Earth/Space, Physics)","Selling And Sales Management","Social Studies Education","Sociology","Soil And Water Sciences","Sound For The Performing Arts","Spanish","Special Education: Elementary Education And Special Education - Mild Intervention","Special Education: Mild And Intense Intervention P-12","Special Education: Mild Intervention P-12","Speech, Language, And Hearing Sciences","Statistics - Applied Statistics","Statistics With Mathematics Option","Studio Arts And Technology","Supply Chain Information And Analytics","Supply Chain Management Technology","Sustainable Biomaterials – Process And Product Design","Sustainable Food And Farming Systems","Systems Analysis And Design","Theatre","Theatre Design And Production","Transdisciplinary Studies In Engineering Technology","Transdisciplinary Studies In Technology","Turf Management And Science","Undecided Liberal Arts","Undecided Within Engineering","Unmanned Aerial Systems","Ux Design","Veterinary Technician Or Technologist","Virtual Product Integration","Visual Arts Design Education","Visual Arts Education","Visual Communications Design","Visual Effects Compositing","Web Programming And Design","Wildlife","Women’s, Gender And Sexuality Studies"
- ]
-
- var dropdown = document.getElementById("Major");
- for (var i = 0; i < majors.length; i++) {
-   var curr = majors[i];
-   var el = document.createElement("option");
-   el.textContent = curr;
-   el.value = curr;
-   //dropdown.appendChild(el);
-   console.log("uh oh");
-   console.log(dropdown);
-   console.log("uh oh");
- }
-
-}
-
-componentWillMount = () => {
-  this.majorDropdown();
 }
 
 
@@ -74,7 +51,7 @@ getLocalStorage = (key) => {
   return localStorage.getItem(key);
 }
 
-componentDidMount = () => {
+componentWillMount = () => {
   const user_id = this.getLocalStorage("id");
   const token = this.getLocalStorage("token");
   // const requested_id = this.state.user_id;
@@ -108,14 +85,11 @@ removeWhiteSpaces = (array) => {
    array[i] = nowhite;
  }
 
- console.log(array);
-
  return array;
 }
 
 handleSubmitPassword = (e) => {
   e.preventDefault();
-  //console.log("lol");
   <Redirect to="/update-password"/>
 }
 
@@ -136,8 +110,8 @@ handleSubmit = (event) => {
      "skills": skillsarray,
      "fullName": this.state.Name,
      "grad_year": this.state.Graduation,
+     "major": this.state.Major,
      });
-     console.log(payload);
      fetch('http://localhost:8080/update-profile', {
        method: 'POST',
        headers: {
@@ -151,7 +125,6 @@ handleSubmit = (event) => {
        if (response.ok) {
          document.getElementById("success").value="Your profile was successfully updated!";
          response.json().then(json => {
-           console.log(json);
          });
        } else {
          alert("Error in updating profile");
@@ -165,6 +138,7 @@ handleSubmit = (event) => {
      "courses": coursesarray,
      "fullName": this.state.Name,
      "grad_year": this.state.Graduation,
+     "major":this.state.Major,
      });
      console.log(payload);
      fetch('http://localhost:8080/update-profile', {
@@ -195,6 +169,7 @@ handleSubmit = (event) => {
      "skills": skillsarray,
      "fullName": this.state.Name,
      "grad_year": this.state.Graduation,
+     "major": this.state.Major,
      });
      console.log(payload);
      fetch('http://localhost:8080/update-profile', {
@@ -216,13 +191,14 @@ handleSubmit = (event) => {
          alert("Error in updating profile");
        }    
      })
-   } else if (this.state.edit_bio && !this.state.edit_courses && !this.state.edit_skills) {
+   } else {
      var payload = JSON.stringify({
      "userId": id,
      "token": token,
      "bio": this.state.Bio,
      "fullName": this.state.Name,
      "grad_year": this.state.Graduation,
+     "major": this.state.Major,
      });
      console.log(payload);
      fetch('http://localhost:8080/update-profile', {
@@ -244,87 +220,6 @@ handleSubmit = (event) => {
          alert("Error in updating profile");
        }    
      })
-   } else if (!this.state.edit_bio && !this.state.edit_courses && !this.state.edit_courses) {
-     if (this.state.edit_name && this.state.edit_grad) {
-       var payload = JSON.stringify({
-         "userId": id,
-         "token": token,
-         "fullName": this.state.Name,
-         "grad_year": this.state.Graduation,
-         });
-         console.log(payload);
-         fetch('http://localhost:8080/update-profile', {
-           method: 'POST',
-           headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json;charset=UTF-8',
-             'transfer-encoding': 'chunked',
-           },
-           body: payload,
-         })
-         .then(function(response) {
-           if (response.ok) {
-             document.getElementById("success").value="Your profile was successfully updated!";
-             response.json().then(json => {
-               console.log(json);
-             });
-           } else {
-             alert("Error in updating profile");
-           }    
-         })
-     } else if (this.state.edit_name && !this.state.edit_grad) {
-       var payload = JSON.stringify({
-         "userId": id,
-         "token": token,
-         "fullName": this.state.Name,
-         });
-         console.log(payload);
-         fetch('http://localhost:8080/update-profile', {
-           method: 'POST',
-           headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json;charset=UTF-8',
-             'transfer-encoding': 'chunked',
-           },
-           body: payload,
-         })
-         .then(function(response) {
-           if (response.ok) {
-             document.getElementById("success").value="Your profile was successfully updated!";
-             response.json().then(json => {
-               console.log(json);
-             });
-           } else {
-             alert("Error in updating profile");
-           }    
-         })
-     } else if (this.state.edit_grad && !this.state.edit_name) {
-       var payload = JSON.stringify({
-         "userId": id,
-         "token": token,
-         "grad_year": this.state.Graduation,
-         });
-         console.log(payload);
-         fetch('http://localhost:8080/update-profile', {
-           method: 'POST',
-           headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json;charset=UTF-8',
-             'transfer-encoding': 'chunked',
-           },
-           body: payload,
-         })
-         .then(function(response) {
-           if (response.ok) {
-             document.getElementById("success").value="Your profile was successfully updated!";
-             response.json().then(json => {
-               console.log(json);
-             });
-           } else {
-             alert("Error in updating profile");
-           }    
-         })
-     }
    }
    this.setState ({
      edit_courses: false,
@@ -364,9 +259,12 @@ handleSubmit = (event) => {
        this.setState({
          edit_grad: true
        });
-     }
+     } else if (event.target.className == "FormInput major") {
+      this.setState({
+        edit_major: true
+      });
 
-     console.log(this.state.Graduation);
+    }
 
      document.getElementById("success").textContent="";
   }
