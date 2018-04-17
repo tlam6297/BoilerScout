@@ -93,6 +93,7 @@ class Login extends Component {
       body: payload,
     })
     .then(function(response) {
+      console.log(response)
       if (response.ok) {
         // redirect
         _this.setState({ redirect: true })
