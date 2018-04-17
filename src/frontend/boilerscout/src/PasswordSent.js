@@ -6,7 +6,7 @@ class PasswordSent extends Component {
     return (
       <div className="PasswordSent" class="Form">                
         <h1>Password Sent!</h1>
-        <Link to="/">Return Home</Link>
+        <p>Check your email for the next steps on updating your password</p>
       </div>
     );
   }

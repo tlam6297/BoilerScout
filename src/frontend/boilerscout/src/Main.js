@@ -22,6 +22,11 @@ import Community from './Community'
 import CreateAThread from './CreateAThread'
 import Thread from './Thread'
 import Home from './Home'
+import Inbox from './Inbox'
+import Logout from './Logout'
+import PassUp from './PasswordUpdated'
+import Outbox from './Outbox'
+import ValidateReset from './ValidateReset'
 
 class Main extends Component  {
 constructor(props) {
@@ -96,10 +101,15 @@ render () {
         <Route path="/profile-created" component={ProfileCreated} />
         <Route path="/forum" component={Forum} />
         <Route path="/community" component={Community}/>
-       <Route path="/create-thread" component={CreateAThread}/>
-       <Route path="/view-thread" component={Thread}/>
-       </AnimatedSwitch>  
-           </div>
+        <Route path="/create-thread" component={CreateAThread}/>
+        <Route path="/view-thread" component={Thread}/>
+        <Route path="/inbox" component={Inbox} />
+        <Route path="/outbox" component={Outbox} />
+        <Route path="/logout" component={Logout} />
+        <Route path="/password-updated" component={PassUp} />
+        <Route path="/validate-reset" component={ValidateReset}/>
+      </AnimatedSwitch>  
+    </div>
   )
 }
 }

@@ -154,3 +154,8 @@ option {
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 1fr;
 }
+
+.noResults {
+  grid-column: 2;
+  grid-row: 3;
+}

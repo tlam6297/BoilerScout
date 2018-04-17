@@ -43,9 +43,9 @@ class TopNavBar extends Component {
    }
 
    return (
-     <div class="container">
-       <div class="grid-container">
-         <div class="logo grid-item">
+     <div className="container">
+       <div className="grid-container">
+         <div className="logo grid-item">
           <a href="/scout">
            <img
              id="mylogo"
@@ -55,27 +55,32 @@ class TopNavBar extends Component {
            />
           </a>
        </div>
-       <div class="grid-item">
-         <nav class="nav">
+       <div className="grid-item">
+         <nav className="nav">
            <a
-             class="nav-link"
+             className="nav-link"
              href="/scout">
              Scout
            </a>
            <a
-             class="nav-link"
+             className="nav-link"
              href="/community">
              Community
            </a>
            <a
-             class="nav-link"
+             className="nav-link"
              href={this.state.link}>
              Profile
            </a>
            <a
-             class="nav-link"
+             className="nav-link"
              href="/settings">
              Settings
+           </a>
+           <a
+             className="nav-link"
+             href="/logout">
+             Logout
            </a>
          </nav>
        </div>

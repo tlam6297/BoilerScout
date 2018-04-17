@@ -273,4 +273,3 @@ class Thread extends Component {
    }
    
    export default Thread;
-   

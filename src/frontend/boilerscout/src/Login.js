@@ -93,6 +93,7 @@ class Login extends Component {
       body: payload,
     })
     .then(function(response) {
+      console.log(response)
       if (response.ok) {
         // redirect
         _this.setState({ redirect: true })
@@ -101,7 +102,7 @@ class Login extends Component {
           console.log(json);
           // Save to local storage
           _this.saveToLocalStorage("token", json.token);
-          _this.saveToLocalStorage("id", json.user_id);
+          _this.saveToLocalStorage("id", json.userId);
         });
 
       } else {
