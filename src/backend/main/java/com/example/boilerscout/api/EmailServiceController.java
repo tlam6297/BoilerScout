@@ -72,7 +72,7 @@ public class EmailServiceController extends ValidationUtility {
 
             jdbcTemplate.update("UPDATE users SET email_verified=" + verificationCode + " WHERE user_id='" + userId + "'");
             String subject ="BoilerScout. Account verification.";
-            String text = "Hi,\nYou are now one step closer to your BoilerScout account.\n\nPlease verifiy your account with the following link:\n\n\tlocalhost:8080/verify?id=";
+            String text = "Hi,\nYou are now one step closer to your BoilerScout account.\n\nPlease verifiy your account with the following link:\n\n\tlocalhost:3000/verify?id=";
             sendSimpleMessage(to,subject,text + userId + "&query=" + verificationCode);
             response.put("status",HttpStatus.OK);
             response.put("userId",userId);
