@@ -83,20 +83,23 @@ class Thread extends Component {
         }
       );
     }
+
     getThreadId = () => {
       return this.state.threadId;
-    }
-   
+    }   
    
     getLocalStorage = (key) => {
       return localStorage.getItem(key);
     }
+
     handleSubmit = (event) => {
       event.preventDefault();
+
       const _this = this;
       const id = _this.getLocalStorage("id");
       let token = _this.getLocalStorage("token");
       const threadId = _this.getLocalStorage("threadId");
+
       var payload = JSON.stringify({
         "userId": id,
         "token": token,
@@ -115,11 +118,9 @@ class Thread extends Component {
      })
      .then(function(response) {
        if (response.ok) {
-         //_this.setState({ redirect: true })
          response.json().then(json => {
-           console.log(json);
-         });
-         
+           alert("Reply successfully posted")
+         });         
    
        } else {
          alert("Error in posting comment");
