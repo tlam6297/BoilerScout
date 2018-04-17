@@ -67,21 +67,22 @@ class Community extends Component {
      <div className="Community">
        <div className="NavBar">
          <NavBar/>
+
        </div>
        <div className="onlyCommunity">
        <h2> Community </h2>
        <div class="grid-container-comm forums">
        <ul>
-         <div className='li'>
+         <div className='listt'>
            {this.state.forums.map((result, index) =>
                <li id={index}>
                 <Link to={
                `/forum/`}>
-                   <div className="first entry" onClick={this.saveForumInfo}>
+                   <div className="name ent" onClick={this.saveForumInfo}>
                      {result.forum_name}
                    </div>
                </Link>
-               <div className="description entry">
+               <div className="description ent">
                      {result.forum_description}
                    </div>
                </li>

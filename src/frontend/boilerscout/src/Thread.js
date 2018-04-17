@@ -218,18 +218,18 @@ class Thread extends Component {
         <div className='li'>
           {this.state.comments.map((result, index) =>
               <li key={index}>
-                <div className='result entry'>
+                <div class="grid-container" className='result entry'>
                 <Link to={
                 `/profile?user_id=` + result.user_id + `&name=` + result.full_name + `&bio=` + result.bio + `&major=` + result.major + `&year=` + result.grad_year
                   } className="link">
-                  <div className="first entry">
+                  <div class="grid-item" className="name entry">
                     {result.full_name}
                   </div>
                   </Link>
-                  <div className="body entry">
+                  <div class="grid-item" className="body entry">
                     {result.post_body}
                   </div>
-                  <div className="date entry">
+                  <div class="grid-item" className="date entry">
                     {result.post_date}
                   </div>
                 </div>
