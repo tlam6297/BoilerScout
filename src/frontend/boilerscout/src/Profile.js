@@ -2,6 +2,8 @@ import React from 'react'
 import { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 import { Button, Panel, ControlLabel} from "react-bootstrap";
+import 'react-responsive-modal/lib/react-responsive-modal.css';
+import Modal from 'react-responsive-modal/lib/css';
 import Logo from './Logo'
 import './Profile.css'
 import TopNavBar from './TopNavBar'
@@ -14,6 +16,8 @@ class Profile extends Component {
        this.getID = this.getID.bind(this);
 
        this.state = {
+				open: false,
+				reply: "",
         Bio: "",
         Courses: [],
         Email: "",
@@ -37,7 +41,85 @@ class Profile extends Component {
            throw new Error('No Token Found');
        }
        return token;
-   }
+	 }
+	 
+	 getLocalStorage = (key) => {
+    return localStorage.getItem(key);
+  }
+
+   onCloseModal = () => {
+        this.setState({ open: false, reply: "", });
+    };
+
+		handleSubmit = (e) => {
+			e.preventDefault();
+
+			const _this = this;
+	
+			const id = this.getLocalStorage("id");
+			let token = this.getLocalStorage("token"); 
+	
+			const payload = JSON.stringify ({
+				"userId": id,
+				"token": token,
+				"recipientEmail": this.state.Email,
+				"messageBody": this.state.reply,
+			})
+	
+			//send POST
+			fetch('http://localhost:8080/send-message', {
+					method: 'POST',
+					headers: {
+						'Accept': 'application/json;charset=UTF-8',
+						'Content-Type':'application/json;charset=UTF-8'
+					},
+					body: payload
+				})
+				.then(function(response) {
+					if (response.ok) {
+						alert("Message Sent");
+					} else {
+						alert("Message not sent");
+					}
+				})
+		}
+
+		validateForm = () => {
+			return (this.state.reply.length > 0);
+		}
+
+		renderModal = () => {
+			const { open } = this.state;
+	
+			return (
+				<Modal
+					open={open}
+					onClose={this.onCloseModal}
+					little
+					classNames={{
+						transitionEnter: 'transition-enter',
+						transitionEnterActive: 'transition-enter-active',
+						transitionExit: 'transition-exit-active',
+						transitionExitActive: 'transition-exit-active',
+					}}
+					animationDuration={1000}
+				>
+					<h2 className="padding">To: {this.state.Name}</h2>
+					<p className="padding">
+						{this.state.body}
+					</p>
+					
+					<form onSubmit={this.handleSubmit} className="padding">
+						<label>
+							<p className="">Compose Message:</p>
+							<textarea rows="4" cols="104" onChange={this.handleChangeInput}>{this.state.reply}</textarea>
+						</label>
+						<button type="submit" value="Submit" disabled={!this.validateForm}>SEND</button>
+					</form>
+				</Modal>
+			)
+		}
+	
 
    getID = () => {
        // The type of token might be JSON
@@ -48,7 +130,7 @@ class Profile extends Component {
        return id;
    }
 
-    componentDidMount = () => {
+    componentWillMount = () => {
         // this variable needs to be manipulated to pull the data from it to display!
         const all_data = this.props.location.search;
         const split = all_data.split("&");
@@ -70,7 +152,7 @@ class Profile extends Component {
 
         axios.get(url)
         .then(res => {
-            //console.log(res.data);
+            
             if (res.status == 200) {
                 this.setState({
                     ...res.data,
@@ -87,11 +169,7 @@ class Profile extends Component {
     }
 
     componentDidUpdate = () => {
-        // see if state was update correcly
-        //console.log(this.state);
-        console.log("_____");
         console.log(this.state);
-        console.log("------");
     }
 
    render() {
@@ -120,6 +198,17 @@ class Profile extends Component {
                                        id="info">
                                        {this.state.Graduation}
                                    </p>
+                           </div>
+                           <div className="send"
+													 			onClick={() => {
+																	this.setState({
+																		open: true,
+																	});
+																 }}
+													 >
+                             <Button>
+                                 Send a message
+                             </Button>
                            </div>
                        </div>
                        <div className="grid-item">
@@ -159,6 +248,7 @@ class Profile extends Component {
                            </div>
                        </div>
                    </div>
+									 {this.renderModal()}
                </div>
        );
        }
