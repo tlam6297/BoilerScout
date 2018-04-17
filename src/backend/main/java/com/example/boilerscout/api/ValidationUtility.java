@@ -1,6 +1,8 @@
 package com.example.boilerscout.api;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * Created by terrylam on 2/19/18.

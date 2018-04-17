@@ -52,7 +52,7 @@ class Outbox extends Component {
     axios.get(url)
     .then(res => {
       this.setState({
-        threads: res.data.listOfinbox,
+        threads: res.data.userOutbox,
       })      
     });
   }
@@ -140,14 +140,14 @@ class Outbox extends Component {
   }
 
   compare = (a, b) => {
-    if (a.message < b.message) { return -1; }
-    if (a.message > b.message) { return 1; }
+    if (a.message_body < b.message_body) { return -1; }
+    if (a.message_body > b.message_body) { return 1; }
     return 0;
   }
 
   compareASC = (a, b) => {
-    if (a.message > b.message) { return -1; }
-    if (a.message < b.message) { return 1; }
+    if (a.message_body > b.message_body) { return -1; }
+    if (a.message_body < b.message_body) { return 1; }
     return 0;
   }
 

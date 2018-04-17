@@ -1,9 +1,6 @@
 package com.example.boilerscout.api;
 
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,17 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.xml.bind.DatatypeConverter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
 
 @Service
 public class VerificationController extends EmailServiceController{
@@ -49,15 +40,15 @@ public class VerificationController extends EmailServiceController{
                     //MATCH, verify user
                     if(verificationStatus.get(0).get("email_verified").equals(verificationCode)){
                         jdbcTemplate.update("UPDATE users SET email_verified=" + 1 + " WHERE user_id='" + userId + "'");
-                        response.put("Status","Verified");
-                        response.put("Exit","1");
+                        response.put("Response","Verified");
+                        response.put("status",HttpStatus.OK);
                         return response;
                     } else {
                         //NO MATCH, inform this verification email isnt valid
                         String message = "This verification email has either expired, or is not valid.";
                         message = message + "  Please check your inbox for a more recent one, or request a new one.";
-                        response.put("Status",message);
-                        response.put("Exit", "0");
+                        response.put("Response",message);
+                        response.put("status", HttpStatus.OK);
                         response.put("email_verified",(verificationStatus.get(0).get("email_verified")));
                         response.put("test",compare);
                         response.put("verification code", verificationCode);
@@ -68,13 +59,14 @@ public class VerificationController extends EmailServiceController{
                     //USER ALREADY VERIFIED
                 } else {
                     //response.put("St",verificationStatus.get(0));
-                    response.put("Status","Email previously verified.");
-                    response.put("Exit","0");
+                    response.put("Response","Email previously verified.");
+                    response.put("status",HttpStatus.BAD_REQUEST);
                     return response;
                 }
             }else {
                 //Should never reach here, as all users should have a verified field
-                response.put("Status", "Critical error, email or id do not exist");
+                response.put("Response", "Critical error, email or id do not exist");
+                response.put("status",HttpStatus.BAD_REQUEST);
                 return response;
             }
         } catch (DataAccessException ex) {
