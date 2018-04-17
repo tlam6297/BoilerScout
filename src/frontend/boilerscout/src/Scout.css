@@ -1,6 +1,4 @@
-* {
-  background-color: tomato;
-}
+
 
 .scout {
   display: grid;
@@ -72,7 +70,7 @@ button {
 }
 
 .type {
-  color: salmon;
+  color: white;
   display: inline;
 }
 
@@ -126,7 +124,7 @@ option {
 .grad_year {
   grid-column: 1;
   grid-row: 1 / span 2;
-  background-color: tomato;
+  background-color: white;
 }
 
 .major {
@@ -134,14 +132,14 @@ option {
   grid-row: 1 / span 2;
   font-size: small;
   color: slateblue;
-  background-color: tomato;
+  background-color: white;
 }
 
 .grad {
   grid-column: 2 / 4;
   grid-row: 2;
   font-size: small;
-  background-color: tomato;
+  background-color: white;
 }
 
 .advanced {

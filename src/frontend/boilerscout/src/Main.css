@@ -1,3 +1,13 @@
 .Home {
   text-align: center;
 }
+
+.route-wrapper {
+  position: relative;
+}
+
+.route-wrapper > div {
+  position: absolute;
+  margin: auto;
+  width: 100%;
+}

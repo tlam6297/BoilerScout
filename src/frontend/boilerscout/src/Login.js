@@ -116,9 +116,7 @@ class Login extends Component {
     return (
       <div className="Login">
         {this.renderRedirect()}
-        <div className="logo">
-          <Logo />
-        </div>
+        <Logo/>
         <form onSubmit={this.handleSubmit}>
           <div className="Form">
             <FormGroup controlId="email" bsSize="large">
@@ -155,7 +153,6 @@ class Login extends Component {
         <p></p>
         <Link to="/forgot-password">Forgot Password?</Link>
         <p></p>
-        <Link to="/scout"> Scout</Link>
       </div>
     )
   }
