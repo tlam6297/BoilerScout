@@ -304,7 +304,7 @@ render() {
       <div className="Container">
         <h1>Settings</h1>
       <br/>
-      <h4>Hello, {this.state.Name}!</h4>
+      <h4>Hello, {this.state.Name}</h4>
       <Link to="/update-password">
           <p>Change Password</p>
         </Link>
