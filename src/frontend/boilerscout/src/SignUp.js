@@ -49,9 +49,6 @@ class SignUp extends Component {
       el.textContent = curr;
       el.value = curr;
       //dropdown.appendChild(el);
-      console.log("uh oh");
-      console.log(dropdown);
-      console.log("uh oh");
     }
    
    }
@@ -60,8 +57,6 @@ class SignUp extends Component {
     this.setState({
       [event.target.id]: event.target.value
     });
-
-    console.log(this.state);
   }
 
   handleSubmit = (event) => {
@@ -69,16 +64,18 @@ class SignUp extends Component {
       const _this = this;
       const email = this.state.email;
 
-      const g = this.state.grad;
+      const g = this.state.Graduation;
       const year = parseInt(g);
 
       const payload = JSON.stringify({
         "email": this.state.email,
         "password": this.state.password,
         "fullName": this.state.fullname,
-        "major": this.state.major,
+        "major": this.state.Major,
         "grad_year": year,
       });
+
+      console.log(payload)
 
       fetch('http://localhost:8080/sign-up', {
         method: 'POST',
@@ -151,20 +148,21 @@ class SignUp extends Component {
                 onChange={this.handleChange}
               />
             </FormGroup>
-            <FormGroup controlId="grad" bsSize="large">
+            <FormGroup controlId="Graduation" bsSize="large">
             <ControlLabel>Graduation Year:</ControlLabel>
               <select
                 className="FormInput graduation"
                 id="Graduation"
                 value={this.state.Graduation}
                 onChange={this.handleChange}>
+                <option value="2019"></option>
                 <option value="2019">2019</option>
                 <option value="2020">2020</option>
                 <option value="2021">2021</option>
                 <option value="2022">2022</option>
               </select>
             </FormGroup>
-            <FormGroup controlId="grad" bsSize="large">
+            <FormGroup controlId="Major" bsSize="large">
             <ControlLabel>Major:</ControlLabel>
                 <select
                   className="FormInput major"
@@ -220,7 +218,7 @@ class SignUp extends Component {
         <p></p>
         <Link to="/resend-confirmation">Resend Confirmation?</Link>
         {this.state.redirect && (
-          <Redirect to={'/profile-created'}/>   
+          <Redirect to={'/confirmation-resent'}/>   
         )}
         </div>
       </div>
