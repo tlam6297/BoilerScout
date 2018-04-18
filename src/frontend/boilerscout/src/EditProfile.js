@@ -4,6 +4,7 @@ import { Redirect } from 'react-router'
 import './EditProfile.css'
 import { Button, FormGroup, FormControl, ControlLabel, Radio, Checkbox, DropdownButton, InputGroup, MenuItem, ButtonGroup } from "react-bootstrap";
 import axios from 'axios'
+import UpdatePassword from './UpdatePassword';
 class EditProfile extends Component {
 constructor() {
   super()
@@ -302,16 +303,13 @@ render() {
   return (
     <div className="EditProfile">
       <div className="Container">
-        <h1>Settings</h1>
-      <br/>
-      <h4>Hello, {this.state.Name}</h4>
-      <Link to="/update-password">
-          <p>Change Password</p>
-        </Link>
+      <h4 id="greeting">Hello, {this.state.Name}</h4>
       <form onSubmit={this.handleSubmit}>
-        <div className="Form">
+        <div className="editForm">
+        <h2 id="editHeader">Edit Profile</h2>
         <FormGroup controlId="Name" bsSize="large">
-        <ControlLabel>Name:</ControlLabel>
+        <ControlLabel className="edit">Name:</ControlLabel>
+            <br/>
             <FormControl
               className="FormInput name"
               autoFocus
@@ -320,7 +318,9 @@ render() {
               onChange={this.handleChange}
             />
          </FormGroup>
-       <ControlLabel>Graduation Year:</ControlLabel>
+         <FormGroup controlId="Graduation" bsSize="large">
+       <ControlLabel className="edit">Graduation Year:</ControlLabel>
+        <br/>
         <select
            className="FormInput graduation"
            id="Graduation"
@@ -331,7 +331,10 @@ render() {
           <option value="2021">2021</option>
           <option value="2022">2022</option>
         </select>
-        <ControlLabel>Major:</ControlLabel>
+        </FormGroup>
+        <FormGroup controlId="Major" bsSize="large">
+        <ControlLabel className="edit">Major:</ControlLabel>
+        <br/>
         <select
            className="FormInput major"
            id="Major"
@@ -341,8 +344,10 @@ render() {
            <option value={result}>{result}</option>
            )}
         </select>
+        </FormGroup>
         <FormGroup controlId="Bio" bsSize="large">
-          <ControlLabel>Bio:</ControlLabel>
+          <ControlLabel className="edit">Bio:</ControlLabel>
+            <br/>
             <FormControl
               className="FormInput bio"
               autoFocus
@@ -352,7 +357,8 @@ render() {
             />
           </FormGroup>
             <FormGroup controlId="Courses" bsSize="large">
-          <ControlLabel>Courses:</ControlLabel>
+          <ControlLabel className="edit">Courses:</ControlLabel>
+            <br/>
             <FormControl
               className="FormInput courses"
               autoFocus
@@ -362,7 +368,8 @@ render() {
             />
           </FormGroup>
             <FormGroup controlId="Skills" bsSize="large">
-          <ControlLabel>Skills:</ControlLabel>
+          <ControlLabel className="edit">Skills:</ControlLabel>
+            <br/>
             <FormControl
               className="FormInput skills"
               autoFocus
@@ -373,6 +380,7 @@ render() {
           </FormGroup>
             <Button
             bsSize="small"
+            className="submitbutton"
             type="submit">
             SUBMIT      
           </Button>

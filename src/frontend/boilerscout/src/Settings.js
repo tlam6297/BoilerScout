@@ -93,8 +93,10 @@ render() {
  return (
    <div className="Settings">
    {this.rednerRedirect()}
-     <TopNavBar/>
+   <TopNavBar/>
+   <h1>Settings</h1>
       <EditProfile/>
+     <UpdatePassword/>
       </div>
  )
 }

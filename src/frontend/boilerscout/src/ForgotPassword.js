@@ -65,6 +65,7 @@ class ForgotPassword extends Component {
           <div className="Form" class="Form">
             <FormGroup controlId="email" bsSize="large">
               <ControlLabel>Email:</ControlLabel>
+              <br/>
               <FormControl
                 className="FormInput"
                 autoFocus

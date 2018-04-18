@@ -119,14 +119,15 @@ class UpdatePassword extends Component {
     return(
       <div>
         {this.rednerRedirect()}
-        <Nav />
         <div className="UpdatePassword">      
         <form onSubmit={this.handleSubmit}>
           <div className="Form" >
+            <h2 id="passwordedit">Update Password</h2>
               <FormGroup controlId="oldPassword" bsSize="large">
-                <ControlLabel>Enter old password:</ControlLabel>
+                <ControlLabel className="edit">Enter old password:</ControlLabel>
+                <br/>
                 <FormControl
-                  className="FormInput Password"
+                  className="FormInput FormInput-Password"
                   autoFocus
                   type="password"
                   value={this.state.oldPassword}
@@ -134,9 +135,10 @@ class UpdatePassword extends Component {
                 />
               </FormGroup>
               <FormGroup controlId="newPassword1" bsSize="large">
-                <ControlLabel>Enter new password:</ControlLabel>
+                <ControlLabel className="edit">Enter new password:</ControlLabel>
+                <br/>
                 <FormControl
-                  className="FormInput Password"
+                  className="FormInput FormInput-Password"
                   autoFocus
                   type="password"
                   value={this.state.newPassword1}
@@ -144,9 +146,10 @@ class UpdatePassword extends Component {
                 />
               </FormGroup>
               <FormGroup controlId="newPassword2" bsSize="large">
-                <ControlLabel>Enter new password again:</ControlLabel>
+                <ControlLabel className="edit">Enter new password again:</ControlLabel>
+                <br/>
                 <FormControl
-                  className="FormInput Password"
+                  className="FormInput FormInput-Password"
                   autoFocus
                   type="password"
                   value={this.state.newPassword2}
@@ -156,6 +159,7 @@ class UpdatePassword extends Component {
               <Button
                 block
                 bsSize="small"
+                id="submitbutton"
                 disabled={!this.validateForm()}
                 type="submit">
                 SUBMIT        
