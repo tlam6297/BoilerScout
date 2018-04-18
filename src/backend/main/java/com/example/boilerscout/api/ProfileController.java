@@ -50,6 +50,7 @@ public class ProfileController extends ValidationUtility {
                 if (body.containsKey("skills")) {
                     //TODO this really needs to be refactored so we don't hit the database so much
                     List ls = (List) body.get("skills");
+                    ls.removeAll(Arrays.asList("", null));
                     HashSet<String> listOfSkills = new HashSet<String>(ls);
                     log.info(listOfSkills.toString());
 
@@ -75,6 +76,7 @@ public class ProfileController extends ValidationUtility {
                 if (body.containsKey("courses")) {
                     //TODO this really needs to be refactored so we don't hit the database so much
                     List ls = (List) body.get("courses");
+                    ls.removeAll(Arrays.asList("", null));
                     HashSet<String> listOfCourses = new HashSet<String>(ls);
                     log.info(listOfCourses.toString());
 
