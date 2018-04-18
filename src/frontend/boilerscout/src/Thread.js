@@ -138,8 +138,7 @@ class Thread extends Component {
   
     renderReplyBox = () => {    
       return (
-        <div className="EditProfile">
-          <div className="Container">
+        <div className="Thread">
             <button
               type="button"
               onClick={this.toggle}>
@@ -147,7 +146,7 @@ class Thread extends Component {
           </button>
           <br/>
           <form onSubmit={this.handleSubmit}>
-            <div className="Form">
+            <div className="reply">
             <FormGroup controlId="body" bsSize="large">
                 <FormControl
                   className="FormInput body"
@@ -167,7 +166,6 @@ class Thread extends Component {
              </div>
             </div>
           </form>
-          </div>
         </div>
       )
     }
@@ -215,10 +213,10 @@ class Thread extends Component {
     renderComments = () => {
      return ( <div className="comments">
       <ul>
-        <div className='li'>
+        <div className='li-thread'>
           {this.state.comments.map((result, index) =>
               <li key={index}>
-                <div class="grid-container" className='result entry'>
+                <div class="grid-container-thread" className='result entry'>
                 <Link to={
                 `/profile?user_id=` + result.user_id + `&name=` + result.full_name + `&bio=` + result.bio + `&major=` + result.major + `&year=` + result.grad_year
                   } className="link">
