@@ -209,6 +209,7 @@ class SignUp extends Component {
           </div>
           <Button
             block
+            className="submitbutton"
             bsSize="small"
             disabled={!this.validateForm()}
             type="submit">

@@ -142,6 +142,7 @@ class Login extends Component {
             <Button
               block
               bsSize="small"
+              className="submitbutton"
               disabled={!this.validateForm()}
               type="submit">
               SUBMIT        
