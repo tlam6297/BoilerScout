@@ -38,7 +38,6 @@ class CreateAThread extends Component {
    }
  
    handleSubmit = (event) => {
-     event.preventDefault();
      this.setState({ redirect: true })
      const _this = this;
      const id = _this.getLocalStorage("id");

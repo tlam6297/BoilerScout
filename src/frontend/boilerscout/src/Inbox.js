@@ -134,6 +134,9 @@ class Inbox extends Component {
       .then(function(response) {
         if (response.ok) {
           alert("Message Sent");
+          _this.setState({
+            open: false,
+          })
         } else {
           alert("Message not sent");
         }
