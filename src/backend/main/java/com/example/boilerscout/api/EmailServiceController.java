@@ -72,7 +72,7 @@ public class EmailServiceController extends ValidationUtility {
 
             jdbcTemplate.update("UPDATE users SET email_verified=" + verificationCode + " WHERE user_id='" + userId + "'");
             String subject ="BoilerScout. Account verification.";
-            String text = "Hi,\nYou are now one step closer to your BoilerScout account.\n\nPlease verifiy your account with the following link:\n\n\tlocalhost:3000/verify?id=";
+            String text = "Hi,\nYou are now one step closer to your BoilerScout account.\n\nPlease verifiy your account with the following link:\n\n\thttp://localhost:3000/verify?id=";
             sendSimpleMessage(to,subject,text + userId + "&query=" + verificationCode);
             response.put("status",HttpStatus.OK);
             response.put("userId",userId);
@@ -106,7 +106,7 @@ public class EmailServiceController extends ValidationUtility {
             String hashedEmail = encoder.encode(email);
             String to = email;
             String subject ="BoilerScout. New password requested.";
-            String text = "Hi,\n\n You have requested to reset your password.  Please click the following link:\n\n\tlocalhost:3000/validate-reset?query=";
+            String text = "Hi,\n\n You have requested to reset your password.  Please click the following link:\n\n\thttp://localhost:3000/validate-reset?query=";
             //this is were frontend would want to change to 3000 for testing.
             text = text + "" + hashedEmail; //append hashedEmail
             text = text + "&id=" + userId;  //append id, these are both for sec checks
