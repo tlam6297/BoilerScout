@@ -1,6 +1,15 @@
-
+.li-item {
+}
 h4, h1 {
-  color:#cc9900;
+  color:#8f7526;
+}
+
+#profile-bio {
+  box-shadow: 4px 4px 8px 4px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .grid-container {
@@ -9,27 +18,65 @@ h4, h1 {
   grid-row-gap: 50px;
 }
 
-h2 {
-  color:white;
+.profile * {
+  background-color: #f0eceb;
 }
 
-h3 {
-  color:white;
+.profile {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8%;
+  margin-bottom: auto;
 }
 
-h3 {
-  color:white;
+.send > Button{
+  background-color: #c29c4b;
 }
 
-h5 {
-  color:white;
+.li-item1 {
+  box-shadow: 4px 4px 8px 4px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 10rem;
+  background-color: #c29c4b;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.li-item2 {
+  box-shadow: 4px 4px 8px 4px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 80%;
+  background-color: #c29c4b;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 4px 4px 8px 4px rgba(0,0,0,0.2);
   transition: 0.3s;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+#profile-courses {
+  box-shadow: 4px 4px 8px 4px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  position: relative;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#profile-skills {
+  box-shadow: 4px 4px 8px 4px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 70%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 
 #label {
@@ -41,6 +88,6 @@ h5 {
 }
 
 p {
-  color: white;
+  color: black;
 }
 

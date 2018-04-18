@@ -215,12 +215,12 @@ class Profile extends Component {
                <div className="container">
                {this.rednerRedirect()}
                    <TopNavBar/>
-                   <div className="grid-container">
+                   <div className="grid-container profile">
                        <div className="card grid-item">
                            <h1>{this.state.Name}</h1>
                            <div
                                id="labels">
-															 		<ControlLabel
+							<ControlLabel
                                        id="label">
                                        Email: &nbsp;
                                    </ControlLabel>
@@ -228,7 +228,7 @@ class Profile extends Component {
                                        id="info">
                                        {this.state.Email}
                                    </p>
-																	 <p></p>
+									 <p></p>
                                    <ControlLabel
                                        id="label">
                                        Major: &nbsp;
@@ -246,48 +246,45 @@ class Profile extends Component {
                                        id="info">
                                        {this.state.Graduation}
                                    </p>
-																	 <p></p>
+							<p></p>
                            </div>
                            <div className="send"
-													 			onClick={() => {
-																	this.setState({
-																		open: true,
-																	});
-																 }}
-													 >
+								onClick={() => {
+                                    this.setState({
+                                        open: true,
+                                    });
+								}}
+							>
                              <Button>
                                  Send a message
                              </Button>
                            </div>
                        </div>
-                       <div className="grid-item">
+                       <div className="grid-item" id="profile-bio">
                            <h1> Bio </h1>
                            <h3>{this.state.Bio}</h3>
                        </div>
-                       <div className="grid-item">
+                       <div className="grid-item" id="profile-courses">
                            <h1> Courses </h1>
-                           <div className="grid-container">                                
                                 <div className="results">
                                     <ul>
                                         <div className='li'>
                                             {this.state.Courses.map((result, index) =>
-                                                <li key={index}>
+                                                <li className='li-item1' key={index}>
                                                     {result}
                                                 </li>
                                             )}
                                         </div>
                                     </ul>
                                 </div>                               
-                           </div>
                        </div>
-                       <div className="grid-item">
+                       <div className="grid-item" id="profile-skills">
                            <h1>Skills </h1>
-                           <div className="grid-container">                                
                                 <div className="results">
                                     <ul>
                                         <div className='li'>
                                             {this.state.Skills.map((result, index) =>
-                                                <li key={index}>
+                                                <li className="li-item2" key={index}>
                                                     {result}
                                                 </li>
                                             )}
@@ -295,7 +292,6 @@ class Profile extends Component {
                                     </ul>
                                 </div>                               
                            </div>
-                       </div>
                    </div>
 									 {this.renderModal()}
                </div>

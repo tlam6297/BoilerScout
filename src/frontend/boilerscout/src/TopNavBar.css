@@ -20,6 +20,10 @@
   grid-template-columns: auto;
   grid-template-rows: 0.1fr;
  }
+
+ .NavBar * {
+   background-color: black;
+ }
  
  #mylogo {
   float: left;
