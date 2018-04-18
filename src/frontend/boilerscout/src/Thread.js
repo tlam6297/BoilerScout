@@ -104,6 +104,7 @@ class Thread extends Component {
       const _this = this;
       const id = _this.getLocalStorage("id");
       let token = _this.getLocalStorage("token");
+      let forumID = _this.getLocalStorage("forum_id");
       const threadId = _this.getLocalStorage("threadId");
       var payload = JSON.stringify({
         "userId": id,
