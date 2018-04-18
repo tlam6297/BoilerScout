@@ -4,6 +4,7 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import UpdatePassword from './UpdatePassword.js'
 import TopNavBar from './TopNavBar.js'
 import EditProfile from './EditProfile.js'
+import axios from 'axios'
 
 class Settings extends Component {
 constructor (props) {
@@ -37,11 +38,6 @@ validateForm = () => {
  return true;
 }
 
-renderRedirect = () => {
- if (this.state.redirect) {
-   return <Redirect to='/home'/>
- }
-}
 
 
 
@@ -61,24 +57,42 @@ renderRedirect = () => {
   },
    body: payload,
  })
- .then(function(response) {
-   if (response.ok) {
-     // redirect
-     _this.setState({ redirect: true })
-     console.log(response.json())
-     //Get the user ID and token and save to localstorage
 
-   } else {
-     alert("Error: invalid username or password");
-   }    
- })
 
 }
 */
+rednerRedirect = () => {
+  if (this.state.redirect) {
+    this.setState({
+      redirect: false,
+    })
+    return (<Redirect to="/" />)
+  }
+}
+
+componentWillMount = () => {
+  console.log("Checking if valid token...")
+  axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
+
+  .then(res => {
+    if (res.data == false) {
+      console.log("Not valid token")
+      this.setState({
+        redirect: true,
+      })
+    } else {
+      console.log("Valid Token")
+      this.setState({
+        redirect: false,
+      })
+    }
+  })
+}
 
 render() {
  return (
    <div className="Settings">
+   {this.rednerRedirect()}
      <TopNavBar/>
       <EditProfile/>
       </div>

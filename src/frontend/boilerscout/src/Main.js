@@ -11,7 +11,6 @@ import PasswordSent from './PasswordSent'
 import ResendConfirmation from './ResendConfirmation'
 import ConfirmationSent from './ConfirmationSent'
 import Scout from './Scout'
-import AdvancedFilters from './AdvancedFilters'
 import UpdatePassword from './UpdatePassword'
 import NavBar from './TopNavBar'
 import Settings from './Settings'
@@ -92,7 +91,6 @@ componentWillMount = () => {
     }
   })
 }
-
 rednerRedirect = () => {
   if (this.state.redirect) {
     this.setState({
@@ -119,10 +117,8 @@ render () {
         <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/password-reset-sent" component={PasswordSent} />
         <Route path="/confirmation-resent" component={ConfirmationSent} />
-        <Route path="/advanced-filters" component={AdvancedFilters} />
         <Route path="/update-password" component={UpdatePassword} />
         <Route path="/resend-confirmation" component={ResendConfirmation} />
-        <Route path="/update-password" component={UpdatePassword} />
         <Route path="/settings" component={Settings}/>
         <Route path="/profile" component={Profile}/>
         <Route path="/profile-created" component={ProfileCreated} />
@@ -135,9 +131,7 @@ render () {
         <Route path="/logout" component={Logout} />
         <Route path="/password-updated" component={PassUp} />
         <Route path="/validate-reset" component={ValidateReset}/>
-      </AnimatedSwitch> 
-      
-      {this.rednerRedirect()}
+      </AnimatedSwitch>
     </div>
   )
 }

@@ -14,11 +14,32 @@ class Community extends Component {
            token: "",
            userId: "",
            forumId: "",
-           forums: [],
+           forums: [{
+            "forum_id": "",
+            "forum_name": "",
+            "forum_description": "",
+           }],
        }
    }
 
    componentWillMount= () => {
+    console.log("Checking if valid token...")
+    axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
+  
+    .then(res => {
+      if (res.data == false) {
+        console.log("Not valid token")
+        this.setState({
+          redirect1: true,
+        })
+      } else {
+        console.log("Valid Token")
+        this.setState({
+          redirect1: false,
+        })
+      }
+    })
+    
        const all_data = this.props.location.search;
        const split = all_data.split("&");
 
@@ -61,10 +82,37 @@ class Community extends Component {
      localStorage.setItem('forum_title', name);
      localStorage.setItem('forum_description', description);
    }
+  rednerRedirect = () => {
+    if (this.state.redirect1) {
+      this.setState({
+        redirect1: false,
+      })
+      return (<Redirect to="/" />)
+    }
+  }
+
+  renderForums = () => {
+    if (this.state.forums !== undefined) {
+    this.state.forums.map((result, index) => {
+      return (<li id={index}>
+        <Link to={
+       `/forum/`}>
+           <div className="name ent" onClick={this.saveForumInfo}>
+             {result.forum_name}
+           </div>
+       </Link>
+       <div className="description ent">
+             {result.forum_description}
+           </div>
+       </li>)
+    }
+      
+  )}}
 
  render() {
    return (
      <div className="Community">
+     {this.rednerRedirect()}
        <div className="NavBar">
          <NavBar/>
 
@@ -73,9 +121,10 @@ class Community extends Component {
        <h2> Community </h2>
        <div class="grid-container-comm forums">
        <ul>
-         <div className='listt'>
-           {this.state.forums.map((result, index) =>
-               <li id={index}>
+         <div className='listt'>         
+           {this.state.forums.map((result, index) => {
+              console.log(result)
+              return (<li id={index}>
                 <Link to={
                `/forum/`}>
                    <div className="name ent" onClick={this.saveForumInfo}>
@@ -85,8 +134,9 @@ class Community extends Component {
                <div className="description ent">
                      {result.forum_description}
                    </div>
-               </li>
-           )}
+               </li>)           
+            
+           })}
          </div>
        </ul>
        </div>

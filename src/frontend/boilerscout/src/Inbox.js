@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios'
 import Navbar from './TopNavBar'
 import { Button, FormGroup, FormControl, ControlLabel, } from "react-bootstrap";
@@ -40,6 +40,22 @@ class Inbox extends Component {
   }
 
   componentWillMount = () => {
+    console.log("Checking if valid token...")
+    axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
+  
+    .then(res => {
+      if (res.data == false) {
+        console.log("Not valid token")
+        this.setState({
+          redirect: true,
+        })
+      } else {
+        console.log("Valid Token")
+        this.setState({
+          redirect: false,
+        })
+      }
+    })
     this.setName();
     this.getInitialMessages();    
   }
@@ -319,9 +335,19 @@ class Inbox extends Component {
     )
   }
 
+  rednerRedirect = () => {
+    if (this.state.redirect) {
+      this.setState({
+        redirect: false,
+      })
+      return (<Redirect to="/" />)
+    }
+  }
+
   render = () => {
     return (
       <div>
+         {this.rednerRedirect()}
         <Navbar />
         <div className="inbox">
           <div className="title">

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import './EditProfile.css'
 import { Button, FormGroup, FormControl, ControlLabel, Radio, Checkbox, DropdownButton, InputGroup, MenuItem, ButtonGroup } from "react-bootstrap";
 import './Thread.css'
 import NavBar from './TopNavBar'
 import axios from 'axios'
 import PostReply from './PostReply'
+
 class Thread extends Component {
     constructor(props) {
       super(props);
@@ -63,6 +64,24 @@ class Thread extends Component {
       );
     }
     componentWillMount = () => {
+
+      console.log("Checking if valid token...")
+      axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
+    
+      .then(res => {
+        if (res.data == false) {
+          console.log("Not valid token")
+          this.setState({
+            redirect1: true,
+          })
+        } else {
+          console.log("Valid Token")
+          this.setState({
+            redirect1: false,
+          })
+        }
+      })
+
         const user_id = localStorage.getItem("id");
         const token = localStorage.getItem("token");
         const thread_id = this.state.threadId;
@@ -239,10 +258,20 @@ class Thread extends Component {
     </div>
      )
     }
+
+    rednerRedirect = () => {
+      if (this.state.redirect1) {
+        this.setState({
+          redirect1: false,
+        })
+        return (<Redirect to="/" />)
+      }
+    }
    
     render() {
       return (
         <div className="Container">
+        {this.rednerRedirect()}
         <NavBar/>
           <div className="Thread">
           <p/>

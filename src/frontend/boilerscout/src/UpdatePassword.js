@@ -3,6 +3,7 @@ import { BrowserRouter as Route, Router, Link, Redirect} from 'react-router-dom'
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./UpdatePassword.css"
 import Nav from './TopNavBar'
+import axios from 'axios'
 
 class UpdatePassword extends Component {
   constructor(props) {
@@ -86,9 +87,38 @@ class UpdatePassword extends Component {
 
   }
 
+  componentWillMount = () => {
+    console.log("Checking if valid token...")
+    axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
+  
+    .then(res => {
+      if (res.data == false) {
+        console.log("Not valid token")
+        this.setState({
+          redirect1: true,
+        })
+      } else {
+        console.log("Valid Token")
+        this.setState({
+          redirect1: false,
+        })
+      }
+    })
+  }
+
+  rednerRedirect = () => {
+    if (this.state.redirect1) {
+      this.setState({
+        redirect1: false,
+      })
+      return (<Redirect to="/" />)
+    }
+  }
+
   render() {
     return(
       <div>
+        {this.rednerRedirect()}
         <Nav />
         <div className="UpdatePassword">      
         <form onSubmit={this.handleSubmit}>

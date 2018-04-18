@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { FormGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios'
 import Nav from './TopNavBar'
@@ -62,22 +62,24 @@ class Forum extends Component {
 
     axios.get(url)
     .then(res => {
-      if (res.data.threads.length < 1) { 
-        this.setState({
-          found: true,
-          displayTitle: false,
-        }) 
-      } else {
-        let title1 = "Complaining Forum";
-        title1 = this.getLocalStorage("forum_title");
-
-        let desp = "Let's all meet up and complain about stuff";
-        desp = this.getLocalStorage("forum_description");
-
-        this.setState({
-          title: title1,
-          description: desp,
-        });
+      if (res.data.threads !== undefined) {
+        if (res.data.threads.length < 1) { 
+          this.setState({
+            found: true,
+            displayTitle: false,
+          }) 
+        } else {
+          let title1 = "Complaining Forum";
+          title1 = this.getLocalStorage("forum_title");
+  
+          let desp = "Let's all meet up and complain about stuff";
+          desp = this.getLocalStorage("forum_description");
+  
+          this.setState({
+            title: title1,
+            description: desp,
+          });
+        }
       }
       this.setState({
         threads: res.data.threads,
@@ -89,17 +91,48 @@ class Forum extends Component {
 
   // Make page while loading
   componentWillMount = () => {
+    console.log("Checking if valid token...")
+    axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
+  
+    .then(res => {
+      if (res.data == false) {
+        console.log("Not valid token")
+        this.setState({
+          redirect1: true,
+        })
+      } else {
+        console.log("Valid Token")
+        this.setState({
+          redirect1: false,
+        })
+      }
+    })
     this.getThreads();
   }
 
+
+  rednerRedirect = () => {
+    if (this.state.redirect1) {
+      this.setState({
+        redirect1: false,
+      })
+      return (<Redirect to="/" />)
+    }
+  }
+
   render = () => {
-    let searchResults = this.state.threads.filter( (thread) => {
-      const input_lower = this.state.input.toLowerCase();
-      return thread.thread_title.toLowerCase().indexOf(input_lower) != -1;
-    });
+    var searchResults = [];
+    if (this.state.threads !== undefined) {
+      searchResults = this.state.threads.filter( (thread) => {
+        const input_lower = this.state.input.toLowerCase();
+        return thread.thread_title.toLowerCase().indexOf(input_lower) != -1;
+      });
+    }
+    
     
     return (
         <div>
+          {this.rednerRedirect()}
           <Nav />
             <div className="forum">
               <div className="heading">
