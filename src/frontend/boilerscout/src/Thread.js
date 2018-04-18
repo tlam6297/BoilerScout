@@ -238,7 +238,7 @@ class Thread extends Component {
               <li key={index}>
                 <div class="grid-container-thread" className='result entry'>
                 <Link to={
-                `/profile?user_id=` + result.user_id + `&name=` + result.full_name + `&bio=` + result.bio + `&major=` + result.major + `&year=` + result.grad_year
+                `/profile?user_id=` + result.user_id
                   } className="link">
                   <div class="grid-item" className="name entry">
                     {result.full_name}

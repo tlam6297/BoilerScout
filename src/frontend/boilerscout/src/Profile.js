@@ -114,9 +114,7 @@ class Profile extends Component {
 					animationDuration={1000}
 				>
 					<h2 className="padding">To: {this.state.Name}</h2>
-					<p className="padding">
-						{this.state.body}
-					</p>
+					
 					
 					<form onSubmit={this.handleSubmit} className="padding">
 						<label>

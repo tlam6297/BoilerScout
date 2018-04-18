@@ -30,7 +30,7 @@ class Scout extends Component {
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     console.log("Checking if valid token...")
     axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
   
@@ -70,12 +70,12 @@ class Scout extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    if (this.state.searchinput == '') {
-      this.setState({
-        results: [],
-      })
-      return;
-    }
+    // if (this.state.searchinput == '') {
+    //   this.setState({
+    //     results: [],
+    //   })
+    //   return;
+    // }
     
     const id = this.getLocalStorage("id");
     let token = this.getLocalStorage("token");
@@ -146,7 +146,7 @@ class Scout extends Component {
           <div className='li'>
             {this.state.results.map((result, index) =>
               <Link key={index} to={
-                  `/profile?user_id=` + result.user_id + `&name=` + result.full_name + `&bio=` + result.bio + `&major=` + result.major + `&year=` + result.grad_year
+                  `/profile?user_id=` + result.user_id
                 } className="link">
                 <li key={index} className="listelem">
                     <div className="first entry">

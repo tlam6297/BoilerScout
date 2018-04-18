@@ -65,7 +65,6 @@ componentWillMount = () => {
               ...res.data,
           }); 
          
-          console.log(res.data);
       } else {
           alert("Invalid Token- Please login again");
           this.setState({
@@ -112,6 +111,7 @@ handleSubmit = (event) => {
      "grad_year": this.state.Graduation,
      "major": this.state.Major,
      });
+     console.log(payload)
      fetch('http://localhost:8080/update-profile', {
        method: 'POST',
        headers: {
@@ -122,12 +122,14 @@ handleSubmit = (event) => {
        body: payload,
      })
      .then(function(response) {
-       if (response.ok) {
+       console.log(response.status == 200)
+       if (response.status == 200) {
          document.getElementById("success").value="Your profile was successfully updated!";
          response.json().then(json => {
          });
+         alert("Profile successfully updated")
        } else {
-         alert("Error in updating profile");
+         alert("Error in updating profile4");
        }    
      })
    } else if (this.state.edit_courses && !this.state.edit_skills) {
@@ -140,7 +142,7 @@ handleSubmit = (event) => {
      "grad_year": this.state.Graduation,
      "major":this.state.Major,
      });
-     console.log(payload);
+     console.log(payload)
      fetch('http://localhost:8080/update-profile', {
        method: 'POST',
        headers: {
@@ -151,13 +153,14 @@ handleSubmit = (event) => {
        body: payload,
      })
      .then(function(response) {
-       if (response.ok) {
+       if (response.status == 200) {
          document.getElementById("success").value="Your profile was successfully updated!";
          response.json().then(json => {
            console.log(json);
          });
+         alert("Profile successfully updated")
        } else {
-         alert("Error in updating profile");
+         alert("Error in updating profile1");
        }    
      })
    } else if (!this.state.edit_courses && this.state.edit_skills) {
@@ -182,13 +185,15 @@ handleSubmit = (event) => {
        body: payload,
      })
      .then(function(response) {
-       if (response.ok) {
+      console.log(response.status == 200)
+       if (response.status == 200) {
          document.getElementById("success").value="Your profile was successfully updated!";
          response.json().then(json => {
            console.log(json);
          });
+         alert("Profile successfully updated")
        } else {
-         alert("Error in updating profile");
+         alert("Error in updating profile2");
        }    
      })
    } else {
@@ -200,7 +205,7 @@ handleSubmit = (event) => {
      "grad_year": this.state.Graduation,
      "major": this.state.Major,
      });
-     console.log(payload);
+     console.log(payload)
      fetch('http://localhost:8080/update-profile', {
        method: 'POST',
        headers: {
@@ -211,13 +216,14 @@ handleSubmit = (event) => {
        body: payload,
      })
      .then(function(response) {
-       if (response.ok) {
+       console.log(response)
+       if (response.status == 200) {
          document.getElementById("success").value="Your profile was successfully updated!";
          response.json().then(json => {
-           console.log(json);
          });
+         alert("Profile successfully updated")
        } else {
-         alert("Error in updating profile");
+         alert("Error in updating profile3");
        }    
      })
    }
@@ -286,7 +292,6 @@ handleSubmit = (event) => {
       return id;
   }
 componentDidUpdate = () => {
-  console.log(this.state);
 }
 // handle unauth, remove userid
 handleUnauth = () => {
@@ -299,7 +304,7 @@ render() {
       <div className="Container">
         <h1>Settings</h1>
       <br/>
-      <h4>Hello, {this.state.Name}!</h4>
+      <h4>Hello, {this.state.Name}</h4>
       <Link to="/update-password">
           <p>Change Password</p>
         </Link>
