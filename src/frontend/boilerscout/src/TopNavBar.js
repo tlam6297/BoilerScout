@@ -43,7 +43,7 @@ class TopNavBar extends Component {
    }
 
    return (
-     <div className="container">
+     <div className="NavBar">
        <div className="grid-container">
          <div className="logo grid-item">
           <a href="/scout">
@@ -74,6 +74,11 @@ class TopNavBar extends Component {
            </a>
            <a
              className="nav-link"
+             href="/inbox">
+             Inbox
+           </a>
+           <a
+             className="nav-link"
              href="/settings">
              Settings
            </a>
@@ -86,7 +91,6 @@ class TopNavBar extends Component {
        </div>
      </div>
        <p></p>
-       <hr/>
      </div>
    )
  }

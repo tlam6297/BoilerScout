@@ -1,7 +1,6 @@
-.Form {
-  color: #cc9900;
+.SignUp * {
+  background-color: black;
 }
-
 .FormInput {
   background-color: white;
 }
