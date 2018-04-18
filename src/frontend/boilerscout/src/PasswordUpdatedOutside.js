@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
 
-class PasswordUpdated extends Component {
+class PasswordUpdatedOutside extends Component {
   render() {
     return (
-      <div className="PasswordUpdated" class="Form">
+      <div className="PasswordUpdatedOutside" class="Form">
         < Logo/>           
         <h1>Password Updated!</h1>
-        <Link to="/settings">Return to Settings</Link>
+        <Link to="/login">Return to Login</Link>
       </div>
     );
   }
 }
 
-export default PasswordUpdated;
+export default PasswordUpdatedOutside;

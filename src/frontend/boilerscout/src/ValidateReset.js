@@ -162,7 +162,7 @@ class ValidateReset extends Component {
           </Link>
         </div>
         {this.loadform()}
-        {this.state.redirect && <Redirect to="/password-updated"/>}
+        {this.state.redirect && <Redirect to="/password-updated-outside"/>}
       </div>
     );
   }
