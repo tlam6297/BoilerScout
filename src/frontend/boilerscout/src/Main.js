@@ -24,6 +24,7 @@ import Home from './Home'
 import Inbox from './Inbox'
 import Logout from './Logout'
 import PassUp from './PasswordUpdated'
+import PassUpOutside from './PasswordUpdatedOutside'
 import Outbox from './Outbox'
 import ValidateReset from './ValidateReset'
 import axios from 'axios'
@@ -73,32 +74,32 @@ mapStyles = (styles) => {
   });
 }
 
-componentWillMount = () => {
-  console.log("Checking if valid token...")
-  axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
+// componentWillMount = () => {
+//   console.log("Checking if valid token...")
+//   axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
 
-  .then(res => {
-    if (res.data == false) {
-      console.log("Not valid token")
-      this.setState({
-        redirect: true,
-      })
-    } else {
-      console.log("Valid Token")
-      this.setState({
-        redirect: false,
-      })
-    }
-  })
-}
-rednerRedirect = () => {
-  if (this.state.redirect) {
-    this.setState({
-      redirect: false,
-    })
-    return (<Redirect to="/" />)
-  }
-}
+//   .then(res => {
+//     if (res.data == false) {
+//       console.log("Not valid token")
+//       this.setState({
+//         redirect: true,
+//       })
+//     } else {
+//       console.log("Valid Token")
+//       this.setState({
+//         redirect: false,
+//       })
+//     }
+//   })
+// }
+// rednerRedirect = () => {
+//   if (this.state.redirect) {
+//     this.setState({
+//       redirect: false,
+//     })
+//     return (<Redirect to="/" />)
+//   }
+// }
 
 render () {
   return (
@@ -129,8 +130,9 @@ render () {
         <Route path="/inbox" component={Inbox} />
         <Route path="/outbox" component={Outbox} />
         <Route path="/logout" component={Logout} />
-        <Route path="/password-updated" component={PassUp} />
         <Route path="/validate-reset" component={ValidateReset}/>
+        <Route path="/password-updated" component={PassUp} />
+        <Route path="/password-updated-outside" component={PassUpOutside}/>
       </AnimatedSwitch>
     </div>
   )
