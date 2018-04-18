@@ -23,8 +23,8 @@ class Outbox extends Component {
       input: "",
       email: "",
       name: "",
-      sort: "DESC",
-      buttonText: "Descending",
+      order: "ASC",
+      buttonText: "Ascending",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -47,7 +47,7 @@ class Outbox extends Component {
     const id = this.getLocalStorage("id");
     let token = this.getLocalStorage("token");
 
-    const url = "http://localhost:8080/outbox?" + "userId=" + id + "&sort=" + this.state.sort + "&token=" + token;
+    const url = "http://localhost:8080/outbox?" + "userId=" + id + "&sort=" + this.state.order + "&token=" + token;
     console.log(url)
     axios.get(url)
     .then(res => {
@@ -140,14 +140,14 @@ class Outbox extends Component {
   }
 
   compare = (a, b) => {
-    if (a.message_body < b.message_body) { return -1; }
-    if (a.message_body > b.message_body) { return 1; }
+    if (a.message_date < b.message_date) { return -1; }
+    if (a.message_date > b.message_date) { return 1; }
     return 0;
   }
 
   compareASC = (a, b) => {
-    if (a.message_body > b.message_body) { return -1; }
-    if (a.message_body < b.message_body) { return 1; }
+    if (a.message_date > b.message_date) { return -1; }
+    if (a.message_date < b.message_date) { return 1; }
     return 0;
   }
 
@@ -199,6 +199,12 @@ class Outbox extends Component {
 
   renderThreads = () => {
     const searchResults = this.getSearchResults();
+
+    if (this.state.order == "ASC") {
+      searchResults.sort(this.compareASC)
+    } else {
+      searchResults.sort(this.compare)
+    }
 
     if (searchResults.length == 0) {
       return (

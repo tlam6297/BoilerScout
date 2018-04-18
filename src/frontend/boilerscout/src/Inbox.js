@@ -23,8 +23,8 @@ class Inbox extends Component {
       input: "",
       email: "",
       name: "",
-      order: "DESC",
-      buttonText: "Descending",
+      order: "ASC",
+      buttonText: "Ascending",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -52,7 +52,6 @@ class Inbox extends Component {
 
     axios.get(url)
     .then(res => {
-      console.log(res)
       this.setState({
         threads: res.data.userInbox,
       })      
@@ -178,14 +177,14 @@ class Inbox extends Component {
   }
 
   compare = (a, b) => {
-    if (a.message_body < b.message_body) { return -1; }
-    if (a.message_body > b.message_body) { return 1; }
+    if (a.message_date < b.message_date) { return -1; }
+    if (a.message_date > b.message_date) { return 1; }
     return 0;
   }
 
   compareASC = (a, b) => {
-    if (a.message_body > b.message_body) { return -1; }
-    if (a.message_body < b.message_body) { return 1; }
+    if (a.message_date > b.message_date) { return -1; }
+    if (a.message_date < b.message_date) { return 1; }
     return 0;
   }
 
@@ -247,6 +246,13 @@ class Inbox extends Component {
   renderThreads = () => {
     const searchResults = this.getSearchResults();
 
+    if (this.state.order == "ASC") {
+      searchResults.sort(this.compareASC)
+    } else {
+      searchResults.sort(this.compare)
+    }
+    
+
     if (searchResults.length == 0) {
       return (
         <div className="noResults">
@@ -259,7 +265,7 @@ class Inbox extends Component {
       <div>
       <ul>
         {searchResults.map((thread, index) =>
-          <li key={thread.id}>
+          <li key={index}>
             <div onClick={() => {
                 this.setState({
                   open: true,
