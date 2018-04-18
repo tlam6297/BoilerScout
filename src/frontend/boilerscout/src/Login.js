@@ -113,7 +113,6 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="wrapper">
       <div className="Login">
         {this.renderRedirect()}
         <Logo/>
@@ -153,7 +152,6 @@ class Login extends Component {
         <p></p>
         <Link to="/forgot-password">Forgot Password?</Link>
         <p></p>
-        </div>
       </div>
     )
   }

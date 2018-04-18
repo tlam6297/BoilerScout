@@ -1,25 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Fauna+One|Oxygen:400,300,700);
 
 * {
-  background-color: #b9a883;
-  font-family: Oxygen, Helvetica, Arial, sans-serif;
+ background-color: #b9a883;
+ font-family: Oxygen, Helvetica, Arial, sans-serif;
 }
-
-.Main {
-    text-align: center;
-}
-  
-.route-wrapper {
-    position: relative;
-    
-}
-  
-.route-wrapper > div {
-    position: absolute;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
 
 button {
  background-color: #aa863a;
@@ -30,6 +14,10 @@ button {
 margin-right: auto;
  width: 25%;
  height: 35px;
+}
+
+.App-logo {
+ align-self: center;
 }
 
 

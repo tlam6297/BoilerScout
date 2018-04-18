@@ -56,7 +56,6 @@ class ForgotPassword extends Component {
 
   render() {
     return (
-      <div className="wrapper">
       <div className="ForgotPassword">
         <div className="logo">
           <Logo />
@@ -86,7 +85,6 @@ class ForgotPassword extends Component {
         {this.state.redirect && (
           <Redirect to={'/password-reset-sent'}/>   
         )}
-      </div>
       </div>
     );
   }

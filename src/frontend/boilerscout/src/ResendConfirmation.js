@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
+import POSTRequest from './POSTRequest'
 import Logo from './Logo'
-import './ResendConfirmation.css'
+
 class ForgotPassword extends Component {
   constructor(props) {
     super(props);
@@ -73,8 +74,7 @@ class ForgotPassword extends Component {
 
   render() {
     return (
-      <div className="wrapper">
-      <div className="ResendConfirmation">
+      <div className="ForgotPassword" class="fg">
         <div className="logo">
           <Logo />
         </div>
@@ -103,7 +103,6 @@ class ForgotPassword extends Component {
         {this.state.redirect && (
           <Redirect to={'/confirmation-resent'}/>   
         )}
-      </div>
       </div>
     );
   }

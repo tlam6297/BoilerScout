@@ -79,11 +79,6 @@ class TopNavBar extends Component {
            </a>
            <a
              className="nav-link"
-             href="/outbox">
-             Outbox
-           </a>
-           <a
-             className="nav-link"
              href="/settings">
              Settings
            </a>
