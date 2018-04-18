@@ -29,6 +29,25 @@ class Scout extends Component {
       posts: [],
     };
   }
+
+  componentWillMount = () => {
+    console.log("Checking if valid token...")
+    axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
+  
+    .then(res => {
+      if (res.data == false) {
+        console.log("Not valid token")
+        this.setState({
+          redirect: true,
+        })
+      } else {
+        console.log("Valid Token")
+        this.setState({
+          redirect: false,
+        })
+      }
+    })
+  }
   
   handleChange = (event) => {
     this.setState({
@@ -228,9 +247,19 @@ class Scout extends Component {
     return localStorage.getItem(key);
   }
 
+  rednerRedirect = () => {
+    if (this.state.redirect) {
+      this.setState({
+        redirect: false,
+      })
+      return (<Redirect to="/" />)
+    }
+  }
+
   render() {
     return (
       <div className="scout">
+      {this.rednerRedirect()}
         <div className="navs">
           <TopNavBar/>
         </div>        

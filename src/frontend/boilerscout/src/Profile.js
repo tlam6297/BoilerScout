@@ -141,8 +141,25 @@ class Profile extends Component {
        }
        return id;
    }
+   
 
     componentWillMount = () => {
+        console.log("Checking if valid token...")
+    axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
+  
+    .then(res => {
+      if (res.data == false) {
+        console.log("Not valid token")
+        this.setState({
+          redirect: true,
+        })
+      } else {
+        console.log("Valid Token")
+        this.setState({
+          redirect: false,
+        })
+      }
+    })
         // this variable needs to be manipulated to pull the data from it to display!
         const all_data = this.props.location.search;
         const split = all_data.split("&");
@@ -184,9 +201,19 @@ class Profile extends Component {
         console.log(this.state);
     }
 
+    rednerRedirect = () => {
+        if (this.state.redirect) {
+          this.setState({
+            redirect: false,
+          })
+          return (<Redirect to="/" />)
+        }
+      }
+
    render() {
         return (
                <div className="container">
+               {this.rednerRedirect()}
                    <TopNavBar/>
                    <div className="grid-container">
                        <div className="card grid-item">
