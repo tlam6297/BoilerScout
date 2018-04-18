@@ -126,7 +126,6 @@ class Scout extends Component {
                   `/profile?user_id=` + result.user_id + `&name=` + result.full_name + `&bio=` + result.bio + `&major=` + result.major + `&year=` + result.grad_year
                 } className="link">
                 <li key={index} className="listelem">
-                  <div className='result entry'>
                     <div className="first entry">
                       {result.full_name}
                     </div>
@@ -136,7 +135,6 @@ class Scout extends Component {
                     <div className="grad entry">
                       Grad Year: {result.grad_year}
                     </div>
-                  </div>
                 </li>
               </Link>
             )}

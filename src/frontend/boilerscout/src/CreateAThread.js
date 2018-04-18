@@ -43,11 +43,9 @@ class CreateAThread extends Component {
      const _this = this;
      const id = _this.getLocalStorage("id");
      let token = _this.getLocalStorage("token");
-     let forum_id = this.getLocalStorage("forum_id");
+     let forum_id = _this.getLocalStorage("forum_id");
      let title = document.getElementById('threadTitle').textContent;
      let body = document.getElementById('threadBody').textContent;
-
-     console.log("title:" + title + ", body:" + body);
 
      var payload = JSON.stringify({
        "userId": id,

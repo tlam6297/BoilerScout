@@ -18,7 +18,7 @@ class Community extends Component {
        }
    }
 
-   componentDidMount= () => {
+   componentWillMount= () => {
        const all_data = this.props.location.search;
        const split = all_data.split("&");
 
@@ -53,8 +53,7 @@ class Community extends Component {
    }
 
    saveForumInfo = (event) => {
-     let key = event.target.parentNode.getAttribute("id");
-     console.log(this.state.forums[key]);
+     let key = event.target.parentNode.parentNode.getAttribute("id");
      let id = this.state.forums[key].forum_id;
      let name = this.state.forums[key].forum_name;
      let description = this.state.forums[key].forum_description;
@@ -68,24 +67,25 @@ class Community extends Component {
      <div className="Community">
        <div className="NavBar">
          <NavBar/>
+
        </div>
        <div className="onlyCommunity">
        <h2> Community </h2>
        <div class="grid-container-comm forums">
        <ul>
-         <div className='li'>
+         <div className='listt'>
            {this.state.forums.map((result, index) =>
-           <Link to={
-               `/forum`}>
-               <li id={index} onClick={this.saveForumInfo}>
-                   <div className="first entry">
+               <li id={index}>
+                <Link to={
+               `/forum/`}>
+                   <div className="name ent" onClick={this.saveForumInfo}>
                      {result.forum_name}
                    </div>
-                   <div className="description entry">
+               </Link>
+               <div className="description ent">
                      {result.forum_description}
                    </div>
                </li>
-               </Link>
            )}
          </div>
        </ul>

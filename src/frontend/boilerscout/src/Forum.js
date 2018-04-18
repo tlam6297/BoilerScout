@@ -56,8 +56,7 @@ class Forum extends Component {
     let token = this.getLocalStorage("token");
 
     //get forum ID from localStorage (dummy forum ID for now)
-    let forum_id = "528fc18a-ebbc-4b0a-9ca3-bd00d6db006c";
-    //forum_id = this.getLocalStorage("forum_id");
+    let forum_id = this.getLocalStorage("forum_id");
 
     const url = "http://localhost:8080/community/get-threads?userId=" + id + "&token=" + token + "&forumId=" + forum_id;    
 
@@ -83,6 +82,8 @@ class Forum extends Component {
       this.setState({
         threads: res.data.threads,
       });      
+
+      console.log(res.data.threads);
     });  
   }
 

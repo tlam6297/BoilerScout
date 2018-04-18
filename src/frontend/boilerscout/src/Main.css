@@ -1,13 +1,17 @@
 .Home {
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .route-wrapper {
   position: relative;
+  
 }
 
 .route-wrapper > div {
   position: absolute;
-  margin: auto;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }

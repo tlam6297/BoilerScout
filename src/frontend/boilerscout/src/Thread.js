@@ -42,18 +42,20 @@ class Thread extends Component {
         axios.get(url)
         .then(res => {
             // console.log(res.data.query);
-            if (res.data.status == "OK") {
+            if (res.status == 200) {
                 this.setState({
                 comments: res.data.comments,
                 thread: res.data.thread[0],
                 });  
-                console.log(this.state.comments);
             } else {
                 alert("Invalid Token- Please login again");
                 this.setState({
                 redirect: true,
                 })
-            }      
+            }    
+            
+            console.log(res.data.status);
+
         })
         .catch(error => {
           console.log(error);
@@ -71,12 +73,12 @@ class Thread extends Component {
         axios.get(url)
         .then(res => {
             // console.log(res.data.query);
-            if (res.data.status == "OK") {
+
+            if (res.status == 200) {
                 this.setState({
                 comments: res.data.comments,
                 thread: res.data.thread[0],
                 });  
-                console.log(this.state.comments);
             } else {
                 alert("Invalid Token- Please login again");
                 this.setState({
@@ -102,6 +104,7 @@ class Thread extends Component {
       const _this = this;
       const id = _this.getLocalStorage("id");
       let token = _this.getLocalStorage("token");
+      let forumID = _this.getLocalStorage("forum_id");
       const threadId = _this.getLocalStorage("threadId");
       var payload = JSON.stringify({
         "userId": id,
@@ -120,7 +123,7 @@ class Thread extends Component {
        body: payload,
      })
      .then(function(response) {
-       if (response.ok) {
+       if (response.status == 200) {
          //_this.setState({ redirect: true })
          response.json().then(json => {
            console.log(json);
@@ -136,8 +139,7 @@ class Thread extends Component {
   
     renderReplyBox = () => {    
       return (
-        <div className="EditProfile">
-          <div className="Container">
+        <div className="Thread">
             <button
               type="button"
               onClick={this.toggle}>
@@ -145,7 +147,7 @@ class Thread extends Component {
           </button>
           <br/>
           <form onSubmit={this.handleSubmit}>
-            <div className="Form">
+            <div className="reply">
             <FormGroup controlId="body" bsSize="large">
                 <FormControl
                   className="FormInput body"
@@ -165,7 +167,6 @@ class Thread extends Component {
              </div>
             </div>
           </form>
-          </div>
         </div>
       )
     }
@@ -213,21 +214,21 @@ class Thread extends Component {
     renderComments = () => {
      return ( <div className="comments">
       <ul>
-        <div className='li'>
+        <div className='li-thread'>
           {this.state.comments.map((result, index) =>
               <li key={index}>
-                <div className='result entry'>
+                <div class="grid-container-thread" className='result entry'>
                 <Link to={
                 `/profile?user_id=` + result.user_id + `&name=` + result.full_name + `&bio=` + result.bio + `&major=` + result.major + `&year=` + result.grad_year
                   } className="link">
-                  <div className="first entry">
+                  <div class="grid-item" className="name entry">
                     {result.full_name}
                   </div>
                   </Link>
-                  <div className="body entry">
+                  <div class="grid-item" className="body entry">
                     {result.post_body}
                   </div>
-                  <div className="date entry">
+                  <div class="grid-item" className="date entry">
                     {result.post_date}
                   </div>
                 </div>
