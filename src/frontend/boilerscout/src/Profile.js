@@ -16,8 +16,9 @@ class Profile extends Component {
        this.getID = this.getID.bind(this);
 
        this.state = {
-				open: false,
-				reply: "",
+        userId: props.search,
+        open: false,
+        reply: "",
         Bio: "",
         Courses: [],
         Email: "",
@@ -88,7 +89,8 @@ class Profile extends Component {
 						alert("Message not sent");
 					}
 				})
-		}
+        }
+        
 
 		validateForm = () => {
 			console.log("Lenght of reply: " + this.state.reply.length)
@@ -210,6 +212,31 @@ class Profile extends Component {
         }
       }
 
+      sameUser = () => {
+          if (this.getLocalStorage("id") === this.props.location.search.split("=")[1]) {
+              return false;
+          }
+          return true;
+      }
+
+      renderSend = () => {
+          if (this.sameUser()) {
+              return (
+                <div className="send"
+                    onClick={() => {
+                        this.setState({
+                            open: true,
+                        });
+                    }}
+                >
+                    <Button>
+                        Send a message
+                    </Button>
+                </div>
+              )
+          }
+      }
+
    render() {
         return (
                <div>
@@ -248,17 +275,7 @@ class Profile extends Component {
                                    </p>
 							<p></p>
                            </div>
-                           <div className="send"
-								onClick={() => {
-                                    this.setState({
-                                        open: true,
-                                    });
-								}}
-							>
-                             <Button>
-                                 Send a message
-                             </Button>
-                           </div>
+                           {this.renderSend()}
                        </div>
                        <div className="grid-item" id="profile-bio">
                            <h1> Bio </h1>
