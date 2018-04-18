@@ -212,7 +212,7 @@ class Profile extends Component {
 
    render() {
         return (
-               <div>
+               <div className="container">
                {this.rednerRedirect()}
                    <TopNavBar/>
                    <div className="grid-container profile">
@@ -293,7 +293,7 @@ class Profile extends Component {
                                 </div>                               
                            </div>
                    </div>
-                                     {this.renderModal()}
+									 {this.renderModal()}
                </div>
        );
        }
