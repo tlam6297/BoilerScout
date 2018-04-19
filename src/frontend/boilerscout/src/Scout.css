@@ -1,7 +1,7 @@
 .scout {
   display: grid;
   min-height: 50%;
-  grid-template-rows: 190px 0.3fr 1fr 1fr 1fr 1fr;  grid-template-columns: 0.5fr 1fr 0.5fr;
+  grid-template-rows: 110px 0.3fr 1fr 1fr 1fr 1fr;  grid-template-columns: 0.5fr 1fr 0.5fr;
 }
 
 .navs {
@@ -167,4 +167,8 @@ option {
 
 .advheader {
   color: #8d743d;
+}
+
+option {
+  color: black;
 }
