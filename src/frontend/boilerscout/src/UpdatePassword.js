@@ -44,9 +44,6 @@ class UpdatePassword extends Component {
       changed: true,
     }, (event) => {
       switch (mytarget) {
-        case 'oldPassword':
-          this.validateOldPassword();
-          break;
         case 'newPassword1':
           this.validateNewPassword();
           break;
@@ -117,7 +114,7 @@ class UpdatePassword extends Component {
   }
 
   validateNewPassword = () => {
-    const password = this.state.password;
+    const password = this.state.newPassword1;
     const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
     let passtemperror = ["Password "];
     let passerror;
@@ -178,15 +175,14 @@ class UpdatePassword extends Component {
     const repeatpass = this.state.newPassword2;
     const repeatPassword = (password == repeatpass);
     if (!repeatPassword) {
-      document.getElementById("repeatpassword").setCustomValidity("Passwords don't match.");
+      document.getElementById("newPassword2").setCustomValidity("Passwords don't match.");
     } else {
-      document.getElementById("repeatpassword").setCustomValidity("");
+      document.getElementById("newPassword2").setCustomValidity("");
     }
 
   }
   handleSubmit = (e) => {
     this.validateNewPassword();
-    this.validateOldPassword();
     this.validateRepeatNewPassword();
 
     if (this.validateForm()) {
