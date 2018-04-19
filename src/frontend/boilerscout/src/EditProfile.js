@@ -10,7 +10,7 @@ class EditProfile extends Component {
     super()
     this.handleSubmit = this.handleSubmit.bind(this);
     this.removeWhiteSkills = this.removeWhiteSkills.bind(this);
-    this.removeWhiteCourses = this.removeWhiteCourses.bind(this);
+    this.removeWhiteCourses = this.removeWhiteCourses.bind(this);    
     this.handleChange = this.handleChange.bind(this);
     this.getAccessToken = this.getAccessToken.bind(this);
     this.getID = this.getID.bind(this);
@@ -152,7 +152,7 @@ class EditProfile extends Component {
         })
     } else if (this.state.edit_courses && !this.state.edit_skills) {
       var coursesarray = this.removeWhiteCourses(this.state.Courses.split(","));
-      var payload = JSON.stringify({
+      var payload = JSON.stringify({       
         "userId": id,
         "token": token,
         "bio": this.state.Bio,
@@ -254,18 +254,16 @@ class EditProfile extends Component {
       edit_grad: false,
       edit_major: false,
     });
-
-    // const requested_id = this.state.user_id;
   }
 
 
   handleChange = (event) => {
+
     this.setState({
       [event.target.id]: event.target.value
     });
 
-    document.getElementById("success").value = " ";
-
+    console.log(event.target.id)
     if (event.target.className == "FormInput courses form-control") {
       this.setState({
         edit_courses: true
@@ -274,7 +272,7 @@ class EditProfile extends Component {
       this.setState({
         edit_skills: true
       });
-    } else if (event.target.className == "FormInput bio form-control") {
+    } else if (event.target.className == "Bio") {
       this.setState({
         edit_bio: true
       });
@@ -332,6 +330,7 @@ class EditProfile extends Component {
                 <br />
                 <FormControl
                   className="FormInput name"
+                  id="Name"
                   autoFocus
                   type="text"
                   value={this.state.Name}
@@ -365,17 +364,17 @@ class EditProfile extends Component {
                   )}
                 </select>
               </FormGroup>
-              <FormGroup controlId="Bio" bsSize="large">
-                <ControlLabel className="edit">Bio:</ControlLabel>
-                <br />
-                <FormControl
-                  className="FormInput bio"
-                  autoFocus
-                  type="text"
-                  value={this.state.Bio}
-                  onChange={this.handleChange}
-                />
-              </FormGroup>
+              <ControlLabel className="edit">Bio:</ControlLabel>
+              <br/>
+              <textarea
+                wrap="soft"
+                id="Bio"
+                value={this.state.Bio}
+                className="Bio"
+                contenteditable="true"
+                onChange={this.handleChange}
+                >
+              </textarea>            
               <FormGroup controlId="Courses" bsSize="large">
                 <ControlLabel className="edit">Courses:</ControlLabel>
                 <br />
@@ -416,6 +415,5 @@ class EditProfile extends Component {
 }
 
 export default EditProfile;
-
 
 
