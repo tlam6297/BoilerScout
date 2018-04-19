@@ -13,6 +13,10 @@
  .graduation * {
   background-color: white;
  }
+
+ #Name {
+  font-size: small;
+ }
  
  #Bio {
   overflow-wrap: break-word;

@@ -333,6 +333,7 @@ class EditProfile extends Component {
                   id="Name"
                   autoFocus
                   type="text"
+                  placeholder="Tell Boilers your name"
                   value={this.state.Name}
                   onChange={this.handleChange}
                 />
