@@ -14,6 +14,7 @@ class UpdatePassword extends Component {
       newPassword1: "",
       newPassword2: "",
       redirect: false,
+      redirect1: false,
     }
   }
 
@@ -235,18 +236,25 @@ class UpdatePassword extends Component {
       if (res.data == false) {
         console.log("Not valid token")
         this.setState({
-          redirect1: true,
+          redirect: true,
         })
       } else {
         console.log("Valid Token")
         this.setState({
-          redirect1: false,
+          redirect: false,
         })
       }
     })
   }
 
-
+  renderRedirectFirst = () => {
+    if (this.state.redirect) {
+      this.setState({
+        redirect: false,
+      })
+      return (<Redirect to="/" />)
+    }
+  }
 
   rednerRedirect = () => {
     if (this.state.redirect1) {
@@ -308,6 +316,7 @@ class UpdatePassword extends Component {
             </form>
         </div>
         {this.rednerRedirect()}
+        {this.renderRedirectFirst()}
       </div>
     )
   }
