@@ -4,7 +4,6 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import './SignUp.css'
 import Logo from './Logo'
 import POSTRequest from './POSTRequest'
-
 class SignUp extends Component {
   constructor (props) {
       super(props);
@@ -140,6 +139,7 @@ class SignUp extends Component {
           <div className="Form">
           <FormGroup controlId="fullname" bsSize="large">
               <ControlLabel>Full Name:</ControlLabel>
+              <br/>
               <FormControl
                 className="FormInput"
                 autoFocus
@@ -150,6 +150,7 @@ class SignUp extends Component {
             </FormGroup>
             <FormGroup controlId="Graduation" bsSize="large">
             <ControlLabel>Graduation Year:</ControlLabel>
+              <br/>
               <select
                 className="FormInput graduation"
                 id="Graduation"
@@ -164,6 +165,7 @@ class SignUp extends Component {
             </FormGroup>
             <FormGroup controlId="Major" bsSize="large">
             <ControlLabel>Major:</ControlLabel>
+                <br/>
                 <select
                   className="FormInput major"
                   id="Major"
@@ -176,6 +178,7 @@ class SignUp extends Component {
                 </FormGroup>
             <FormGroup controlId="email" bsSize="large">
               <ControlLabel>Email:</ControlLabel>
+              <br/>
               <FormControl
                 className="FormInput"
                 autoFocus
@@ -186,6 +189,7 @@ class SignUp extends Component {
             </FormGroup>
             <FormGroup controlId="password" bsSize="large">
               <ControlLabel>Password:</ControlLabel>
+                <br/>
                 <FormControl
                   className="FormInput Password"
                   autoFocus
@@ -196,6 +200,7 @@ class SignUp extends Component {
             </FormGroup>
             <FormGroup controlId="repeatpassword" bsSize="large">
               <ControlLabel>Repeat Password:</ControlLabel>
+                <br/>
                 <FormControl
                   className="FormInput repeatPassword"
                   autoFocus
@@ -207,6 +212,7 @@ class SignUp extends Component {
           </div>
           <Button
             block
+            className="submitbutton"
             bsSize="small"
             disabled={!this.validateForm()}
             type="submit">

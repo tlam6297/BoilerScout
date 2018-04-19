@@ -22,4 +22,11 @@
 }
 .FormInput {
   background-color: white;
+  width: 50%;
+  border-width: 1px;
+  border-color: white;
+  border-radius: 4px;
+}
+.submitbutton {
+  background-color:#c29c4b;
 }

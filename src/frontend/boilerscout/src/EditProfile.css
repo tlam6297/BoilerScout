@@ -16,13 +16,48 @@
  
  #Bio {
   height: 100px;
-  width: 200px;
  }
  
  #success {
   color: green;
  }
+
+ .editForm {
+  box-shadow: 4px 4px 8px 4px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: black;
+  padding-bottom: 20px;
+  border-width: 8px;
+  padding-top: 15px;
+  border-radius: 5px;
+  border-color: black;
+  margin-bottom: 10px;
+ }
+
+ .editForm * {
+   background-color: black;
+ }
+
+ .FormInput {
+  background-color: white;
+ }
+
+ .edit {
+   color: #c29c4b;
+ }
  
+ #editHeader {
+  color: #c29c4b;
+}
+
+.submitbutton {
+  background-color:#c29c4b;
+}
  
- 
- 
+
+#greeting {
+  color: black;
+}

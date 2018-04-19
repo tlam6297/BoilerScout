@@ -121,6 +121,7 @@ class Login extends Component {
           <div className="Form">
             <FormGroup controlId="email" bsSize="large">
               <ControlLabel>Email:</ControlLabel>
+              <br/>
               <FormControl
                 className="FormInput"
                 autoFocus
@@ -131,6 +132,7 @@ class Login extends Component {
             </FormGroup>
             <FormGroup controlId="password" bsSize="large">
             <ControlLabel>Password:</ControlLabel>
+              <br/>
               <FormControl
                 className="FormInput Password"
                 autoFocus
@@ -142,6 +144,7 @@ class Login extends Component {
             <Button
               block
               bsSize="small"
+              className="submitbutton"
               disabled={!this.validateForm()}
               type="submit">
               SUBMIT        

@@ -65,6 +65,7 @@ class ForgotPassword extends Component {
           <div className="Form" class="Form">
             <FormGroup controlId="email" bsSize="large">
               <ControlLabel>Email:</ControlLabel>
+              <br/>
               <FormControl
                 className="FormInput"
                 autoFocus
@@ -77,6 +78,7 @@ class ForgotPassword extends Component {
             <Button
               block
               bsSize="small"
+              className="submitbutton"
               disabled={!this.validateForm()}
               type="submit">
               SUBMIT        

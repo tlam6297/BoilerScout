@@ -12,10 +12,10 @@
 .link {
   text-decoration: none;
 }
-h3 {
+
+.thread-title > h3 {
   color: #8f7526;
 }
-
 .thread-author {
   color: black;
 }
