@@ -371,6 +371,7 @@ class EditProfile extends Component {
                 id="Bio"
                 value={this.state.Bio}
                 className="Bio"
+                placeholder="Tell Boilers about yourself"
                 contenteditable="true"
                 onChange={this.handleChange}
                 >
@@ -382,6 +383,7 @@ class EditProfile extends Component {
                   className="FormInput courses"
                   autoFocus
                   type="text"
+                  placeholder="Enter courses with a comma between each"
                   value={this.state.Courses}
                   onChange={this.handleChange}
                 />
@@ -393,6 +395,7 @@ class EditProfile extends Component {
                   className="FormInput skills"
                   autoFocus
                   type="text"
+                  placeholder="Enter skills with a comma between each"
                   value={this.state.Skills}
                   onChange={this.handleChange}
                 />
