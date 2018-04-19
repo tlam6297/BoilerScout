@@ -76,7 +76,7 @@ componentWillMount = () => {
 
 }
 
-removeWhiteSpaces = (array, type) => {
+removeWhiteSpaces = (array) => {
  var i;
 
  for (i = 0; i < array.length; i++) {
@@ -104,8 +104,8 @@ handleSubmit = (event) => {
   const id = _this.getLocalStorage("id");
   let token = _this.getLocalStorage("token");
    if (this.state.edit_courses && this.state.edit_skills) {
-     var skillsarray = this.removeWhiteSpaces(this.state.Skills.split(","), "s");
-     var coursesarray = this.removeWhiteSpaces(this.state.Courses.split(","), "c");
+     var skillsarray = this.removeWhiteSpaces(this.state.Skills.split(","));
+     var coursesarray = this.removeWhiteSpaces(this.state.Courses.split(","));
      var payload = JSON.stringify({
      "userId": id,
      "token": token,
@@ -138,7 +138,8 @@ handleSubmit = (event) => {
        }    
      })
    } else if (this.state.edit_courses && !this.state.edit_skills) {
-     var coursesarray = this.removeWhiteSpaces(this.state.Courses.split(","), "c");       var payload = JSON.stringify({
+     var coursesarray = this.removeWhiteSpaces(this.state.Courses.split(","));       
+     var payload = JSON.stringify({
      "userId": id,
      "token": token,
      "bio": this.state.Bio,
@@ -169,7 +170,7 @@ handleSubmit = (event) => {
        }    
      })
    } else if (!this.state.edit_courses && this.state.edit_skills) {
-     var skillsarray = this.removeWhiteSpaces(this.state.Skills.split(","), "s");
+     var skillsarray = this.removeWhiteSpaces(this.state.Skills.split(","));
      var payload = JSON.stringify({
      "userId": id,
      "token": token,
