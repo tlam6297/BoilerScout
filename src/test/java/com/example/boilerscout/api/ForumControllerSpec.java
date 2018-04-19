@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -38,6 +39,9 @@ public class ForumControllerSpec {
     private MockMvc mvc;
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -90,16 +94,19 @@ public class ForumControllerSpec {
     @Test
     public void validStartThread() throws Exception {
         Map<String, Object> startThreadMap = new HashMap<String, Object>();
+        String threadTitle = "Automatic Bitcoin Miner";
         startThreadMap.put("userId", userId);
         startThreadMap.put("token", token);
         startThreadMap.put("forumId", forumId);
-        startThreadMap.put("threadTitle", "Automatic Bitcoin Miner");
+        startThreadMap.put("threadTitle", threadTitle);
         startThreadMap.put("threadBody", "I'm looking to get rich quick!");
 
         String startThreadJson = json(startThreadMap);
         this.mvc.perform(post("/community/start-thread")
         .contentType(contentType)
         .content(startThreadJson)).andExpect(status().isOk());
+
+        jdbcTemplate.update("DELETE FROM threads WHERE thread_title='" + threadTitle + "'");
     }
 
     @Test
@@ -125,15 +132,17 @@ public class ForumControllerSpec {
     @Test
     public void validPostReply() throws Exception {
         Map<String, Object> postReplyMap = new HashMap<String, Object>();
+        String postBody = "I would love to help...some call me a stallion.";
         postReplyMap.put("userId", userId);
         postReplyMap.put("token", token);
         postReplyMap.put("threadId", threadId);
-        postReplyMap.put("postBody", "I would love to help...some call me a stallion.");
+        postReplyMap.put("postBody", postBody);
         String postReplyJson = json(postReplyMap);
         mvc.perform(post("/community/post-reply")
         .contentType(contentType)
         .content(postReplyJson))
                 .andExpect(status().isOk());
+        jdbcTemplate.update("DELETE FROM thread_posts WHERE post_body='" + postBody + "'");
     }
 
     @Test
