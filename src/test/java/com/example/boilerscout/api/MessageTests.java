@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 
 import java.io.IOException;
@@ -39,6 +40,9 @@ public class MessageTests extends MessageController {
     private MockMvc mvc;
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -106,8 +110,11 @@ public class MessageTests extends MessageController {
                 .content(output))
                 .andExpect(status().isOk());
 
+        jdbcTemplate.update("DELETE FROM user_messages WHERE sender_id='" + user_id + "'ORDER BY message_date DESC LIMIT 1");
+
     }
 
+    String user_id = "86b6be19-9d32-4b1a-ab4b-a29a7a90cc98";
     @Test
     public void emptyMessage() throws Exception {
         Map<String,String> input = new HashMap<String, String>();
@@ -124,8 +131,9 @@ public class MessageTests extends MessageController {
                 .content(output))
                 .andExpect(status().isOk());
 
-    }
+        jdbcTemplate.update("DELETE FROM user_messages WHERE sender_id='" + user_id + "'ORDER BY message_date DESC LIMIT 1");
 
+    }
 
     @Test
     public void noInputforSortInbox() throws Exception {
