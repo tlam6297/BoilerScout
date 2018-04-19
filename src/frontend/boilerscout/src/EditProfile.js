@@ -76,13 +76,17 @@ componentWillMount = () => {
 
 }
 
-removeWhiteSpaces = (array) => {
+removeWhiteSpaces = (array, type) => {
  var i;
 
  for (i = 0; i < array.length; i++) {
    var curr = array[i];
    var nowhite = curr.replace(/\s/g, "");
-   array[i] = nowhite;
+   var temp = nowhite.toLowerCase();
+  var firstchar = temp.charAt(0).toUpperCase(); 
+   var final = firstchar + temp.slice(1);
+  console.log(final);
+  array[i] = final;
  }
 
  return array;
@@ -100,8 +104,8 @@ handleSubmit = (event) => {
   const id = _this.getLocalStorage("id");
   let token = _this.getLocalStorage("token");
    if (this.state.edit_courses && this.state.edit_skills) {
-     var skillsarray = this.removeWhiteSpaces(this.state.Skills.split(","));
-     var coursesarray = this.removeWhiteSpaces(this.state.Courses.split(","));
+     var skillsarray = this.removeWhiteSpaces(this.state.Skills.split(","), "s");
+     var coursesarray = this.removeWhiteSpaces(this.state.Courses.split(","), "c");
      var payload = JSON.stringify({
      "userId": id,
      "token": token,
@@ -134,7 +138,7 @@ handleSubmit = (event) => {
        }    
      })
    } else if (this.state.edit_courses && !this.state.edit_skills) {
-     var coursesarray = this.removeWhiteSpaces(this.state.Courses.split(","));       var payload = JSON.stringify({
+     var coursesarray = this.removeWhiteSpaces(this.state.Courses.split(","), "c");       var payload = JSON.stringify({
      "userId": id,
      "token": token,
      "bio": this.state.Bio,
@@ -165,7 +169,7 @@ handleSubmit = (event) => {
        }    
      })
    } else if (!this.state.edit_courses && this.state.edit_skills) {
-     var skillsarray = this.removeWhiteSpaces(this.state.Skills.split(","));
+     var skillsarray = this.removeWhiteSpaces(this.state.Skills.split(","), "s");
      var payload = JSON.stringify({
      "userId": id,
      "token": token,
@@ -236,6 +240,8 @@ handleSubmit = (event) => {
      edit_grad: false,
      edit_major: false,
    });
+
+  // const requested_id = this.state.user_id;
   }
 
 
