@@ -99,7 +99,8 @@ class EditProfile extends Component {
     for (i = 0; i < array.length; i++) {
       var curr = array[i].toUpperCase();
       var nowhite = curr.replace(/\s/g, "");
-      array[i] = nowhite;
+      array[i] = nowhite.toUpperCase();
+      console.log(array[i]);
     }
 
     return array;
@@ -116,6 +117,10 @@ class EditProfile extends Component {
     const _this = this;
     const id = _this.getLocalStorage("id");
     let token = _this.getLocalStorage("token");
+    if (!this.state.edit_courses && !this.state.edit_skills && !this.state.edit_bio && !this.state.edit_grad && !this.state.edit_name && !this.state.edit_major ) {
+      alert("Please change profile fields to update profile");
+      return;
+    }
     if (this.state.edit_courses && this.state.edit_skills) {
       var skillsarray = this.removeWhiteSkills(this.state.Skills.split(","));
       var coursesarray = this.removeWhiteCourses(this.state.Courses.split(","));
