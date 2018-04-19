@@ -72,13 +72,17 @@ class SignUp extends Component {
       }
     });
 
-    console.log(this.state.Graduation);
   }
 
 
   handleSubmit = (event) => {
       event.preventDefault();
-      console.log("ugh");
+      this.validateName();
+      this.validateGraduation();
+      this.validateMajor();
+      this.validateEmail();
+      this.validatePassword();
+      this.validateRepeatPassword();
       if (this.validateForm()) {
       const _this = this;
       const email = this.state.email;
@@ -214,6 +218,10 @@ class SignUp extends Component {
     const password = this.state.password;
     const repeatpass = this.state.repeatpassword;
     const repeatPassword = (password == repeatpass);
+    if (this.state.repeatpassword == "") {
+      document.getElementById("repeatpassword").setCustomValidity("Please enter your password again.");
+      return;
+    }
     if (!repeatPassword) {
       document.getElementById("repeatpassword").setCustomValidity("Passwords don't match.");
     } else {
@@ -223,7 +231,7 @@ class SignUp extends Component {
   }
 
   validateGraduation = () => {
-    if (this.state.Graduation == "" || this.state.Graduation.length == 0 ) {
+    if (this.state.Graduation == "" || this.state.Graduation.length == 0) {
       document.getElementById("Graduation").setCustomValidity("Please select your graduation year.");
     } else {
       document.getElementById("Graduation").setCustomValidity("");
@@ -234,7 +242,7 @@ class SignUp extends Component {
     if (this.state.Major == "" || this.state.Major.length == 0) {
       document.getElementById("Major").setCustomValidity("Please select your major.");
     } else {
-      document.getElementById("").setCustomValidity("");
+      document.getElementById("Major").setCustomValidity("");
     }
   }
 
@@ -272,7 +280,8 @@ class SignUp extends Component {
                   id="Graduation"
                   value={this.state.Graduation}
                   onChange={this.handleChange}>
-                  <option value=""></option>
+                  <option value="0"></option>
+                  <option value="2018">2018</option>
                   <option value="2019">2019</option>
                   <option value="2020">2020</option>
                   <option value="2021">2021</option>
@@ -298,7 +307,7 @@ class SignUp extends Component {
                 <FormControl
                   className="FormInput"
                   autoFocus
-
+                  id="email"
                   type="email"
                   value={this.state.email}
                   onChange={this.handleChange}
