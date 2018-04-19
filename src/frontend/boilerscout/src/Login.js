@@ -4,6 +4,7 @@ import { Button, FormGroup, FormControl, ControlLabel, Nav } from "react-bootstr
 import NavBar from './TopNavBar'
 import './Login.css'
 import Logo from './Logo'
+import axios from 'axios'
 
 class Login extends Component {
   constructor (props) {
@@ -16,6 +17,25 @@ class Login extends Component {
       DEBUGGING: false,
     };
   }
+
+  componentDidUpdate () {
+    // console.log(this.state);
+   }
+ 
+   componentWillMount = () => {
+     console.log("Checking if valid token...")
+     axios.get("http://localhost:8080/verify-authentication?" + "userId=" + localStorage.getItem("id") + "&token=" + localStorage.getItem("token"))
+   
+     .then(res => {
+       if (res.data == false) {
+       } else {
+         console.log("Valid Token")
+         this.setState({
+           redirect: true,
+         })
+       }
+     })
+   }
 
   validateForm = () => {
     const email = this.state.email.toLowerCase();
