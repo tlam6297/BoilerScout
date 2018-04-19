@@ -97,10 +97,9 @@ class EditProfile extends Component {
     var i;
 
     for (i = 0; i < array.length; i++) {
-      var curr = array[i];
+      var curr = array[i].toUpperCase();
       var nowhite = curr.replace(/\s/g, "");
-      var temp = nowhite.toUpperCase();
-      array[i] = temp;
+      array[i] = nowhite;
     }
 
     return array;
