@@ -120,14 +120,14 @@ class CreateAThread extends Component {
          <p/>
                <div
                    id="threadTitle"
-                   contenteditable="true">
-                   Enter a title
+                   contenteditable="true"
+                   data-text="Enter your title here">
                </div>
                <p/>
                <div
                    id="threadBody"
-                   contenteditable="true">
-                   Body
+                   contenteditable="true"
+                   data-text="What's on your mind?">
                </div>
                <p/>
                <Button
