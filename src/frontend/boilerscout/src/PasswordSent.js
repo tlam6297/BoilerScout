@@ -5,7 +5,7 @@ class PasswordSent extends Component {
   render() {
     return (
       <div className="PasswordSent" class="Form">                
-        <h1>Password Sent!</h1>
+        <h1>Password Reset Link Sent!</h1>
         <p>Check your email for the next steps on updating your password</p>
       </div>
     );

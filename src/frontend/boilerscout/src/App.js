@@ -27,6 +27,7 @@ import PassUp from './PasswordUpdated'
 import PassUpOutside from './PasswordUpdatedOutside'
 import Outbox from './Outbox'
 import ValidateReset from './ValidateReset'
+import Verify from './Verify'
 import axios from 'axios'
 
 class App extends Component  {
@@ -134,6 +135,7 @@ render () {
         <Route path="/validate-reset" component={ValidateReset}/>
         <Route path="/password-updated" component={PassUp} />
         <Route path="/password-updated-outside" component={PassUpOutside}/>
+        <Route path="/verify" component={Verify} />
       </AnimatedSwitch>
     </div>
   )
