@@ -1,16 +1,15 @@
-
-
 .scout {
   display: grid;
   min-height: 50%;
-  grid-template-rows: 0.3fr 0.3fr 1fr 1fr 1fr 1fr;
-  grid-template-columns: 0.5fr 1fr 0.5fr;
+  grid-template-rows: 190px 0.3fr 1fr 1fr 1fr 1fr;  grid-template-columns: 0.5fr 1fr 0.5fr;
 }
 
 .navs {
   grid-column: 1 / 4;
   grid-row: 0;
 }
+
+
 
 .form {
   grid-column: 2;
@@ -24,11 +23,6 @@
   grid-row: 3 / 9;
 }
 
-.advanced {
-  grid-column: 3;
-  grid-row: 3;
-}
-
 button {
   color:black;
 }
@@ -38,18 +32,20 @@ button {
 }
 
 .ScoutForm {
-  width: 20%;
+  width: 20.5%;
+  height: 1.2rem;
 }
 
 .listelem {
-  list-style-type: none;
-  border: 4px solid rgb(139, 130, 0);
-  background-color: rgb(0, 96, 221);
-  padding: 2rem;
-  margin: 1rem;
-  border-radius: 30px;
-  text-decoration: none;
+  background-color: #f0eceb;
+  box-shadow: 4px 4px 8px 4px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  padding: 10px;
+  margin: 10px;
+  border-width: 1px;
+  border-color: #d1d1d1;
 }
+
 
 .result {
   list-style-type: none;
@@ -88,7 +84,7 @@ button {
 .first {
   grid-column: 1;
   grid-row: 1;
-  font-size: large;
+  font-size: large;  
 }
 
 .last {
@@ -97,7 +93,6 @@ button {
 }
 
 .dropdown {
-  background-color: #4CAF50; /* Green */
   border: solid;
   color: white;
   padding: 15px 32px;
@@ -112,9 +107,6 @@ option {
 }
 
 .advancedButton {
-  background-color: rgb(12, 71, 0);
-  border: solid;
-  color: white;
   padding: 10px;
   text-align: center;
   text-decoration: none;
@@ -123,16 +115,22 @@ option {
 
 .grad_year {
   grid-column: 1;
-  grid-row: 1 / span 2;
+  grid-row: 1;
   background-color: white;
+  font-size: small;
+}
+
+.major_adv {
+  margin-bottom: 100px;
+  grid-column: 1;
+  grid-row: 2;
+  font-size: small;
 }
 
 .major {
-  grid-column: 2;
-  grid-row: 1 / span 2;
+  grid-column: 1;
+  grid-row: 2;
   font-size: small;
-  color: slateblue;
-  background-color: white;
 }
 
 .grad {
@@ -144,18 +142,29 @@ option {
 
 .advanced {
   border-style: solid;
-  border-width: thin;
+  border-radius: 3%;
+  border-width: 1px;
   border-color: white;
-  background-color: tomato;
-  padding: 30px;
+  background-color: #f0eceb;
   grid-column: 3;
   grid-row: 2;
   display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr 1fr;
+  margin-right: 50px;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr;
+  width:80%;
+  height: 50%;
+}
+
+.advanced * {
+  background-color: #f0eceb;
 }
 
 .noResults {
   grid-column: 2;
   grid-row: 3;
+}
+
+.advheader {
+  color: #8d743d;
 }

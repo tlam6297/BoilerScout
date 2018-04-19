@@ -2,6 +2,10 @@
   display: grid;
 } 
 
+.onlyCommunity {
+  padding: 110px;
+}
+
 h2 {
   color: black;
 }
