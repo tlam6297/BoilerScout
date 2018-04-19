@@ -10,7 +10,6 @@ li {
   margin-left: auto;
   margin-right: auto;
 }
-
 .comments {
   margin-left: auto;
   margin-right: auto;
@@ -50,12 +49,15 @@ li {
   background-color: #f0eceb;
  
 }
+#threadUser {
+  color:#555555;
+  font-size: 1rem;
+  width: 25em;
+  display: inline-block;
+}
 
-.result {
-  padding-bottom: 2rem;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
+#threadTime {
+  font-size: small;
 }
  .body {
   grid-column: 1/5;

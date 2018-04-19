@@ -254,7 +254,7 @@ class Inbox extends Component {
         <form onSubmit={this.handleSubmit} className="padding">
           <label>
             <p className="">Reply:</p>
-            <textarea rows="4" cols="104" onChange={this.handleChangeInput}>{this.state.reply}</textarea>
+            <textarea id="msgreply" rows="4" cols="104" onChange={this.handleChangeInput}>{this.state.reply}</textarea>
           </label>
           <button type="submit" value="Submit" disabled={!this.validateForm}>SEND</button>
         </form>

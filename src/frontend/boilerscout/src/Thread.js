@@ -98,6 +98,9 @@ class Thread extends Component {
                 comments: res.data.comments,
                 thread: res.data.thread[0],
                 });  
+
+                console.log(res.data)
+                console.log(this.state);
             } else {
                 alert("Invalid Token- Please login again");
                 this.setState({
@@ -159,11 +162,6 @@ class Thread extends Component {
     renderReplyBox = () => {    
       return (
         <div className="Thread">
-            <button
-              type="button"
-              onClick={this.toggle}>
-              Post Reply
-          </button>
           <br/>
           <form onSubmit={this.handleSubmit}>
             <div className="reply">
@@ -279,10 +277,22 @@ class Thread extends Component {
                     id="threadTitle"> 
                     {this.state.thread.thread_title}
                 </div>
+                <Link to={
+                  `/profile?user_id=` + this.state.thread.user_id
+                } id="link">
+                <div 
+                    id="threadUser"> 
+                    by {this.state.thread.full_name}
+                </div>
+                </Link>
                 <p/>
                 <div 
                     id="threadBody"> 
                     {this.state.thread.thread_body}
+                </div>
+                <div 
+                    id="threadTime"> 
+                    {this.state.thread.thread_date}
                 </div>
                 <p/>
           </div>
