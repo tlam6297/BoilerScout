@@ -145,13 +145,14 @@ class Scout extends Component {
         <ul>
           <div className='li'>
             {this.state.results.map((result, index) =>
-              <Link key={index} to={
+                <li key={index} className="listelem">
+                    <Link key={index} to={
                   `/profile?user_id=` + result.user_id
                 } className="link">
-                <li key={index} className="listelem">
-                    <div className="first entry">
+                <div className="first entry">
                       {result.full_name}
                     </div>
+                    </Link>
                     <div className="major entry">
                       {result.major}
                     </div>
@@ -159,7 +160,6 @@ class Scout extends Component {
                       Grad Year: {result.grad_year}
                     </div>
                 </li>
-              </Link>
             )}
           </div>
         </ul>
@@ -182,14 +182,6 @@ class Scout extends Component {
 
     const grad_years = [
       "",
-      2010,
-      2011,
-      2012,
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
       2018,
       2019,
       2020,
@@ -197,27 +189,21 @@ class Scout extends Component {
       2022,
       2023,
       2024,
-      2025,
-      2026,
-      2027,
-      2028,
-      2029,
-      2030,
     ];
 
     if (this.state.advanced) {
       return (
         <div className="advanced">
           <div className="grad_year">
-            <h3>Graduation Year:</h3>
+            <h3 class="advheader">Graduation Year:</h3>
             <select value={this.state.selectedYear} onChange={this.handleChangeYear} key="0" name="dropdownYear" id="0" className="select">
               {grad_years.map((year, i) =>                
                 <option className="select" key={i} value={year}>{year}</option>
               )}
             </select>
           </div>
-          <div className="major">
-            <h2>Major:</h2>
+          <div className="major_adv">
+            <h3 class="advheader">Major:</h3>
             <select value={this.state.selectedMajor} onChange={this.handleChangeMajor} key="1" name="dropdownMajor" id="1" className="select">
               {majors.map((major, i) =>
                 <option key={i} value={major}>{major}</option>
@@ -267,7 +253,8 @@ class Scout extends Component {
         <div className="navs">
           <TopNavBar/>
         </div>        
-        <form onSubmit={this.handleSubmit} className="form">  
+        <form onSubmit={this.handleSubmit} className="form"> 
+        <h2>Scout</h2> 
         <FormGroup controlId="searchinput" bsSize="large">
           <FormControl
             className="FormInput ScoutForm"
@@ -297,6 +284,7 @@ class Scout extends Component {
           <div className="advancedButton">
             <Route render={({ history}) => (
               <button
+                id='advbutton'
                 type='button'
                 onClick={() => {
 
