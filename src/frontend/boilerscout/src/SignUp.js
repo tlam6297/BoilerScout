@@ -71,11 +71,15 @@ class SignUp extends Component {
           break;
       }
     });
+
+    console.log(this.state.Graduation);
   }
 
 
   handleSubmit = (event) => {
       event.preventDefault();
+      console.log("ugh");
+      if (this.validateForm()) {
       const _this = this;
       const email = this.state.email;
 
@@ -135,7 +139,7 @@ class SignUp extends Component {
           console.log(response);
         }
       })
-
+    }
   }
 
   validateEmail = () => {
@@ -327,7 +331,6 @@ class SignUp extends Component {
               block
               className="submitbutton"
               bsSize="small"
-              disabled={!this.validateForm}
               type="submit">
               SUBMIT
           </Button>
