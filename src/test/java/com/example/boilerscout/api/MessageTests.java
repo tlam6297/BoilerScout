@@ -86,46 +86,44 @@ public class MessageTests extends MessageController {
             Assert.assertTrue("Test failed!", false);
 
         }catch(RuntimeException e){
-            Assert.assertTrue("The user receiver don't exist!", true);
+            Assert.assertTrue("The user receiver don't exist!", e.getMessage().equals("[InternalServerError] - Error accessing data."));
         }
     }
 
     @Test
-    public void everythingWorksMessage(){
+    public void everythingWorksMessage() throws Exception {
         Map<String,String> input = new HashMap<String, String>();
+
         input.put("token","eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnRvbWVsZ2FyY0BwdXJkdWUuZWR1IiwidXNlcklkIjoiODZiNmJlMTktOWQzMi00YjFhLWFiNGItYTI5YTdhOTBjYzk4IiwiZXhwIjoxNTI0OTcxMzE2fQ.7_MHA4JOfCxdQRHvsJlXFbvVtb52XrBqiDxqOZJQxAQpVwiS4TqRfAHE-YA4NNLUtwWlxq32mI7NojeNwjIeqg");
         input.put("userId", "86b6be19-9d32-4b1a-ab4b-a29a7a90cc98");
         input.put("recipientEmail","lam45@purdue.edu");
         input.put("messageBody","This is a message.");
 
-        Map<String, Object> output = new HashMap<String, Object>();
+        String output = json(input);
 
-        try {
-            output = sendMessage(input);
-            Assert.assertTrue("Test passed! All inputs are valid!!", true);
+        mvc.perform(post("/send-message")
+                .contentType(contentType)
+                .content(output))
+                .andExpect(status().isOk());
 
-        }catch(RuntimeException e){
-            Assert.assertTrue("Test failed!",false );
-        }
     }
 
     @Test
-    public void emptyMessage(){
+    public void emptyMessage() throws Exception {
         Map<String,String> input = new HashMap<String, String>();
+
         input.put("token","eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnRvbWVsZ2FyY0BwdXJkdWUuZWR1IiwidXNlcklkIjoiODZiNmJlMTktOWQzMi00YjFhLWFiNGItYTI5YTdhOTBjYzk4IiwiZXhwIjoxNTI0OTcxMzE2fQ.7_MHA4JOfCxdQRHvsJlXFbvVtb52XrBqiDxqOZJQxAQpVwiS4TqRfAHE-YA4NNLUtwWlxq32mI7NojeNwjIeqg");
         input.put("userId", "86b6be19-9d32-4b1a-ab4b-a29a7a90cc98");
         input.put("recipientEmail","lam45@purdue.edu");
         input.put("messageBody","");
 
-        Map<String, Object> output = new HashMap<String, Object>();
+        String output = json(input);
 
-        try {
-            output = sendMessage(input);
-            Assert.assertTrue("Test passed! All inputs are valid!!", true);
+        mvc.perform(post("/send-message")
+                .contentType(contentType)
+                .content(output))
+                .andExpect(status().isOk());
 
-        }catch(RuntimeException e){
-            Assert.assertTrue("Test failed!",false );
-        }
     }
 
 
@@ -140,6 +138,7 @@ public class MessageTests extends MessageController {
                 .andExpect(content().contentType(contentType));
     }
 
+
     @Test
     public void validOutbox() throws Exception {
         mvc.perform(get("/outbox")
@@ -153,25 +152,26 @@ public class MessageTests extends MessageController {
 
 
     @Test
-    public void noInputforSortInbox(){
-        try {
-            getInbox("86b6be19-9d32-4b1a-ab4b-a29a7a90cc98","" ,"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnRvbWVsZ2FyY0BwdXJkdWUuZWR1IiwidXNlcklkIjoiODZiNmJlMTktOWQzMi00YjFhLWFiNGItYTI5YTdhOTBjYzk4IiwiZXhwIjoxNTI0OTcxMzE2fQ.7_MHA4JOfCxdQRHvsJlXFbvVtb52XrBqiDxqOZJQxAQpVwiS4TqRfAHE-YA4NNLUtwWlxq32mI7NojeNwjIeqg" );
-            Assert.assertTrue("Sorted as ASC, which is the default!!", true);
+    public void noInputforSortInbox() throws Exception {
+        mvc.perform(get("/inbox")
+                .param("userId", inboxUserId)
+                .param("token", inboxToken)
+                .param("sort","")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType));
 
-        }catch(RuntimeException e){
-            Assert.assertTrue("Test failed!",false );
-        }
     }
 
     @Test
-    public void noInputforSortOutbox(){
-        try {
-            getInbox("86b6be19-9d32-4b1a-ab4b-a29a7a90cc98","" ,"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnRvbWVsZ2FyY0BwdXJkdWUuZWR1IiwidXNlcklkIjoiODZiNmJlMTktOWQzMi00YjFhLWFiNGItYTI5YTdhOTBjYzk4IiwiZXhwIjoxNTI0OTcxMzE2fQ.7_MHA4JOfCxdQRHvsJlXFbvVtb52XrBqiDxqOZJQxAQpVwiS4TqRfAHE-YA4NNLUtwWlxq32mI7NojeNwjIeqg" );
-            Assert.assertTrue("Sorted as ASC, which is the default!!", true);
-
-        }catch(RuntimeException e){
-            Assert.assertTrue("Test failed!",false );
-        }
+    public void noInputforSortOutbox() throws Exception{
+        mvc.perform(get("/outbox")
+                .param("userId", outboxUserId)
+                .param("token", outboxToken)
+                .param("sort","")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType));
     }
 
     @Test
