@@ -255,7 +255,6 @@ class EditProfile extends Component {
         edit_skills: true
       });
     } else if (event.target.className == "Bio") {
-      console.log("wtfbro")
       this.setState({
         edit_bio: true
       });
@@ -352,11 +351,11 @@ class EditProfile extends Component {
               <textarea
                 wrap="soft"
                 id="Bio"
+                value={this.state.Bio}
                 className="Bio"
                 contenteditable="true"
                 onChange={this.handleChange}
                 >
-                {this.state.Bio}
               </textarea>            
               <FormGroup controlId="Courses" bsSize="large">
                 <ControlLabel className="edit">Courses:</ControlLabel>
