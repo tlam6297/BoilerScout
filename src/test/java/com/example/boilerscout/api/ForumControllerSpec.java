@@ -93,8 +93,8 @@ public class ForumControllerSpec {
         startThreadMap.put("userId", userId);
         startThreadMap.put("token", token);
         startThreadMap.put("forumId", forumId);
-        startThreadMap.put("threadTitle", "someThreadTitle");
-        startThreadMap.put("threadBody", "someThreadBody");
+        startThreadMap.put("threadTitle", "Automatic Bitcoin Miner");
+        startThreadMap.put("threadBody", "I'm looking to get rich quick!");
 
         String startThreadJson = json(startThreadMap);
         this.mvc.perform(post("/community/start-thread")
@@ -128,7 +128,7 @@ public class ForumControllerSpec {
         postReplyMap.put("userId", userId);
         postReplyMap.put("token", token);
         postReplyMap.put("threadId", threadId);
-        postReplyMap.put("postBody", "TERRY CARRIED CS307");
+        postReplyMap.put("postBody", "I would love to help...some call me a stallion.");
         String postReplyJson = json(postReplyMap);
         mvc.perform(post("/community/post-reply")
         .contentType(contentType)
@@ -141,7 +141,7 @@ public class ForumControllerSpec {
         Map<String, Object> updateMap = new HashMap<String, Object>();
         updateMap.put("forumName", "someForum");
         updateMap.put("description", "someDescription");
-        updateMap.put("action", "insert");
+        updateMap.put("action", "remove");
         String updateJson = json(updateMap);
         mvc.perform(post("/community/update")
         .contentType(contentType)
