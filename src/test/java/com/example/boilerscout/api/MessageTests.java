@@ -64,22 +64,20 @@ public class MessageTests extends MessageController {
     private WebApplicationContext webApplicationContext;
 
 
-    String inboxUserId = "6b8ed454-eaba-4cf3-88ef-8f21f36f920f";
-    String inboxToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYmxhY2tAcHVyZHVlLmVkdSIsInVzZXJJZCI6IjZiOGVkNDU0LWVhYmEtNGNmMy04OGVmLThmMjFmMzZmOTIwZiIsImV4cCI6MTUyNTAxODExNH0.1TumNEy-xw6LZwnxDMvXQUAv5NL7TnGH1xFH0w7TwR1Qcj0ffh6Hvkykvup8xrZfw5au6S7FWbjrzF78hVlyAA";
-
-    String outboxUserId = "86b6be19-9d32-4b1a-ab4b-a29a7a90cc98";
-    String outboxToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnRvbWVsZ2FyY0BwdXJkdWUuZWR1IiwidXNlcklkIjoiODZiNmJlMTktOWQzMi00YjFhLWFiNGItYTI5YTdhOTBjYzk4IiwiZXhwIjoxNTI0OTcxMzE2fQ.7_MHA4JOfCxdQRHvsJlXFbvVtb52XrBqiDxqOZJQxAQpVwiS4TqRfAHE-YA4NNLUtwWlxq32mI7NojeNwjIeqg";
-
     @Before
     public void setup() throws Exception {
         this.mvc = webAppContextSetup(webApplicationContext).build();
     }
 
+    String user_id = "80ebe00d-bba8-443f-81b2-fefbe884b6ab";
+    String token_ = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYW00NUBwdXJkdWUuZWR1IiwidXNlcklkIjoiODBlYmUwMGQtYmJhOC00NDNmLTgxYjItZmVmYmU4ODRiNmFiIiwiZXhwIjoxNTI1MDM0NTEzfQ.duUpwGJXCdbivBbTuH92UzPPS4JrWZISOvQbxCWrCha-vLh_Mj6BYK8k55tHqNzBdd-yT0kuvrq9l652x2gLoA";
+    String email = "jmieczni@purdue.edu";
+
     @Test
     public void nonExistingUserTest(){
         Map<String,String> input = new HashMap<String, String>();
-        input.put("token","eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnRvbWVsZ2FyY0BwdXJkdWUuZWR1IiwidXNlcklkIjoiODZiNmJlMTktOWQzMi00YjFhLWFiNGItYTI5YTdhOTBjYzk4IiwiZXhwIjoxNTI0OTcxMzE2fQ.7_MHA4JOfCxdQRHvsJlXFbvVtb52XrBqiDxqOZJQxAQpVwiS4TqRfAHE-YA4NNLUtwWlxq32mI7NojeNwjIeqg");
-        input.put("userId", "86b6be19-9d32-4b1a-ab4b-a29a7a90cc98");
+        input.put("token",token_);
+        input.put("userId", user_id);
         input.put("recipientEmail","nonexistinguser@purdue.edu");
         input.put("message","This is a message.");
 
@@ -98,9 +96,9 @@ public class MessageTests extends MessageController {
     public void everythingWorksMessage() throws Exception {
         Map<String,String> input = new HashMap<String, String>();
 
-        input.put("token","eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnRvbWVsZ2FyY0BwdXJkdWUuZWR1IiwidXNlcklkIjoiODZiNmJlMTktOWQzMi00YjFhLWFiNGItYTI5YTdhOTBjYzk4IiwiZXhwIjoxNTI0OTcxMzE2fQ.7_MHA4JOfCxdQRHvsJlXFbvVtb52XrBqiDxqOZJQxAQpVwiS4TqRfAHE-YA4NNLUtwWlxq32mI7NojeNwjIeqg");
-        input.put("userId", "86b6be19-9d32-4b1a-ab4b-a29a7a90cc98");
-        input.put("recipientEmail","lam45@purdue.edu");
+        input.put("token",token_);
+        input.put("userId", user_id);
+        input.put("recipientEmail",email);
         input.put("messageBody","This is a message.");
 
         String output = json(input);
@@ -114,14 +112,14 @@ public class MessageTests extends MessageController {
 
     }
 
-    String user_id = "86b6be19-9d32-4b1a-ab4b-a29a7a90cc98";
+
     @Test
     public void emptyMessage() throws Exception {
         Map<String,String> input = new HashMap<String, String>();
 
-        input.put("token","eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnRvbWVsZ2FyY0BwdXJkdWUuZWR1IiwidXNlcklkIjoiODZiNmJlMTktOWQzMi00YjFhLWFiNGItYTI5YTdhOTBjYzk4IiwiZXhwIjoxNTI0OTcxMzE2fQ.7_MHA4JOfCxdQRHvsJlXFbvVtb52XrBqiDxqOZJQxAQpVwiS4TqRfAHE-YA4NNLUtwWlxq32mI7NojeNwjIeqg");
-        input.put("userId", "86b6be19-9d32-4b1a-ab4b-a29a7a90cc98");
-        input.put("recipientEmail","lam45@purdue.edu");
+        input.put("token",token_);
+        input.put("userId", user_id);
+        input.put("recipientEmail",email);
         input.put("messageBody","");
 
         String output = json(input);
@@ -135,11 +133,12 @@ public class MessageTests extends MessageController {
 
     }
 
+
     @Test
     public void noInputforSortInbox() throws Exception {
         mvc.perform(get("/inbox")
-                .param("userId", inboxUserId)
-                .param("token", inboxToken)
+                .param("userId", user_id)
+                .param("token", token_)
                 .param("sort","")
         )
                 .andExpect(status().isOk())
@@ -150,8 +149,8 @@ public class MessageTests extends MessageController {
     @Test
     public void noInputforSortOutbox() throws Exception{
         mvc.perform(get("/outbox")
-                .param("userId", outboxUserId)
-                .param("token", outboxToken)
+                .param("userId", user_id)
+                .param("token", token_)
                 .param("sort","")
         )
                 .andExpect(status().isOk())
@@ -161,8 +160,8 @@ public class MessageTests extends MessageController {
     @Test
     public void testASCforInbox() throws Exception {
         mvc.perform(get("/inbox")
-                .param("userId", inboxUserId)
-                .param("token", inboxToken)
+                .param("userId", user_id)
+                .param("token", token_)
                 .param("sort","ASC")
         )
                 .andExpect(status().isOk())
@@ -175,8 +174,8 @@ public class MessageTests extends MessageController {
     @Test
     public void testDESCforInbox() throws Exception{
         mvc.perform(get("/inbox")
-                .param("userId", inboxUserId)
-                .param("token", inboxToken)
+                .param("userId", user_id)
+                .param("token", token_)
                 .param("sort","DESC")
         )
                 .andExpect(status().isOk())
@@ -186,8 +185,8 @@ public class MessageTests extends MessageController {
     @Test
     public void testASCforOutbox() throws Exception {
         mvc.perform(get("/outbox")
-                .param("userId", outboxUserId)
-                .param("token", outboxToken)
+                .param("userId", user_id)
+                .param("token", token_)
                 .param("sort","ASC")
         )
                 .andExpect(status().isOk())
@@ -197,8 +196,8 @@ public class MessageTests extends MessageController {
     @Test
     public void testDESCforOutbox() throws Exception {
         mvc.perform(get("/outbox")
-                .param("userId", outboxUserId)
-                .param("token", outboxToken)
+                .param("userId", user_id)
+                .param("token", token_)
                 .param("sort","DESC")
         )
                 .andExpect(status().isOk())
