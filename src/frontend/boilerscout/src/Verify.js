@@ -22,11 +22,11 @@ class Verify extends Component {
     const _this = this;
     axios.get("http://localhost:8080/verify" + uri)
     .then(res => {
-      console.log(res.data)
+      console.log(res)
       if (res.data.status == "OK") {
         _this.setState({
           render: true,
-          text: "Profile successfully verified",
+          text: res.data.Response,
         })
       } else {
         _this.setState({
@@ -48,7 +48,7 @@ class Verify extends Component {
           <Logo />
         </div>            
         <h1>{this.state.text}</h1>
-        <Link to="/login">Go to Login</Link>
+        <Link to="/">Go to Home</Link>
       </div>
     )
   }
