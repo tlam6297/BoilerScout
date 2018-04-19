@@ -218,7 +218,7 @@ class UpdatePassword extends Component {
     .then(function(response) {
       console.log(response);   
       if (response.ok) {
-        _this.setState({ redirect: true })
+        _this.setState({ redirect1: true })
       } else {
         alert("Error, old password is not correct")
       } 
@@ -253,7 +253,7 @@ class UpdatePassword extends Component {
       this.setState({
         redirect1: false,
       })
-      return (<Redirect to="/" />)
+      return (<Redirect to="/password-updated" />)
     }
   }
 
@@ -307,6 +307,7 @@ class UpdatePassword extends Component {
           </div>
             </form>
         </div>
+        {this.rednerRedirect()}
       </div>
     )
   }
