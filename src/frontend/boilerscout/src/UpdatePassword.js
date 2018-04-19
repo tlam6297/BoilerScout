@@ -46,6 +46,7 @@ class UpdatePassword extends Component {
       switch (mytarget) {
         case 'newPassword1':
           this.validateNewPassword();
+          this.validateRepeatNewPassword();
           break;
         case 'newPassword2':
           this.validateRepeatNewPassword();
@@ -57,7 +58,7 @@ class UpdatePassword extends Component {
   }
 
   validateOldPassword = () => {
-    const password = this.state.password;
+    const password = this.state.oldPassword;
     const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
     let passtemperror = ["Your old password "];
     let passerror;
