@@ -25,6 +25,10 @@ input:invalid{
   background-color: #FDD;
 }
 
+select:invalid{
+  border-color: #900;
+  background-color: #FDD;
+}
 
 .error {
   width  : 100%;
