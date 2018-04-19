@@ -31,6 +31,10 @@ class SignUp extends Component {
     if (this.state.Graduation == "-1" || this.state.Major == "-1") {
       return false;
     }
+
+    if (this.state.fullname == "" || this.state.fullname.length == 0 || this.state.fullname.indexOf(' ') < 0) {
+      return false;
+    }
       const email = this.state.email.toLowerCase();
       const regex = /^\S+@purdue.edu$/;
       const validEmail = regex.test(email);
