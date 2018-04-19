@@ -128,30 +128,6 @@ public class MessageTests extends MessageController {
 
 
     @Test
-    public void validInbox() throws Exception {
-        mvc.perform(get("/inbox")
-                .param("userId", inboxUserId)
-                .param("token", inboxToken)
-                .param("sort","ASC")
-        )
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
-    }
-
-
-    @Test
-    public void validOutbox() throws Exception {
-        mvc.perform(get("/outbox")
-                .param("userId", outboxUserId)
-                .param("token", outboxToken)
-                .param("sort","ASC")
-        )
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
-    }
-
-
-    @Test
     public void noInputforSortInbox() throws Exception {
         mvc.perform(get("/inbox")
                 .param("userId", inboxUserId)
