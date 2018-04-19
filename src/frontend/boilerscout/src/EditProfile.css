@@ -15,8 +15,16 @@
  }
  
  #Bio {
-  height: 100px;
- }
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  text-overflow: clip;
+  background-color: white;
+  text-justify: distribute;
+  border-width: 2px;
+  border-radius: 5%;
+  width: 50%;
+  height: 6rem;
+}
  
  #success {
   color: green;
