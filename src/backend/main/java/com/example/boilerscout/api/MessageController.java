@@ -108,7 +108,7 @@ public class MessageController extends ValidationUtility {
                         userOutbox = jdbcTemplate.queryForList("SELECT um.message_id, um.message_body, p.full_name, u.email, um.message_date FROM user_messages um INNER JOIN profiles p ON um.recipient_id=p.user_id INNER JOIN users u ON u.user_id=um.recipient_id WHERE sender_id='" + userId + "'ORDER BY message_date ASC");
                         break;
                     case "DESC":
-                        userOutbox = jdbcTemplate.queryForList("SELECT um.message_id, um.message_body, p.full_name, u.email, um.message_date FROM user_messages um INNER JOIN profiles p ON um.recipient_id=p.user_id INNER JOIN users u ON u.user_id=um.recipient_id WHERE sender_id='" + userId + "'ORDER BY message_date ASC");
+                        userOutbox = jdbcTemplate.queryForList("SELECT um.message_id, um.message_body, p.full_name, u.email, um.message_date FROM user_messages um INNER JOIN profiles p ON um.recipient_id=p.user_id INNER JOIN users u ON u.user_id=um.recipient_id WHERE sender_id='" + userId + "'ORDER BY message_date DESC");
                         break;
                     default:
                         userOutbox = jdbcTemplate.queryForList("SELECT um.message_id, um.message_body, p.full_name, u.email, um.message_date FROM user_messages um INNER JOIN profiles p ON um.recipient_id=p.user_id INNER JOIN users u ON u.user_id=um.recipient_id WHERE sender_id='" + userId + "'ORDER BY message_date ASC");
