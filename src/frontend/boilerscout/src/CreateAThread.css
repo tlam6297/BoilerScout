@@ -7,6 +7,10 @@
   text-align: center;
 }
 
+[contentEditable=true]:empty:not(:focus):before{
+  content:attr(data-text) 
+}
+
 #threadBody {
   color: black;
   font-size: 1rem;
@@ -15,6 +19,7 @@
   height: 8rem;
   display: inline-block;
 }
+
 
 h1 {
   color: #cc9900,

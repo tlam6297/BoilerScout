@@ -14,6 +14,7 @@ class UpdatePassword extends Component {
       newPassword1: "",
       newPassword2: "",
       redirect: false,
+      redirect1: false,
     }
   }
 
@@ -30,8 +31,6 @@ class UpdatePassword extends Component {
 
     const passwordsMatch = (newPassword1 == newPassword2);
 
-    console.log(validNewPassword);
-
     return (passwordsMatch && validNewPassword);
   }
 
@@ -40,12 +39,155 @@ class UpdatePassword extends Component {
   }
 
   handleChange = (event) => {
+    let mytarget = event.target.id;
     this.setState({
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
+      changed: true,
+    }, (event) => {
+      switch (mytarget) {
+        case 'newPassword1':
+          this.validateNewPassword();
+          this.validateRepeatNewPassword();
+          break;
+        case 'newPassword2':
+          this.validateRepeatNewPassword();
+          break;
+        default:
+          break;
+      }
     });
   }
 
+  validateOldPassword = () => {
+    const password = this.state.oldPassword;
+    const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
+    let passtemperror = ["Your old password "];
+    let passerror;
+    const validPassword = passwordregex.test(password);
+
+    if (!validPassword) {
+      const passonedigit = /^(?=.*[0-9])/;
+      const passoneuppercase = /^(?=.*[A-Z])/;
+      const passonespecialchar = /^(?=.*[$@$!%*?&])/;
+      const passlengtheight = /^.{8,12}$/;
+      let i = 1;
+      if (!passonedigit.test(password)) {
+        passtemperror[i] = "must have had one digit"
+        i++;
+      }
+
+      if (!passoneuppercase.test(password)) {
+        if (i != 1) {
+          passtemperror[i] = ", one uppercase character"
+        } else {
+          passtemperror[i] = "must have had one uppercase character"
+        }
+        i++;
+      }
+
+      if (!passonespecialchar.test(password)) {
+        if (i != 1) {
+          passtemperror[i] = ", one special ($@$!%*?&) character. "
+        } else {
+          passtemperror[i] = "must have had one special ($@$!%*?&) character. "
+        }
+        i++;
+      }
+
+      if (!passlengtheight.test(password)) {
+        if (i != 1) {
+          passtemperror[i] = "Password length must be between 8 and 12 characters"
+        } else {
+          passtemperror[i] = "length must have been between 8 and 12 characters"
+        }
+        i++;
+      }
+
+      passtemperror[i] = ".";
+
+
+      passerror = passtemperror.join("");
+      document.getElementById("oldPassword").setCustomValidity(passerror);
+
+    } else {
+      document.getElementById("oldPassword").setCustomValidity("");
+    }
+
+  }
+
+  validateNewPassword = () => {
+    const password = this.state.newPassword1;
+    const passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
+    let passtemperror = ["Password "];
+    let passerror;
+    const validPassword = passwordregex.test(password);
+
+    if (!validPassword) {
+      const passonedigit = /^(?=.*[0-9])/;
+      const passoneuppercase = /^(?=.*[A-Z])/;
+      const passonespecialchar = /^(?=.*[$@$!%*?&])/;
+      const passlengtheight = /^.{8,12}$/;
+      let i = 1;
+      if (!passonedigit.test(password)) {
+        passtemperror[i] = "must have one digit"
+        i++;
+      }
+
+      if (!passoneuppercase.test(password)) {
+        if (i != 1) {
+          passtemperror[i] = ", one uppercase character"
+        } else {
+          passtemperror[i] = "must have one uppercase character"
+        }
+        i++;
+      }
+
+      if (!passonespecialchar.test(password)) {
+        if (i != 1) {
+          passtemperror[i] = ", one special ($@$!%*?&) character. "
+        } else {
+          passtemperror[i] = "must have one special ($@$!%*?&) character. "
+        }
+        i++;
+      }
+
+      if (!passlengtheight.test(password)) {
+        if (i != 1) {
+          passtemperror[i] = "Password length must be between 8 and 12 characters"
+        } else {
+          passtemperror[i] = "length must be between 8 and 12 characters"
+        }
+        i++;
+      }
+
+      passtemperror[i] = ".";
+
+
+      passerror = passtemperror.join("");
+      document.getElementById("newPassword1").setCustomValidity(passerror);
+
+    } else {
+      document.getElementById("newPassword1").setCustomValidity("");
+    }
+
+  }
+
+  validateRepeatNewPassword = () => {
+    const password = this.state.newPassword1;
+    const repeatpass = this.state.newPassword2;
+    const repeatPassword = (password == repeatpass);
+    if (!repeatPassword) {
+      document.getElementById("newPassword2").setCustomValidity("Passwords don't match.");
+    } else {
+      document.getElementById("newPassword2").setCustomValidity("");
+    }
+
+  }
   handleSubmit = (e) => {
+    this.validateNewPassword();
+    this.validateRepeatNewPassword();
+
+    if (this.validateForm()) {
     e.preventDefault();
     const _this = this;
 
@@ -77,14 +219,13 @@ class UpdatePassword extends Component {
     .then(function(response) {
       console.log(response);   
       if (response.ok) {
-        _this.setState({ redirect: true })
+        _this.setState({ redirect1: true })
       } else {
         alert("Error, old password is not correct")
       } 
     })
 
-
-
+  }
   }
 
   componentWillMount = () => {
@@ -95,15 +236,24 @@ class UpdatePassword extends Component {
       if (res.data == false) {
         console.log("Not valid token")
         this.setState({
-          redirect1: true,
+          redirect: true,
         })
       } else {
         console.log("Valid Token")
         this.setState({
-          redirect1: false,
+          redirect: false,
         })
       }
     })
+  }
+
+  renderRedirectFirst = () => {
+    if (this.state.redirect) {
+      this.setState({
+        redirect: false,
+      })
+      return (<Redirect to="/" />)
+    }
   }
 
   rednerRedirect = () => {
@@ -111,16 +261,15 @@ class UpdatePassword extends Component {
       this.setState({
         redirect1: false,
       })
-      return (<Redirect to="/" />)
+      return (<Redirect to="/password-updated" />)
     }
   }
 
   render() {
     return(
       <div>
-        {this.rednerRedirect()}
         <div className="UpdatePassword">      
-        <form onSubmit={this.handleSubmit}>
+        <form novalidate onSubmit={this.handleSubmit}>
           <div className="Form" >
             <h2 id="passwordedit">Update Password</h2>
               <FormGroup controlId="oldPassword" bsSize="large">
@@ -160,16 +309,14 @@ class UpdatePassword extends Component {
                 block
                 bsSize="small"
                 id="submitbutton"
-                disabled={!this.validateForm()}
                 type="submit">
                 SUBMIT        
               </Button>
           </div>
             </form>
-            {this.state.redirect && (
-              <Redirect to={'/password-updated'}/>   
-            )}
         </div>
+        {this.rednerRedirect()}
+        {this.renderRedirectFirst()}
       </div>
     )
   }

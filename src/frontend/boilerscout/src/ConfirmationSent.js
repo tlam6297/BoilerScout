@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Logo from './Logo'
+import './ConfirmationSent.css'
 
 class ConfirmationSent extends Component {
   render() {
@@ -7,7 +8,7 @@ class ConfirmationSent extends Component {
       <div className="ConfirmationSent" class="Form">
         <Logo/>               
         <h1>You're almost there...</h1>
-        <p>Check your email for the next steps on signing up</p>
+        <p id="confirmationsent">Check your email to finish signing up!</p>
       </div>
     );
   }
