@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.apache.commons.text.WordUtils;
 
 import java.util.*;
 
@@ -26,7 +27,7 @@ public class ProfileController extends ValidationUtility {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-   public Map<String, Object> updateProfile(@RequestBody Map<String, Object> body) {
+  public Map<String, Object> updateProfile(@RequestBody Map<String, Object> body) {
 
         Map<String, Object> response = new HashMap<String, Object>();
 
@@ -41,6 +42,7 @@ public class ProfileController extends ValidationUtility {
             //Update profile
             //TODO Refactor this functionality for PUT and PATCH rather than POSTs
             try {
+                WordUtils wordUtils = new WordUtils();
                 //Update bio (if any changes are made)
                 if (body.containsKey("bio")) {
                     String bio = body.get("bio").toString().replace("'", "''");
@@ -62,6 +64,10 @@ public class ProfileController extends ValidationUtility {
                         jdbcTemplate.update("DELETE FROM user_skills WHERE user_id='" + userId + "'");
                         for (Iterator<String> it = listOfSkills.iterator(); it.hasNext();) {
                             String skillName = it.next();
+                            //trim, and capitalize each first letter,
+                            skillName = skillName.trim().replaceAll(" +"," ");
+                            skillName = skillName.toLowerCase();
+                            skillName = wordUtils.capitalize(skillName);
                             if (!skillExists(skillName)) {
                                 String newSkillId = UUID.randomUUID().toString();
                                 jdbcTemplate.update("INSERT INTO skills (skill_id, skill_name) VALUES (?, ?)", newSkillId, skillName);
@@ -88,6 +94,8 @@ public class ProfileController extends ValidationUtility {
                         jdbcTemplate.update("DELETE FROM user_courses WHERE user_id='" + userId + "'");
                         for (Iterator<String> it = listOfCourses.iterator(); it.hasNext();) {
                             String courseName = it.next();
+                            courseName = courseName.trim().replaceAll("\\s+","");
+                            courseName = courseName.toUpperCase();
                             if (!courseExists(courseName)) {
                                 String newCourseId = UUID.randomUUID().toString();
                                 jdbcTemplate.update("INSERT INTO courses (course_id, course_name) VALUES (?, ?)", newCourseId, courseName);
