@@ -15,6 +15,8 @@ class Thread extends Component {
       this.getAccessToken = this.getAccessToken.bind(this);
       this.getID = this.getID.bind(this);
       this.renderReplyBox = this.renderReplyBox.bind(this);
+      this.disabledReply = this.disabledReply.bind(this);
+      this.validateReply = this.validateReply.bind(this);
          this.state = {
           threadTitle: "",
           threadBody: "",
@@ -116,6 +118,15 @@ class Thread extends Component {
     getThreadId = () => {
       return this.state.threadId;
     }
+
+    validateReply = () => {
+      if (this.state.body == "") {
+        document.getElementById('body').setCustomValidity("Please enter a reply body");
+        console.log("body");
+      } else {
+        document.getElementById('body').setCustomValidity("");
+      }
+    }
    
    
     getLocalStorage = (key) => {
@@ -150,13 +161,20 @@ class Thread extends Component {
          response.json().then(json => {
            console.log(json);
          });
-         
-   
+            
        } else {
          alert("Error in posting comment");
        }     
      })
         this.reloadReplies();
+     }
+
+     disabledReply = () => {
+       if (this.state.body == "") {
+         return true;
+       } else {
+         return false;
+       }
      }
   
     renderReplyBox = () => {    
@@ -165,18 +183,18 @@ class Thread extends Component {
           <br/>
           <form onSubmit={this.handleSubmit}>
             <div className="reply">
-            <FormGroup controlId="body" bsSize="large">
-                <FormControl
-                  className="FormInput body"
-                  autoFocus
+                <textarea
+                  className="bodyonly"
                   type="text"
+                  id="body"
                   value={this.state.body}
                   onChange={this.handleChange}
                 />
-              </FormGroup>
+                <br/>
                 <Button
                 bsSize="small"
-                type="submit">
+                type="submit"
+                disabled={!this.disabledReply}>
                 SUBMIT       
               </Button>
               <div id="success">
@@ -192,9 +210,16 @@ class Thread extends Component {
    
    
       handleChange = (event) => {
+        let mytarget = event.target.id;
           this.setState({
             [event.target.id]: event.target.value
-          });        
+          }, () => {
+            if (mytarget == 'body') {
+              console.log("lol");
+              this.validateReply();
+            }
+          });
+        
       }
       getAccessToken = () => {
           // The type of token might be JSON

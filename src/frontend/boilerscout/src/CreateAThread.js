@@ -70,8 +70,7 @@ class CreateAThread extends Component {
       "threadBody": this.state.threadBody,
     });
 
-    console.log(payload);
-
+    
     fetch('http://localhost:8080/community/start-thread', {
       method: 'POST',
       headers: {
@@ -88,6 +87,10 @@ class CreateAThread extends Component {
           response.json().then(json => {
             console.log(json);
           });
+
+          this.setState ({
+            body: "",
+          })
 
         } else {
           alert("Error in updating profile");
