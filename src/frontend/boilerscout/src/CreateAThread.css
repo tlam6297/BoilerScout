@@ -1,6 +1,7 @@
 #threadTitle {
-  color: white;
   font-size: 2rem;
+  height: 3rem;
+  color: black;
 }
 
 .Container {
@@ -14,14 +15,25 @@
 #threadBody {
   color: black;
   font-size: 1rem;
-  background-color: white;
-  width: 25em;
+  width: 20em;
   height: 8rem;
   display: inline-block;
 }
 
+#threadBody:valid {
+  background-color: white;
+}
 
 h1 {
   color: #cc9900,
 }
 
+textarea:invalid {
+  border-color: #900;
+  background-color: #FDD;
+}
+
+input:valid {
+  border-color: white;
+  background-color:white;
+}

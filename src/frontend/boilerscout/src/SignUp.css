@@ -25,6 +25,11 @@ input:invalid{
   background-color: #FDD;
 }
 
+textarea:invalid {
+  border-color: #900;
+  background-color: #FDD;
+}
+
 select:invalid{
   border-color: #900;
   background-color: #FDD;
