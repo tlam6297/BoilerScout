@@ -9,8 +9,6 @@ class EditProfile extends Component {
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.removeWhiteSkills = this.removeWhiteSkills.bind(this);
-    this.removeWhiteCourses = this.removeWhiteCourses.bind(this);    
     this.handleChange = this.handleChange.bind(this);
     this.getAccessToken = this.getAccessToken.bind(this);
     this.getID = this.getID.bind(this);
@@ -77,35 +75,6 @@ class EditProfile extends Component {
 
   }
 
-  removeWhiteSkills = (array) => {
-    var i;
-
-    for (i = 0; i < array.length; i++) {
-      var curr = array[i];
-      var nowhite = curr.replace(/\s/g, "");
-      var temp = nowhite.toLowerCase();
-      var firstchar = temp.charAt(0).toUpperCase();
-      var final = firstchar + temp.slice(1);
-      console.log(final);
-      array[i] = final;
-    }
-
-    return array;
-  }
-
-  removeWhiteCourses = (array) => {
-    var i;
-
-    for (i = 0; i < array.length; i++) {
-      var curr = array[i].toUpperCase();
-      var nowhite = curr.replace(/\s/g, "");
-      array[i] = nowhite.toUpperCase();
-      console.log(array[i]);
-    }
-
-    return array;
-  }
-
   handleSubmitPassword = (e) => {
     e.preventDefault();
     <Redirect to="/update-password" />
@@ -122,8 +91,8 @@ class EditProfile extends Component {
       return;
     }
     if (this.state.edit_courses && this.state.edit_skills) {
-      var skillsarray = this.removeWhiteSkills(this.state.Skills.split(","));
-      var coursesarray = this.removeWhiteCourses(this.state.Courses.split(","));
+      var skillsarray = this.state.Skills.split(",");
+      var coursesarray = this.state.Courses.split(",");
       var payload = JSON.stringify({
         "userId": id,
         "token": token,
@@ -156,7 +125,7 @@ class EditProfile extends Component {
           }
         })
     } else if (this.state.edit_courses && !this.state.edit_skills) {
-      var coursesarray = this.removeWhiteCourses(this.state.Courses.split(","));
+      var coursesarray = this.state.Courses.split(",");
       var payload = JSON.stringify({       
         "userId": id,
         "token": token,
@@ -188,7 +157,7 @@ class EditProfile extends Component {
           }
         })
     } else if (!this.state.edit_courses && this.state.edit_skills) {
-      var skillsarray = this.removeWhiteSkills(this.state.Skills.split(","));
+      var skillsarray = this.state.Skills.split(",");
       var payload = JSON.stringify({
         "userId": id,
         "token": token,
