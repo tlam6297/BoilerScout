@@ -46,9 +46,13 @@ li {
   grid-column: 1;
   grid-row: 1;
   font-size: large;
-  background-color: #f0eceb;
- 
+  background-color: #f0eceb; 
 }
+
+.bodyonly {
+  background-color: white;
+}
+
 #threadUser {
   color:#555555;
   font-size: 1rem;

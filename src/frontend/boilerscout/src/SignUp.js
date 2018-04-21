@@ -53,7 +53,7 @@ class SignUp extends Component {
     this.setState({
       [event.target.id]: event.target.value,
       changed: true,
-    }, (event) => {
+    }, () => {
       switch (mytarget) {
         case 'email':
           this.validateEmail();
