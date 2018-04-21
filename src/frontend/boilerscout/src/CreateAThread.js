@@ -174,7 +174,7 @@ class CreateAThread extends Component {
                 type="text"
                 value={this.state.threadTitle}
                 onChange={this.handleChange}
-                placeholder="Enter a catchy title!"
+                placeholder="Enter a thread title"
               />
             </FormGroup>
             <p />
@@ -184,7 +184,7 @@ class CreateAThread extends Component {
               type="text"
               value={this.state.threadBody}
               onChange={this.handleChange}
-              placeholder="Nobody wants to see an empty thread!"
+              placeholder="Enter body of your thread"
             />
             <p />
             <Button
