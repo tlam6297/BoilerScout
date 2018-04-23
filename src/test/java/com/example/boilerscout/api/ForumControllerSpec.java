@@ -66,15 +66,15 @@ public class ForumControllerSpec {
 
     //Static values, may need to be updated?
     //TODO create a token that never expires
-    String userId = "2c399169-744e-4eda-9f1c-c0723dcc761d";
+    String userId = "80ebe00d-bba8-443f-81b2-fefbe884b6ab";
 
-    String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYW00NUBwdXJkdWUuZWR1IiwidXNlcklkIjoiMmMzOTkxNjktNzQ0ZS00ZWRhLTlmMW" +
-            "MtYzA3MjNkY2M3NjFkIiwiZXhwIjoxNTI0OTQyMDQyfQ.Q_oNfVaNaI3HJpe0VFD1YUY-SJG8UphzvYhIIx_YM3CBliIBY12UVnoPjb6v-" +
-            "3DE7wtFagSSLkbGs3zPWuJjEQ";
+    String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYW00NUBwdXJkdWUuZWR1IiwidXNlcklkIjoiODBlYmUwMGQtYmJhOC00NDNmLTgxYj" +
+            "ItZmVmYmU4ODRiNmFiIiwiZXhwIjoxNTI1MDM0NTEzfQ.duUpwGJXCdbivBbTuH92UzPPS4JrWZISOvQbxCWrCha-vLh_Mj6BYK8k55tHq" +
+            "NzBdd-yT0kuvrq9l652x2gLoA";
 
     String forumId = "528fc18a-ebbc-4b0a-9ca3-bd00d6db006c";
 
-    String threadId = "00a4aca0-27cd-44d1-8326-f0a852fc43c8";
+    String threadId = "75abbb83-10f7-45f4-a267-4aaa04b036ed";
 
     @Before
     public void setup() throws Exception {
